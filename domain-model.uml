@@ -3,71 +3,72 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="1013.0" y="221.5">Status</node>
-    <node x="552.0" y="75.5">Group</node>
-    <node x="950.0" y="435.5">Task</node>
-    <node x="-38.5" y="152.5">User</node>
-    <node x="243.0" y="752.5">Manager</node>
-    <node x="181.5" y="163.5">TeamMember</node>
-    <node x="181.5" y="923.5">TaskAssigner</node>
+    <node x="-27.0" y="61.5">Status</node>
+    <node x="152.0" y="395.5">Group</node>
+    <node x="190.0" y="-4.5">Task</node>
+    <node x="641.5" y="632.5">User</node>
+    <node x="1218.5" y="494.5">TaskNotifier</node>
+    <node x="953.0" y="461.5">Manager</node>
+    <node x="581.5" y="483.5">TeamMember</node>
+    <node x="901.5" y="3.5">TaskAssigner</node>
   </nodes>
   <notes />
   <edges>
     <edge source="Task" target="Group">
-      <point x="-130.0" y="-40.0" />
-      <point x="720.0" y="520.0" />
       <point x="0.0" y="124.5" />
+      <point x="0.0" y="-124.5" />
     </edge>
     <edge source="Manager" target="Task">
-      <point x="77.0" y="-0.0" />
-      <point x="1080.0" y="800.0" />
-      <point x="0.0" y="124.5" />
+      <point x="-40.0" y="-58.5" />
+      <point x="1000.0" y="120.0" />
+      <point x="130.0" y="-0.0" />
     </edge>
     <edge source="Task" target="TeamMember">
-      <point x="-130.0" y="-0.0" />
-      <point x="360.0" y="560.0" />
-      <point x="40.0" y="36.5" />
+      <point x="40.0" y="124.5" />
+      <point x="360.0" y="320.0" />
+      <point x="680.0" y="320.0" />
+      <point x="-40.0" y="-36.5" />
     </edge>
     <edge source="Manager" target="User">
-      <point x="-77.0" y="-0.0" />
-      <point x="40.0" y="800.0" />
-      <point x="0.0" y="47.5" />
-    </edge>
-    <edge source="Manager" target="TeamMember">
-      <point x="0.0" y="-47.5" />
-      <point x="0.0" y="36.5" />
-    </edge>
-    <edge source="TeamMember" target="User">
-      <point x="-138.5" y="-0.0" />
+      <point x="0.0" y="58.5" />
+      <point x="1040.0" y="680.0" />
       <point x="78.5" y="-0.0" />
     </edge>
+    <edge source="Manager" target="TeamMember">
+      <point x="-87.0" y="-0.0" />
+      <point x="138.5" y="-0.0" />
+    </edge>
+    <edge source="TeamMember" target="User">
+      <point x="0.0" y="36.5" />
+      <point x="0.0" y="-47.5" />
+    </edge>
+    <edge source="Manager" target="TaskNotifier">
+      <point x="87.0" y="-0.0" />
+      <point x="-141.5" y="-0.0" />
+    </edge>
     <edge source="Task" target="Status">
-      <point x="0.0" y="-124.5" />
-      <point x="0.0" y="58.5" />
+      <point x="-130.0" y="-0.0" />
+      <point x="67.0" y="-0.0" />
     </edge>
     <edge source="Manager" target="TaskAssigner">
-      <point x="0.0" y="47.5" />
-      <point x="0.0" y="-36.5" />
+      <point x="0.0" y="-58.5" />
+      <point x="0.0" y="36.5" />
     </edge>
     <edge source="TeamMember" target="Task">
       <point x="0.0" y="-36.5" />
-      <point x="320.0" y="0.0" />
-      <point x="1280.0" y="0.0" />
-      <point x="1280.0" y="560.0" />
-      <point x="130.0" y="-0.0" />
+      <point x="720.0" y="160.0" />
+      <point x="130.0" y="40.0" />
     </edge>
     <edge source="TeamMember" target="Group">
-      <point x="138.5" y="-0.0" />
-      <point x="-168.0" y="-0.0" />
+      <point x="-138.5" y="-0.0" />
+      <point x="168.0" y="-0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.895771878072763" x="620.5" y="498.5" />
-  <SelectedNodes>
-    <node>Manager</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="0.9051000645577792" x="737.5" y="361.5" />
+  <SelectedNodes />
   <Categories>
-    <Category>Methods</Category>
     <Category>Fields</Category>
+    <Category>Methods</Category>
   </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>

@@ -5,4 +5,5 @@ public class Manager extends User {
     private Task[] tasks;
     private TeamMember[] teamMembers;
     private TaskAssigner taskAssigner;
+    private TaskNotifier taskNotifier;
 }
