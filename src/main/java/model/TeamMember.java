@@ -7,10 +7,37 @@ import java.util.HashMap;
  */
 public class TeamMember extends User {
 
-	private HashMap<Group, Integer> weightings;
+	private HashMap<Group, Attribute> weightings;
 	private Task[] tasks;
 
 	public TeamMember(String name, String email, String id) {
 		super(name, email, id);
+	}
+
+	public HashMap<Group, Attribute> getWeightings() {
+		return weightings;
+	}
+
+	public class Attribute {
+		int experience;
+		int interest;
+		int availability;
+		int resource;
+
+		public int getExperience() {
+			return experience;
+		}
+
+		public int getInterest() {
+			return interest;
+		}
+
+		public int getAvailability() {
+			return availability;
+		}
+
+		public int getResource() {
+			return resource;
+		}
 	}
 }
