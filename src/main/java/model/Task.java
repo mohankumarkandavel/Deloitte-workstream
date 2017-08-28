@@ -10,12 +10,12 @@ public class Task {
 	private String name;
 	private String description;
 
+	private Attribute attribute;
 	private Date deadline;
 	private Group group;
 	private Status status;
-	private long cost;
 	private int numAssigneesRequired;
-	private String resources;
+	private int resources;
 	private TeamMember[] assignees;
 
 	public int getId() {
@@ -30,6 +30,10 @@ public class Task {
 		return description;
 	}
 
+	public int getAvailability() {
+		return attribute.getAvailability();
+	}
+
 	public Date getDeadline() {
 		return deadline;
 	}
@@ -42,19 +46,16 @@ public class Task {
 		return status;
 	}
 
-	public long getCost() {
-		return cost;
-	}
-
 	public int getNumAssigneesRequired() {
 		return numAssigneesRequired;
 	}
 
-	public String getResources() {
-		return resources;
+	public int getResources() {
+		return attribute.getResource();
 	}
 
 	public TeamMember[] getAssignees() {
 		return assignees;
 	}
+
 }

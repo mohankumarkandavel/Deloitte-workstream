@@ -18,26 +18,4 @@ public class TeamMember extends User {
 		return weightings;
 	}
 
-	public class Attribute {
-		int experience;
-		int interest;
-		int availability;
-		int resource;
-
-		public int getExperience() {
-			return experience;
-		}
-
-		public int getInterest() {
-			return interest;
-		}
-
-		public int getAvailability() {
-			return availability;
-		}
-
-		public int getResource() {
-			return resource;
-		}
-	}
 }
