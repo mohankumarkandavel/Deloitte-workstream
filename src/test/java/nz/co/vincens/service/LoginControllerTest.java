@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,7 +28,7 @@ public class LoginControllerTest {
                 .accept(MediaType.APPLICATION_JSON);
         
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        assertEquals(200, result.getResponse().getStatus());
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
     }
     
     @Test
@@ -37,7 +38,7 @@ public class LoginControllerTest {
                 .accept(MediaType.APPLICATION_JSON);
         
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        assertEquals(401, result.getResponse().getStatus());
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), result.getResponse().getStatus());
     }
     
     @Test
@@ -46,7 +47,7 @@ public class LoginControllerTest {
                 .accept(MediaType.APPLICATION_JSON);
         
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        assertEquals(400, result.getResponse().getStatus());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
     }
     
 }
