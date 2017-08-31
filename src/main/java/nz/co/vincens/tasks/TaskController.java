@@ -1,4 +1,4 @@
-package nz.co.vincens.service;
+package nz.co.vincens.tasks;
 
 import nz.co.vincens.model.Task;
 import org.springframework.web.bind.annotation.PathVariable;
