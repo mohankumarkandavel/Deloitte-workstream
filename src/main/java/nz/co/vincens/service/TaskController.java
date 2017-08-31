@@ -1,22 +1,20 @@
-package service;
+package nz.co.vincens.service;
 
-import model.Task;
-import org.springframework.http.ResponseEntity;
+import nz.co.vincens.model.Task;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * API endpoints for accessing and managing tasks
+ * API endpoints for accessing and managing nz.co.vincens.tasks
  */
 @RestController
 public class TaskController {
 
-    @RequestMapping("/tasks")
+    @RequestMapping("/nz/co/vincens/tasks")
     List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         tasks.add(new Task());

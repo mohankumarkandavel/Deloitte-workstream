@@ -1,4 +1,4 @@
-package model;
+package nz.co.vincens.model;
 
 /**
  * A generic user in the system. There are two users with different privileges: a {@link TeamMember} and a

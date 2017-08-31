@@ -1,10 +1,8 @@
-package tasks;
+package nz.co.vincens.tasks;
 
-import model.TeamMember;
+import nz.co.vincens.model.TeamMember;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Task the {@link Ranker} class.

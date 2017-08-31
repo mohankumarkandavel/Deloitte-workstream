@@ -1,6 +1,6 @@
-package service;
+package nz.co.vincens.service;
 
-import model.Login;
+import nz.co.vincens.model.Login;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

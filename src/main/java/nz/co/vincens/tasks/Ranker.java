@@ -1,9 +1,9 @@
-package tasks;
+package nz.co.vincens.tasks;
 
-import model.Attribute;
-import model.Group;
-import model.Task;
-import model.TeamMember;
+import nz.co.vincens.model.Attribute;
+import nz.co.vincens.model.Group;
+import nz.co.vincens.model.Task;
+import nz.co.vincens.model.TeamMember;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * This class is used to find the best team members and rank them according to their suitability for a task.
  * The algorithm used is 0.2*x + 0.2*y + 0.5*z + 0.1*k where x is the experience, y is the interest, z is the
- * availability, and k is the resources for the task's given {@link model.Group}. In addition, anyone who doesn't
+ * availability, and k is the resources for the task's given {@link nz.co.vincens.model.Group}. In addition, anyone who doesn't
  * have the required availability should automatically be disqualified from being considered.
  */
 public class Ranker {

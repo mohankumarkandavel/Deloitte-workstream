@@ -1,4 +1,4 @@
-package model;
+package nz.co.vincens.model;
 
 /**
  * Attribute contains the list of fields required by the algorithm.

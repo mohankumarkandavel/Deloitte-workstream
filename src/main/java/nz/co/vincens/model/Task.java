@@ -1,4 +1,4 @@
-package model;
+package nz.co.vincens.model;
 
 import java.util.Date;
 

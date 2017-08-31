@@ -1,4 +1,4 @@
-package model;
+package nz.co.vincens.model;
 
 /**
  * A {@link Task} can have any one of the following Statuses.

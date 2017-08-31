@@ -1,4 +1,4 @@
-package model;
+package nz.co.vincens.model;
 
 /**
  * The possible groups a {@link Task} can belong to. A task can only belong to one group.

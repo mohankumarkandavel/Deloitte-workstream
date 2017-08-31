@@ -1,9 +1,9 @@
-package model;
+package nz.co.vincens.model;
 
 import java.util.HashMap;
 
 /**
- * A team member which may be assigned to tasks.
+ * A team member which may be assigned to nz.co.vincens.tasks.
  */
 public class TeamMember extends User {
 
