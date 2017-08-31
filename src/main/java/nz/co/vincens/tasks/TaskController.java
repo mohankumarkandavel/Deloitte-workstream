@@ -1,11 +1,16 @@
 package nz.co.vincens.tasks;
 
+import nz.co.vincens.model.Attribute;
+import nz.co.vincens.model.Group;
+import nz.co.vincens.model.Status;
 import nz.co.vincens.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,17 +19,24 @@ import java.util.List;
 @RestController
 public class TaskController {
 
-    @RequestMapping("/nz/co/vincens/tasks")
+    private List<Task> tasks;
+
+    public TaskController() {
+        this.tasks = new ArrayList<>();
+        tasks.add(new Task(1, "Task One", "Description1", new Attribute(3, 3, 3, 3), new Date(), Group
+                .HUMAN_CAPITAL, Status.PENDING, 1, 3));
+        tasks.add(new Task(1, "Task Two", "Description2", new Attribute(1, 4, 2, 5), new Date(), Group
+                .SOFTWARE, Status.ASSIGNED, 2, 2));
+    }
+
+    @RequestMapping("/tasks")
     List<Task> getTasks() {
-        List<Task> tasks = new ArrayList<>();
-        tasks.add(new Task());
-        tasks.add(new Task());
-        return null;
+        return tasks;
     }
 
     @RequestMapping("/task/{id}")
     Task getTask(@PathVariable int id) {
-        return new Task();
+        return tasks.get(id - 1);
     }
 
     //@RequestMapping(value = "/task", method = RequestMethod.POST)

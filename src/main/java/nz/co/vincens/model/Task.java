@@ -18,6 +18,19 @@ public class Task {
 	private int resources;
 	private TeamMember[] assignees;
 
+	public Task(int id, String name, String description, Attribute attribute, Date deadline, Group group, Status
+			status, int numAssigneesRequired, int resources) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.attribute = attribute;
+		this.deadline = deadline;
+		this.group = group;
+		this.status = status;
+		this.numAssigneesRequired = numAssigneesRequired;
+		this.resources = resources;
+	}
+
 	public int getId() {
 		return id;
 	}

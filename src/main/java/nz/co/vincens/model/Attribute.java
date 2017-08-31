@@ -10,6 +10,13 @@ public class Attribute {
 	private int availability;
 	private int resource;
 
+	public Attribute(int experience, int interest, int availability, int resource) {
+		this.experience = experience;
+		this.interest = interest;
+		this.availability = availability;
+		this.resource = resource;
+	}
+
 	public int getExperience() {
 		return experience;
 	}
