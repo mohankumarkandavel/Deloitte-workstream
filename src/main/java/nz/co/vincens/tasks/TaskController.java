@@ -4,7 +4,6 @@ import nz.co.vincens.model.Attribute;
 import nz.co.vincens.model.Group;
 import nz.co.vincens.model.Status;
 import nz.co.vincens.model.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +34,7 @@ public class TaskController {
                 .SOFTWARE, Status.ASSIGNED, 2, 2));
     }
 
-    @RequestMapping("/tasks")
+    @RequestMapping("/task")
     List<Task> getTasks() {
         return tasks;
     }
