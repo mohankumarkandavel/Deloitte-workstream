@@ -10,6 +10,9 @@ public class Attribute {
 	private int availability;
 	private int resource;
 
+	public Attribute() {
+	}
+
 	public Attribute(int experience, int interest, int availability, int resource) {
 		this.experience = experience;
 		this.interest = interest;
@@ -33,4 +36,19 @@ public class Attribute {
 		return resource;
 	}
 
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public void setInterest(int interest) {
+		this.interest = interest;
+	}
+
+	public void setAvailability(int availability) {
+		this.availability = availability;
+	}
+
+	public void setResource(int resource) {
+		this.resource = resource;
+	}
 }

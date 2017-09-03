@@ -15,8 +15,11 @@ public class Task {
 	private Group group;
 	private Status status;
 	private int numAssigneesRequired;
-	private int resources;
 	private TeamMember[] assignees;
+
+	public Task() {
+
+	}
 
 	public Task(int id, String name, String description, Attribute attribute, Date deadline, Group group, Status
 			status, int numAssigneesRequired, int resources) {
@@ -28,7 +31,6 @@ public class Task {
 		this.group = group;
 		this.status = status;
 		this.numAssigneesRequired = numAssigneesRequired;
-		this.resources = resources;
 	}
 
 	public int getId() {
@@ -71,4 +73,39 @@ public class Task {
 		return assignees;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setAttribute(Attribute attribute) {
+		this.attribute = attribute;
+	}
+
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public void setNumAssigneesRequired(int numAssigneesRequired) {
+		this.numAssigneesRequired = numAssigneesRequired;
+	}
+
+	public void setAssignees(TeamMember[] assignees) {
+		this.assignees = assignees;
+	}
 }
