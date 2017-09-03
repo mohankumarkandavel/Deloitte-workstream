@@ -22,7 +22,7 @@ public class Ranker {
 	 * @param teamMembers All possible team members which may be assigned to the task
 	 * @return A ranked list of team members best suited for job in descending order
 	 */
-	public TeamMember[] findBestTeamMembers(Task task, TeamMember[] teamMembers) {
+	public List<TeamMember> findBestTeamMembers(Task task, List<TeamMember> teamMembers) {
 
 		List<TeamMember> rankedTeamMembers =  new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class Ranker {
 			}
 		}
 
-		return (TeamMember[]) rankedTeamMembers.toArray();
+		return rankedTeamMembers;
 	}
 
 	/**
@@ -45,11 +45,12 @@ public class Ranker {
 	 * @param group The group to calculate the suitability for
 	 */
 	private void insert(TeamMember teamMember, List<TeamMember> rankedTeamMembers, Group group) {
-		int teamMemberSuitability = calculateSuitability(teamMember.getWeightings().get(group));
+		double teamMemberSuitability = calculateSuitability(teamMember.getWeightings().get(group));
 
 		boolean success = false;
 		for (int i = 0; i < rankedTeamMembers.size(); i++) {
-			int currentTeamMemberSuitability = calculateSuitability(rankedTeamMembers.get(i).getWeightings().get(group));
+			double currentTeamMemberSuitability = calculateSuitability(rankedTeamMembers.get(i).getWeightings().get
+					(group));
 			if (currentTeamMemberSuitability < teamMemberSuitability) {
 				rankedTeamMembers.add(i, teamMember);
 				success = true;
@@ -59,12 +60,13 @@ public class Ranker {
 		if (!success) rankedTeamMembers.add(teamMember);
 	}
 
-	private int calculateSuitability(Attribute attribute) {
+	private double calculateSuitability(Attribute attribute) {
 		return calculateSuitability(attribute.getExperience(), attribute.getInterest(), attribute.getAvailability(),
 				attribute.getResource());
 	}
 
-	private int calculateSuitability(int experience, int interest, int availability, int resources) {
-		return (int) (0.2 * experience + 9.2 * interest + 0.5 * availability + 0.1 * resources);
+	private double calculateSuitability(int experience, int interest, int availability, int resources) {
+		return 0.2 * (double) experience + 0.2 * (double) interest + 0.5 * (double) availability + 0.1 * (double)
+				resources;
 	}
 }
