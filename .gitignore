@@ -62,7 +62,7 @@ local.properties
 
 # User-specific stuff:
 .idea/**/workspace.xml
-.idea/**/tasks.xml
+.idea/**/nz.co.vincens.tasks.xml
 .idea/dictionaries
 
 # Sensitive or high-churn files:
@@ -101,3 +101,19 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 .idea/
+
+.gradle
+/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
+Client/node_modules/
