@@ -62,7 +62,7 @@ local.properties
 
 # User-specific stuff:
 .idea/**/workspace.xml
-.idea/**/tasks.xml
+.idea/**/nz.co.vincens.tasks.xml
 .idea/dictionaries
 
 # Sensitive or high-churn files:
@@ -116,3 +116,4 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+Client/node_modules/
