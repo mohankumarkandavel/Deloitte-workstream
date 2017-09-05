@@ -7,7 +7,6 @@ import { HeaderComponent } from './header/header.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { FooterComponent } from './footer/footer.component';
-import { NewTaskComponent } from './new-task/new-task.component';
 
 @NgModule({
   declarations: [
@@ -15,8 +14,7 @@ import { NewTaskComponent } from './new-task/new-task.component';
     HeaderComponent,
     LoginFormComponent,
     HomePageComponent,
-    FooterComponent,
-    NewTaskComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
