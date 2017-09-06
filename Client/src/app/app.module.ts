@@ -5,6 +5,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
@@ -12,11 +13,12 @@ import { FooterComponent } from './footer/footer.component';
     AppComponent,
     HeaderComponent,
     LoginFormComponent,
+    HomePageComponent,
     FooterComponent
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
