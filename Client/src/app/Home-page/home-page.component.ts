@@ -1,21 +1,71 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
+
 @Component({
-  selector:'app-home-page',
+  selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) {
-  }
+  draftTaskList: any[];
+  pendingTaskList=[];
 
-  ngOnInit() {
-  }
-  newTask(id: string){
+
+  //open new task popup
+  onNewTask(id: string) {
     this.modalService.open(id);
     console.log("found");
   }
+  onAddTask(){
+    //todo add task to database
+  }
+  onTaskDrop(e: any,id:string) {
+    // Get the dropped data here
+    this.pendingTaskList.push(e.dragData);
+    //todo change task status
+    this.onRemoveTask(e.dragData, this.draftTaskList);
+    this.modalService.open(id);
+  }
+  onRemoveTask(task: any, list: Array<any>) {
+    let index = list.map(function (e) {
+      return e.taskName
+    }).indexOf(task.taskName);
+    list.splice(index, 1);
+  }
+  onSendInvitation(){
+    //todo  send invitation
+  }
 
+  constructor(private modalService: NgbModal) {
+
+    //added dummy tasklist here
+    //todo get task details from database
+    this.draftTaskList = [{
+      taskName: "create manager page",
+      deadLine: "12/09/2017",
+      description: "create a web page using angular, hmtl, css,etc",
+      status: "",
+      member: ""
+    },
+      {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: "mohan"
+      },
+      {
+        taskName: "create login page",
+        deadLine: "17/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "pending",
+        member: ""
+      }];
+  }
+
+  ngOnInit() {
+
+  }
 }
