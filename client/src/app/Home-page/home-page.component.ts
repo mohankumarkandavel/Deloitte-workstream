@@ -58,6 +58,55 @@ export class HomePageComponent implements OnInit {
         member: ""
       },
       {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: ""
+      },
+      {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: ""
+      },
+      {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: ""
+      },
+      {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: ""
+      },
+      {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: ""
+      },
+      {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: ""
+      },
+      {
+        taskName: "create home page",
+        deadLine: "15/09/2017",
+        description: "create a web page using angular, hmtl, css,etc",
+        status: "",
+        member: ""
+      },
+      {
         taskName: "create login page",
         deadLine: "17/09/2017",
         description: "create a web page using angular, hmtl, css,etc",
