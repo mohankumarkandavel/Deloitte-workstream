@@ -1,11 +1,11 @@
 
   <div class="card-block">
     <div class="card-text">
-      <div>Task Name:{{task.taskName}} <span class="glyphicon glyphicon-info-sign float-right"></span></div>
-      <div>Deadline:{{task.deadLine}}</div>
-      <div>Description:{{task.description}}</div>
-      <div>Status:{{task.status}}</div>
-      <div>{{task.member}} <span class="glyphicon glyphicon-info-sign float-right"></span></div>
+      <div class="hide-overflow">{{task.taskName}} <span class="float-right"><i class="fa fa-info-circle"></i></span></div>
+      <div>{{task.deadLine}}</div>
+      <div class="hide-overflow">{{task.description}}</div>
+      <div *ngIf="!!task.status">{{task.status}}</div>
+      <div *ngIf="!!task.member">{{task.member}} <span class="float-right"><i class="fa fa-info-circle"></i></span></div>
     </div>
   </div>
 
