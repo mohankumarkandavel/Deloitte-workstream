@@ -36,6 +36,8 @@ public class LoginController {
                 rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                return ResponseEntity.badRequest().build();
             }
         } else {
             return ResponseEntity.badRequest().build();
