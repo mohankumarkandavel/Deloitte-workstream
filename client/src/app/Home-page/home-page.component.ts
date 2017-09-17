@@ -69,21 +69,26 @@ export class HomePageComponent implements OnInit {
     // Get the dropped data here
     this.pendingTaskList.push(e.dragData);
     //todo change task status
-    this.onRemoveTask(e.dragData, this.draftTaskList);
-    this.modalService.open(id, { windowClass: 'recommend-modal' }).result.then(any => {
-      this.emptySelectedEmployeeArray();
-    }, any => {this.emptySelectedEmployeeArray();});
+    this.modalService.open(id, { windowClass: 'recommend-modal' }).result.then((result) => {
+      if(result=='Cancel click'){
+        this.onRemoveTask(e.dragData,this.pendingTaskList);
+        this.emptySelectedEmployeeArray();
+      }
+      else if(result=='invitationSend'){
+        this.onRemoveTask(e.dragData, this.draftTaskList);
+        //this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
+        //todo send invitation here
+        this.emptySelectedEmployeeArray();
+      }
+
+    }, any => {this.emptySelectedEmployeeArray();
+      this.onRemoveTask(e.dragData,this.pendingTaskList);});
   }
   onRemoveTask(task: any, list: Array<any>) {
     let index = list.map(function (e) {
       return e.taskName
     }).indexOf(task.taskName);
     list.splice(index, 1);
-  }
-  onSendInvitation(id: string){
-    //todo  send invitation
-    this.modalService.open(id, { windowClass: 'alert-modal' });
-    //this.emptySelectedEmployeeArray();
   }
   emptySelectedEmployeeArray(){
     this.selectedEmployeeArray.splice(0, this.selectedEmployeeArray.length); //clear array here
@@ -114,48 +119,6 @@ export class HomePageComponent implements OnInit {
       status: "",
       member: ""
     },
-      {
-        taskName: "create home page",
-        deadLine: "15/09/2017",
-        description: "create a web page using angular, hmtl, css,etc",
-        status: "",
-        member: ""
-      },
-      {
-        taskName: "create home page",
-        deadLine: "15/09/2017",
-        description: "create a web page using angular, hmtl, css,etc",
-        status: "",
-        member: ""
-      },
-      {
-        taskName: "create home page",
-        deadLine: "15/09/2017",
-        description: "create a web page using angular, hmtl, css,etc",
-        status: "",
-        member: ""
-      },
-      {
-        taskName: "create home page",
-        deadLine: "15/09/2017",
-        description: "create a web page using angular, hmtl, css,etc",
-        status: "",
-        member: ""
-      },
-      {
-        taskName: "create home page",
-        deadLine: "15/09/2017",
-        description: "create a web page using angular, hmtl, css,etc",
-        status: "",
-        member: ""
-      },
-      {
-        taskName: "create home page",
-        deadLine: "15/09/2017",
-        description: "create a web page using angular, hmtl, css,etc",
-        status: "",
-        member: ""
-      },
       {
         taskName: "create home page",
         deadLine: "15/09/2017",
