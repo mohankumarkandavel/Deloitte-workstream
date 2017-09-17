@@ -70,7 +70,9 @@ export class HomePageComponent implements OnInit {
     this.pendingTaskList.push(e.dragData);
     //todo change task status
     this.onRemoveTask(e.dragData, this.draftTaskList);
-    this.modalService.open(id, { windowClass: 'recommend-modal' });
+    this.modalService.open(id, { windowClass: 'recommend-modal' }).result.then(any => {
+      this.emptySelectedEmployeeArray();
+    }, any => {this.emptySelectedEmployeeArray();});
   }
   onRemoveTask(task: any, list: Array<any>) {
     let index = list.map(function (e) {
@@ -83,10 +85,6 @@ export class HomePageComponent implements OnInit {
     this.modalService.open(id, { windowClass: 'alert-modal' });
     //this.emptySelectedEmployeeArray();
   }
-
-  /*onCancelInvitation(){
-    this.emptySelectedEmployeeArray();
-  }*/
   emptySelectedEmployeeArray(){
     this.selectedEmployeeArray.splice(0, this.selectedEmployeeArray.length); //clear array here
   }
