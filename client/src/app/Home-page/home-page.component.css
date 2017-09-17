@@ -40,6 +40,10 @@
 .table tr:nth-child(odd)  {
   background-color: #E8EAE9;
 }
+.active{
+  background-color: rgba(26, 26,26, 0.8) !important;
+  color: #ffffff !important;
+}
 .task-modal>.modal-dialog>.modal-content>.modal-header>.close{
   width:100%;
   text-align: right;
@@ -60,3 +64,4 @@
 {
   background-color: rgba(26, 26,26, 0.8);
 }
+

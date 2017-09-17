@@ -13,6 +13,7 @@
           </div>
         </div>
       </div>
+
     </div>
     <div class="col-sm-3 pending">
       <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
@@ -29,7 +30,7 @@
         <div class="panel-heading  bg-primary text-white text-uppercase">Current Tasks</div>
         <div class="panel-body current-panel pre-scrollable scroll-style">
           <div class="row">
-            <!--add card list here-->
+            <!--add  current card list here-->
            <!-- <div class="card  col-sm-5 task-card current-card text-white"
                  *ngFor="let draftTask of draftTaskList">
               <app-task-card [task]="draftTask"></app-task-card>
@@ -119,7 +120,7 @@
 </ng-template>
 <ng-template #recommendTeam let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Recommended Team Members</h5>
+    <h5 class="modal-title" >Recommended Team Members</h5>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -134,34 +135,30 @@
         <th>Experience</th>
         <th>Interest</th>
       </tr>
-      <tr>
-        <td>1</td>
-        <td><i class="fa fa-user" aria-hidden="true"></i></td>
-        <td>Jane</td>
-        <td>3</td>
-        <td>5</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td><i class="fa fa-user" aria-hidden="true"></i></td>
-        <td>Jane</td>
-        <td>3</td>
-        <td>5</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td><i class="fa fa-user" aria-hidden="true"></i></td>
-        <td>Jane</td>
-        <td>3</td>
-        <td>5</td>
-        <td>3</td>
+      <tr *ngFor="let employee of employees" (click)="addThisEmployeeToArray(employee, $event)" [class.active]="isEmployeeSelected(employee)">
+        <td>{{employee.ranking}}</td>
+        <td><i class="fa fa-user" aria-hidden="true"></i>{{employee.icon}}</td>
+        <td>{{employee.name}}</td>
+        <td>{{employee.availability}}</td>
+        <td>{{employee.experience}}</td>
+        <td>{{employee.interest}}</td>
       </tr>
     </table>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
-    <button type="button" class="btn btn-primary">Send Invitation</button>
+    <button type="button" class="btn btn-primary" (click)="onSendInvitation(invitationSend)">Send Invitation</button>
   </div>
 </ng-template>
+<ng-template #invitationSend let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" >Successfully send</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <pre>{{selectedEmployeeArray|json }}</pre>
+  </div>
+</ng-template>
+

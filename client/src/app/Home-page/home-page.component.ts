@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {NgbModal,ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -12,7 +12,50 @@ export class HomePageComponent implements OnInit {
 
   draftTaskList: any[];
   pendingTaskList=[];
+  selectedEmployeeArray = [];
 
+  //add dummy employee list here
+  employees = [
+    {
+      ranking: 1,
+      icon:'',
+      name: 'name1',
+      availability: '3',
+      experience:'4',
+      interest:'5'
+    },
+    {
+      ranking: 2,
+      icon:'',
+      name: 'name1',
+      availability: '3',
+      experience:'4',
+      interest:'5'
+    },
+    {
+      ranking: 3,
+      icon:'',
+      name: 'name1',
+      availability: '3',
+      experience:'4',
+      interest:'5'
+    },
+    {
+      ranking: 4,
+      icon:'',
+      name: 'name1',
+      availability: '3',
+      experience:'4',
+      interest:'5'
+    },
+    {
+      ranking: 5,
+      icon:'',
+      name: 'name1',
+      availability: '3',
+      experience:'4',
+      interest:'5'
+    }];
 
   //open new task popup
   onNewTask(id: string) {
@@ -35,8 +78,31 @@ export class HomePageComponent implements OnInit {
     }).indexOf(task.taskName);
     list.splice(index, 1);
   }
-  onSendInvitation(){
+  onSendInvitation(id: string){
     //todo  send invitation
+    this.modalService.open(id, { windowClass: 'alert-modal' });
+    //this.emptySelectedEmployeeArray();
+  }
+
+  /*onCancelInvitation(){
+    this.emptySelectedEmployeeArray();
+  }*/
+  emptySelectedEmployeeArray(){
+    this.selectedEmployeeArray.splice(0, this.selectedEmployeeArray.length); //clear array here
+  }
+  toggleItemInArr(arr, item) {
+    const index = arr.indexOf(item);
+    index === - 1 ? arr.push(item) : arr.splice(index, 1);
+  }
+  addThisEmployeeToArray(employee: any, event) {
+    if (!event.ctrlKey) {
+      this.selectedEmployeeArray = [];
+    }
+
+    this.toggleItemInArr(this.selectedEmployeeArray, employee);
+  }
+  isEmployeeSelected(employee:any){
+    return this.selectedEmployeeArray.indexOf(employee)!==-1;
   }
 
   constructor(private modalService: NgbModal) {
@@ -113,6 +179,7 @@ export class HomePageComponent implements OnInit {
         status: "",
         member: ""
       }];
+
   }
 
   ngOnInit() {
