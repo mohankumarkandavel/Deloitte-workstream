@@ -53,7 +53,7 @@ public class DatabaseHelper {
             // Return query result set
             return rs;
         } catch (SQLException se) {
-            //Handle errors for JDBC
+            // Handle errors for JDBC
             se.printStackTrace();
             return null;
         } catch (Exception e) {

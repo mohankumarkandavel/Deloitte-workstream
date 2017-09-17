@@ -46,17 +46,17 @@ public class LoginConsole {
                 // Login query should only have one row of result
                 Output_Count = Integer.parseInt(rs.getString("count(*)"));
                 System.out.println("Count: " + Output_Count);
-                // If it return zero row of result
+                // If it return zero row of result, return incorrect inputs notification
                 if (Output_Count == 0) {
                     System.out.println("Incorrect Username or Password");
                     return;
                 }
-                // If it return more than one result
+                // If it return more than one result, return incorrect data notification
                 else if (Output_Count > 1) {
                     System.out.println("System error");
                     return;
                 }
-                // If it return only one row of result
+                // If it return only one row of result, return login successful notification
                 else if (Output_Count == 1) {
                     // Retrieve by column name
                     Output_Id = Integer.parseInt(rs.getString("id"));
@@ -75,7 +75,7 @@ public class LoginConsole {
             // Clean-up environment
             rs.close();
         } catch (SQLException e) {
-            //Handle errors for JDBC
+            // Handle errors for JDBC
             e.printStackTrace();
         }
     }
