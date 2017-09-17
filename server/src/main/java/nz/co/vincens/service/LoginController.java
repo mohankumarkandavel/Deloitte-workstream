@@ -18,28 +18,42 @@ import java.sql.SQLException;
 public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ResponseEntity login(Login login) {
+        // Define user login information resource from Login Object
         String Username = login.getUsername();
         String Password = login.getPassword();
+        // Define query result counter
         int Count = 0;
-        if (Username != null && Password != null) {
+        if (login != null && Username != null && Password != null) {
+            // Generate database query sentence
             String sql = "CALL UserLogin(" + login.getUsername() + "," + login.getPassword() + ")";
+            // Call the function of database query operation
             ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
+            // Get the login result with the input information
             try {
+                // Extract data from result set
                 while (rs.next()) {
+                    // Login query should only have one row of result
+                    // Retrieve by column name
+                    // Get the number of database query
                     Count = Integer.parseInt(rs.getString("count(*)"));
-                    if (Count == 1) {
-                        return ResponseEntity.ok().build();
-                    } else {
-                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-                    }
                 }
+                // Clean-up environment
                 rs.close();
             } catch (SQLException e) {
+                // Handle errors for JDBC
                 e.printStackTrace();
-            } finally {
-                return ResponseEntity.badRequest().build();
             }
-        } else {
+            // If it return only one row of result, return login successful notification
+            if (Count == 1) {
+                return ResponseEntity.ok().build();
+            }
+            // If it return zero row of result, return incorrect inputs notification
+            else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }
+        // If the user does not input any information, return warning notification
+        else {
             return ResponseEntity.badRequest().build();
         }
     }
