@@ -1,7 +1,6 @@
 package nz.co.vincens.service;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,9 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * This class is used to implement specific functions for database access. Contains the variables required for the
+ * This class is used to implement specific functions for database access. It contains the variables required for the
  * database connection, and the functions required to perform the contents of the database query.
- * The current database uses the Alibaba Cloud MySQL database service.
+ * The parameters of database connection is stored in the db.xml
  * Database queries use call procedure functions.
  * <p>
  * Created on 06/09/2017 by Shenghong Huang.
@@ -30,9 +29,9 @@ public class DatabaseHelper {
     private static String password = null;
 
     /**
-     * The function of database connection parameters loading.
-     * It reads the JDBC driver name and database URL from the db.xml
-     * It reads the Database credentials from the db.xml
+     * This function is to load the database connection parameters stored in the XML file.
+     * It loads the JDBC driver name and database URL from the db.xml
+     * It loads the Database credentials from the db.xml
      *
      * @throws Exception Handle errors for file reading
      */
@@ -51,6 +50,7 @@ public class DatabaseHelper {
             user = doc.getElementsByTagName("user-name").item(0).getFirstChild().getNodeValue();
             password = doc.getElementsByTagName("password").item(0).getFirstChild().getNodeValue();
         } catch (Exception e) {
+            // Handle errors for XML loading
             e.printStackTrace();
         }
     }
@@ -65,7 +65,7 @@ public class DatabaseHelper {
      * @throws Exception    Handle errors for Class.forName
      */
     public static ResultSet DatabaseExecution(String sql) {
-        // Call a funtion to load database connection parameters;
+        // Call a function to load database connection parameters;
         LoadDatabaseParameters();
         // Create the connection statement
         Connection con = null;
