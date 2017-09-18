@@ -1,5 +1,11 @@
 package nz.co.vincens.service;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,15 +19,32 @@ import java.sql.Statement;
  * Database queries use call procedure functions.
  * <p>
  * Created on 06/09/2017 by Shenghong Huang.
- * Last modified on 16/09/2017 by Shenghong Huang.
+ * Last modified on 18/09/2017 by Shenghong Huang.
  */
 public class DatabaseHelper {
     // JDBC driver name and database URL
-    private static final String DRIVE = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://rm-wz9646cu4gae4478fo.mysql.rds.aliyuncs.com:3306/workload";
+    private static String driver = null;
+    private static String url = null;
     // Database credentials
-    private static final String USER = "root";
-    private static final String PASSWORD = "Student2017SoftwareEngineering";
+    private static String user = null;
+    private static String password = null;
+
+
+    private static void LoadDatabaseParameters() {
+        try {
+            File file = new File("db.xml");
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(file);
+            driver = doc.getElementsByTagName("driver-name").item(0).getFirstChild().getNodeValue();
+            url = doc.getElementsByTagName("url").item(0).getFirstChild().getNodeValue();
+            user = doc.getElementsByTagName("user-name").item(0).getFirstChild().getNodeValue();
+            password = doc.getElementsByTagName("password").item(0).getFirstChild().getNodeValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * The function of database execution.
@@ -33,15 +56,17 @@ public class DatabaseHelper {
      * @throws Exception    Handle errors for Class.forName
      */
     public static ResultSet DatabaseExecution(String sql) {
+        // Call a funtion to load database connection parameters;
+        LoadDatabaseParameters();
         // Create the connection statement
         Connection con = null;
         // Create the statement
         Statement statement = null;
         try {
             // Register JDBC driver
-            Class.forName(DRIVE);
+            Class.forName(driver);
             // Open a connection
-            con = DriverManager.getConnection(URL, USER, PASSWORD);
+            con = DriverManager.getConnection(url, user, password);
             // Check connection status
             if (!con.isClosed()) {
                 System.out.println("Succeeded connecting to the Database!");
