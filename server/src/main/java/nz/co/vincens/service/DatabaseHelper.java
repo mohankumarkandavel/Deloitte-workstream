@@ -29,13 +29,23 @@ public class DatabaseHelper {
     private static String user = null;
     private static String password = null;
 
-
+    /**
+     * The function of database connection parameters loading.
+     * It reads the JDBC driver name and database URL from the db.xml
+     * It reads the Database credentials from the db.xml
+     *
+     * @throws Exception Handle errors for file reading
+     */
     private static void LoadDatabaseParameters() {
         try {
-            File file = new File("db.xml");
+            // Create a DocumentBuilderFactory object
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // Create a DocumentBuilder object
             DocumentBuilder builder = factory.newDocumentBuilder();
+            // Load XML object though parse method on Document builder
+            File file = new File("db.xml");
             Document doc = builder.parse(file);
+            // Get the value of every variables
             driver = doc.getElementsByTagName("driver-name").item(0).getFirstChild().getNodeValue();
             url = doc.getElementsByTagName("url").item(0).getFirstChild().getNodeValue();
             user = doc.getElementsByTagName("user-name").item(0).getFirstChild().getNodeValue();
@@ -44,7 +54,6 @@ public class DatabaseHelper {
             e.printStackTrace();
         }
     }
-
 
     /**
      * The function of database execution.
