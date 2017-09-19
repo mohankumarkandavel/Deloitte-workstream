@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector:'app-home-page',
@@ -8,7 +9,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private router: Router) {
   }
 
   ngOnInit() {
@@ -18,4 +19,7 @@ export class HomePageComponent implements OnInit {
     console.log("found");
   }
 
+  logout() {
+    this.router.navigateByUrl("/login");
+  }
 }
