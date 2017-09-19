@@ -1,108 +1,162 @@
 <div class="container-fluid fill">
-  <div class="new_task">
-    <button class=" btn " (click)="newTask(newTaskModal);">Add New Task</button>
-    <button class="btn" (click)="logout()">Sign Out</button>
+  <div class="new-task">
+    <button class=" btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
   </div>
-  <div class="row">
-    <div class="col-md-3 draft">
+  <div class="row task-layout">
+    <div class="col-sm-3 draft">
       <div class="panel panel-default">
-        <div class="panel-heading">Draft</div>
-        <div class="panel-body">
-          Card item here
+        <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
+        <div class="panel-body pre-scrollable scroll-style">
+          <div class="card task-card text-white" draggable="true" *ngFor="let task of tasks"
+               [dragData]="task"> 
+            <app-task-card [task]="task"></app-task-card> 
+          </div> 
         </div>
       </div>
     </div>
-    <div class="col-md-3 pending">
-      <div class="panel panel-default">
-        <div class="panel-heading">Pending Tasks</div>
-        <div class="panel-body">
-
+    <div class="col-sm-3 pending">
+      <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
+        <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
+        <div class="panel-body pre-scrollable scroll-style">
+          <div class="card task-card text-white" *ngFor="let pendingTask of pendingTaskList">
+            <app-task-card [task]="pendingTask"></app-task-card>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6 current">
+    <div class="col-sm-6 current">
       <div class="panel panel-default">
-        <div class="panel-heading">Current Tasks</div>
-        <div class="panel-body">
-
+        <div class="panel-heading  bg-primary text-white text-uppercase">Current Tasks</div>
+        <div class="panel-body current-panel pre-scrollable scroll-style">
+          <div class="row">
+            <!--add  current card list here-->
+           <!-- <div class="card  col-sm-5 task-card current-card text-white"
+                 *ngFor="let draftTask of draftTaskList">
+              <app-task-card [task]="draftTask"></app-task-card>
+            </div>-->
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<ng-template #newTaskModal>
-  <div class="row">
-    <div class="modal-left">
-      <div class="modal-body">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label class="control-label col-sm-2">Task Name</label>
-            <div class="col-sm-10">
+<ng-template #newTaskModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal">
+      <div class="form-group row">
+        <label class="control-label col-sm-2">Task Name</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="control-label col-sm-2">Description</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" rows="3" id="description"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label class="control-label col-sm-4">Deadline</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="date">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="control-label col-sm-4">Group</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="group">
+                <option>Financial Analysis</option>
+                <option>Project Management</option>
+                <option>Strategy</option>
+                <option>Operations</option>
+                <option>Technology</option>
+                <option>Human Capital</option>
+                <option>Software</option>
+                <option>Teaching and Training</option>
+                <option>Business Development</option>
+                <option>Marketing and Sales</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="control-label col-sm-4">Resource</label>
+            <div class="col-sm-8">
               <input class="form-control" type="text">
             </div>
           </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">Description</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" rows="5" id="description"></textarea>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label class="control-label col-sm-4">Cost</label>
+            <div class="col-sm-8">
+              <input class="form-control">
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label col-sm-4">Deadline</label>
-                <div class="col-sm-8">
-                  <input class="form-control" type="date">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-4">Group</label>
-                <div class="col-sm-8">
-                  <select class="form-control" id="group">
-                    <option>Financial Analysis</option>
-                    <option>Business Plan</option>
-                    <option>Risk Analysis</option>
-                    <option>Accounting</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-4">Resource</label>
-                <div class="col-sm-8">
-                  <input class="form-control" type="text">
-                </div>
-              </div>
+          <div class="form-group row">
+            <label class="control-label col-sm-4">#People Required</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="number">
             </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label col-sm-4">Cost</label>
-                <div class="col-sm-8">
-                  <input class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-5">#People Required</label>
-                <div class="col-sm-7">
-                  <input class="form-control" type="number">
-                </div>
-              </div>
+          </div>
 
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-3 col-sm-offset-9">
-              <button class="btn btn-primary button_add">Add</button>
-              <button class="btn btn-primary button_cancel">Cancel</button>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
-    <div class="modal-right">
-      <button type="button" class="close" data-dismiss="newTaskModal" aria-label="Close"><span
-        aria-hidden="true">&times;</span>
-      </button>
-    </div>
+      <div class="form-group">
+        <div class="modal-footer">
+          <button class="btn btn-secondary button_cancel" (click)="c('Close click')">Cancel</button>
+          <button class="btn btn-primary button_add" (click)="onAddTask();">Add</button>
+        </div>
+      </div>
+    </form>
   </div>
 </ng-template>
-
+<ng-template #recommendTeam let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" >Recommended Team Members</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body pre-scrollable scroll-style">
+    <table class="table">
+      <tr class="bg-primary text-white">
+        <th>Ranking</th>
+        <th></th>
+        <th>Name</th>
+        <th>Availability</th>
+        <th>Experience</th>
+        <th>Interest</th>
+      </tr>
+      <tr *ngFor="let employee of employees" (click)="addThisEmployeeToArray(employee, $event)" [class.active]="isEmployeeSelected(employee)">
+        <td>{{employee.ranking}}</td>
+        <td><i class="fa fa-user" aria-hidden="true"></i>{{employee.icon}}</td>
+        <td>{{employee.name}}</td>
+        <td>{{employee.availability}}</td>
+        <td>{{employee.experience}}</td>
+        <td>{{employee.interest}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Cancel click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="c('invitationSend')">Send Invitation</button>
+  </div>
+</ng-template>
+<ng-template #invitationSend let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" >Successfully send</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <pre>{{selectedEmployeeArray|json }}</pre>
+  </div>
+</ng-template>
