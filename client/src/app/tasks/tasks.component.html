@@ -8,7 +8,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">Draft</div>
         <div class="panel-body">
-          Card item here
+          <ul *ngFor="let task of tasks">
+            <li>{{task.name}}</li>
+          </ul>
         </div>
       </div>
     </div>
