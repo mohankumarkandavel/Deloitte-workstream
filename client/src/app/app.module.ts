@@ -1,12 +1,29 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {RouterModule, Routes} from "@angular/router";
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { LoginFormComponent } from './login-form/login.component';
-import { HomePageComponent } from './home/home.component';
-import { FooterComponent } from './footer/footer.component';
+import {AppComponent} from './app.component';
+import {HeaderComponent} from './header/header.component';
+import {LoginFormComponent} from './login-form/login.component';
+import {HomePageComponent} from './home/home.component';
+import {FooterComponent} from './footer/footer.component';
+
+const appRoutes: Routes = [
+  {
+    path:'login',
+    component: LoginFormComponent
+  },
+  {
+    path:'home',
+    component: HomePageComponent
+  },
+  {
+    path:'',
+    redirectTo:'/login',
+    pathMatch:'full'
+  }
+]
 
 @NgModule({
   declarations: [
@@ -19,8 +36,13 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true}
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
