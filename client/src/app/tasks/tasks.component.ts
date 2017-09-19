@@ -111,14 +111,13 @@ export class TasksComponent implements OnInit {
   ngOnInit() {
     this.http.get('http://localhost:8080/task').subscribe(
       (response) => {
-        if (response.ok) {
+        if(response.ok) {
           this.tasks = JSON.parse(response.text());
         }
       }
     );
   }
-
-  newTask(id: string) {
+  newTask(id: string){
     this.modalService.open(id);
     console.log('found');
   }
