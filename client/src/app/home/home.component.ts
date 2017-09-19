@@ -3,8 +3,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector:'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css'],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
 })
 export class HomePageComponent implements OnInit {
 
