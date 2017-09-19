@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import { AlertModule } from 'ngx-bootstrap';
+import { Ng2DragDropModule } from 'ng2-drag-drop';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
@@ -13,6 +14,7 @@ import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 import {FooterComponent} from './footer/footer.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { TaskCardComponent } from './task-card/task-card.component';
 
 const appRoutes: Routes = [
   {
@@ -41,7 +43,8 @@ const appRoutes: Routes = [
     LoginComponent,
     HomeComponent,
     FooterComponent,
-    TasksComponent
+    TasksComponent,
+    TaskCardComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ const appRoutes: Routes = [
     ),
     FormsModule,
     HttpModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    Ng2DragDropModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
