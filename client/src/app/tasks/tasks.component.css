@@ -1,61 +1,66 @@
-.new_task {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.new-task{
+  padding:10px 0px;
 }
-
-.panel-default {
-  border: solid;
-  border-width: thin;
-  border-color: gray;
-  border-radius:3px;
-  background-color: gainsboro;
-
+.task-layout{
+  margin-bottom: 20px;
 }
 .panel-heading {
   padding: 10px;
 }
 .panel-body {
-  min-height: 400px;
-  height: 400px;
+  min-height: 420px;
   padding:10px;
+  background-color:#E8EAE9;
+  overflow-x:hidden;
+}
+.task-card {
+  background-color: rgba(26, 26,26, 0.8);
+  margin-bottom:8px;
+}
+.current-card {
+  margin-left:36px;
+  margin-bottom:18px;
+  padding-left: 0px;
+  padding-right: 0px;
+
+}
+.recommend-modal>table >th {
+  background-color: #1a1a1a;
+  color:white;
+}
+.draft,.pending,.current {
+  padding-right: 0px;
+}
+.recommend-modal>.modal-dialog,.task-modal>.modal-dialog{
+  max-width:800px;
+}
+.task-modal>.modal-dialog {
+  margin:124px 29px;
+}
+.table tr:nth-child(odd)  {
+  background-color: #E8EAE9;
+}
+.active{
+  background-color: rgba(26, 26,26, 0.8) !important;
+  color: #ffffff !important;
+}
+.task-modal>.modal-dialog>.modal-content>.modal-header>.close{
+  width:100%;
+  text-align: right;
+}
+.scroll-style::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
 }
 
-.modal-content > .modal-body{
-  padding:20px 0px 20px 20px;
-}
-.modal-left {
-  float: left;
-  width:95%;
-}
-.modal-right {
-  float: right;
-  width:5%;
-  padding-right:15px;
-}
-.button_add {
-  margin-right:20px;
-  margin-left:30px;
-}
-.button_cancel {
-  float: right;
-}
-@media (min-width: 768px) {
-  .form-horizontal .control-label {
-    text-align:left;
-  }
-}
-.modal-dialog {
-  max-width: 700px;
-  margin: 130px 45px;
+.scroll-style::-webkit-scrollbar
+{
+  width: 6px;
+  background-color: #F5F5F5;
 }
 
-.modal-content {
-  padding:15px;
+.scroll-style::-webkit-scrollbar-thumb
+{
+  background-color: rgba(26, 26,26, 0.8);
 }
-@media (min-width: 576px)  {
-  .modal-dialog {
-    max-width: 700px !important;
-    margin: 130px 45px !important;
-  }
-}
-
