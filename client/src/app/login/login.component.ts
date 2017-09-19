@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Login} from './model/Login';
+import {Login} from './login.model';
 import {Http, URLSearchParams} from '@angular/http';
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private http: Http) {
   }
@@ -29,7 +29,7 @@ export class LoginFormComponent implements OnInit {
     this.http.get("http://localhost:8080/login", {search : params} ).subscribe(
       (response) => {
         if(response.ok) {
-          this.router.navigateByUrl("/home");
+          this.router.navigateByUrl("/tasks");
         }
       },
       (error) => console.log(`Error:${error.toString()}`),

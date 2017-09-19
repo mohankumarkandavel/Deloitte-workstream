@@ -5,24 +5,31 @@ import {RouterModule, Routes} from "@angular/router";
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
+import { AlertModule } from 'ngx-bootstrap';
+
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
-import {LoginFormComponent} from './login-form/login.component';
-import {HomePageComponent} from './home/home.component';
+import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home/home.component';
 import {FooterComponent} from './footer/footer.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 const appRoutes: Routes = [
   {
     path: 'login',
-    component: LoginFormComponent
+    component: LoginComponent
   },
   {
     path: 'home',
-    component: HomePageComponent
+    component: HomeComponent
+  },
+  {
+    path: 'tasks',
+    component: TasksComponent
   },
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ]
@@ -31,9 +38,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginFormComponent,
-    HomePageComponent,
-    FooterComponent
+    LoginComponent,
+    HomeComponent,
+    FooterComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +51,8 @@ const appRoutes: Routes = [
       {enableTracing: true}
     ),
     FormsModule,
-    HttpModule
+    HttpModule,
+    AlertModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

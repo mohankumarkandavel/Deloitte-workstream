@@ -1,48 +1,17 @@
-.new_task {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.container-fluid {
+  background-color: black;
 }
-
-.panel-default {
-  border: solid;
-  border-width: thin;
-  border-color: gray;
-  border-radius:3px;
-  background-color: gainsboro;
-
+h1{
+  font-size: 50px;
 }
-.panel-heading {
-  padding: 10px;
+.login-btn{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-bottom: 5px;
+  opacity: 0.6;
 }
-.panel-body {
-  min-height: 400px;
-  height: 400px;
-  padding:10px;
+.btn{
+  width: 100px;
+  font-family: "Adobe Devanagari";
+  font-size: large;
 }
-
-.modal-content > .modal-body{
-  padding:20px 0px 20px 20px;
-}
-.modal-left {
-  float: left;
-  width:95%;
-}
-.modal-right {
-  float: right;
-  width:5%;
-  padding-right:15px;
-}
-.button_add {
-  margin-right:20px;
-  margin-left:30px;
-}
-.button_cancel {
-  float: right;
-}
-@media (min-width: 768px) {
-  .form-horizontal .control-label {
-    text-align:left;
-  }
-
-}
-
