@@ -1,13 +1,17 @@
-<form (ngSubmit)="doClick()" #f="ngForm" novalidate>
-  <div class="input">
-    <label>Username</label>
-    <input name="username" type="text" [(ngModel)]="model.username">
+<div class="form-box">
+  <div class="block-line"></div>
+  <div class="container">
+    <img src="../../assets/deloitte_logo.png"/>
+    <form id="loginform" (ngSubmit)="doClick()" #f="ngForm" novalidate>
+      <div class="form-input">
+        <input type="text" name="username" type="text" [(ngModel)]="model.username" placeholder="Enter Username">
+      </div>
+      <div class="form-input">
+        <input type="password" name="password" type="password" [(ngModel)]="model.password" placeholder="Enter Password">
+      </div>
+      <div class="btn-input">
+        <input type="submit" value="Login" class="btn btn-dark btn-medium btn-block">
+      </div>
+    </form>
   </div>
-  <div class="input">
-    <label>Password</label>
-    <input name="password" type="password" [(ngModel)]="model.password">
-  </div>
-  <div class="input">
-    <input type="submit" value="Login">
-  </div>
-</form>
+</div>
