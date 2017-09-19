@@ -3,7 +3,7 @@ package nz.co.vincens.service;
 import nz.co.vincens.model.Login;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ResponseEntity login(Login login) {
-		if (login != null && login.getPassword() != null && login.getUsername() != null) {
+		if (login != null && !login.getPassword().isEmpty() && !login.getUsername().isEmpty()) {
 			if (login.getUsername().equals("James") && login.getPassword().equals("123")) {
 				return ResponseEntity.ok().build();
 			} else {
