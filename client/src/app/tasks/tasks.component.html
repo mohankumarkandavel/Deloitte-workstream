@@ -8,9 +8,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Draft</div>
         <div class="panel-body">
-          <ul *ngFor="let task of tasks">
-            <li>{{task.name}}</li>
-          </ul>
+          <app-task-card *ngFor="let task of tasks" [task]="task"></app-task-card>
         </div>
       </div>
     </div>
