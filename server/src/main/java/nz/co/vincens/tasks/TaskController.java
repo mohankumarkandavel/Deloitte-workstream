@@ -31,9 +31,9 @@ public class TaskController {
     public TaskController() {
         this.tasks = new ArrayList<>();
         tasks.add(new Task(1, "Task One", "Description1", new Attribute(3, 3, 3, 3), new Date(), Group
-                .HUMAN_CAPITAL, Status.PENDING, 1, 3));
+                .HUMAN_CAPITAL, Status.PENDING, 1));
         tasks.add(new Task(2, "Task Two", "Description2", new Attribute(1, 4, 2, 5), new Date(), Group
-                .SOFTWARE, Status.ASSIGNED, 2, 2));
+                .SOFTWARE, Status.ASSIGNED, 2));
     }
 
 	@CrossOrigin

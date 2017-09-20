@@ -14,7 +14,12 @@ export class TasksComponent implements OnInit {
 
   private model = new Task("","","","","","");
   private tasks: any[];
-  pendingTaskList = [];
+
+  private draftTasks: any[];
+  private pendingTasks: any[];
+  private assignedTasks: any[];
+
+  pendingTaskList= [];
   selectedEmployeeArray = [];
 
   constructor(private modalService: NgbModal, private router: Router, private http: Http) {
@@ -84,6 +89,9 @@ export class TasksComponent implements OnInit {
       (response) => {
         if (response.ok) {
           this.tasks = JSON.parse(response.text());
+          this.draftTasks = this.tasks.filter(task => task.status === "DRAFT")
+          this.pendingTasks = this.tasks.filter(task => task.status === "PENDING")
+          this.assignedTasks = this.tasks.filter(task => task.status === "ASSIGNED")
         }
       }
     );
