@@ -9,7 +9,6 @@ export class Task {
       availability:string,
       resource:string,
     },
-    public availability: string,
     public peopleRequired: string,
   ) {}
 }

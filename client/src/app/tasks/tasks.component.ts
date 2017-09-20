@@ -12,7 +12,7 @@ import {Task} from "./task.model";
 })
 export class TasksComponent implements OnInit {
 
-  private model = new Task("","","", { experience: "", interest: "", availability: "", resource: ""},"","");
+  private model = new Task("","","", { experience: "", interest: "", availability: "", resource: ""},"");
   private tasks: any[];
 
   private draftTasks: any[];
