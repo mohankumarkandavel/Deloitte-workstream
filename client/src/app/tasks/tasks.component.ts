@@ -63,6 +63,7 @@ export class TasksComponent implements OnInit {
               this.emptySelectedEmployeeArray();
             } else if (result === 'Send') {
               this.onRemoveTask(e.dragData, this.tasks);
+              this.updateTaskStatus(e.dragData);
               // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
               // todo send invitation here
               this.emptySelectedEmployeeArray();
@@ -77,6 +78,18 @@ export class TasksComponent implements OnInit {
       (error) => console.log(`Error:${error.toString()}`),
       () => console.log("Complete")
     );
+  }
+
+  updateTaskStatus(task: Task) {
+
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
+    this.http.put("http://localhost:8080/task/" , JSON.stringify(task), options).subscribe((response) => {
+      if (response.ok) {
+        this.getAllTasks();
+      }
+    })
   }
 
   onRemoveTask(task: any, list: Array<any>) {

@@ -33,7 +33,7 @@ public class RankerControllerTest {
     public void allAvailable() throws Exception {
 
         Task task = new Task(0, "Test task", "testing", new Attribute(1, 1, 1, 1), new Date(), Group
-                .BUSINESS_DEVELOPMENT, Status.DRAFT, 1);
+                .BUSINESS_AND_DEVELOPMENT, Status.DRAFT, 1);
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm a z").create();
 

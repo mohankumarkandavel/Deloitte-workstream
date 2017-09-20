@@ -23,7 +23,7 @@ public enum Group {
 	@JsonProperty("Teaching and Training")
 	TEACHING_AND_TRAINING,
 	@JsonProperty("Business and Development")
-	BUSINESS_DEVELOPMENT,
+	BUSINESS_AND_DEVELOPMENT,
 	@JsonProperty("Marketing and Sales")
 	MARKETING_AND_SALES
 }
