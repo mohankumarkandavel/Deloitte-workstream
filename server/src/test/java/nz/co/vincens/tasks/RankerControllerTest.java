@@ -1,5 +1,7 @@
 package nz.co.vincens.tasks;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import nz.co.vincens.model.Attribute;
 import nz.co.vincens.model.Group;
 import nz.co.vincens.model.Status;
@@ -29,12 +31,14 @@ public class RankerControllerTest {
 
     @Test
     public void allAvailable() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rank")
-                .accept(MediaType.APPLICATION_JSON);
 
         Task task = new Task(0, "Test task", "testing", new Attribute(1, 1, 1, 1), new Date(), Group
                 .BUSINESS_DEVELOPMENT, Status.DRAFT, 1);
 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm a z").create();
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rank")
+                .content(gson.toJson(task)).contentType(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
