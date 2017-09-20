@@ -17,7 +17,9 @@ public class LoginController {
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ResponseEntity login(Login login) {
-		if (login != null && !login.getPassword().isEmpty() && !login.getUsername().isEmpty()) {
+		System.out.println("".length());
+		if (login != null && login.getPassword()!= null && login.getUsername()!= null && !login.getPassword().isEmpty()
+				&& !login.getUsername().isEmpty()) {
 			if (login.getUsername().equals("James") && login.getPassword().equals("123")) {
 				return ResponseEntity.ok().build();
 			} else {
