@@ -10,14 +10,18 @@ import {Task} from "./task.model";
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./tasks.component.css']
 })
+
 export class TasksComponent implements OnInit {
 
-  private model = new Task("","","", { experience: "", interest: "", availability: "", resource: ""},"");
+  private model = new Task("","","","", { experience: "", interest: "", availability: "", resource: ""},"");
   private tasks: any[];
 
   private draftTasks: any[];
   private pendingTasks: any[];
   private assignedTasks: any[];
+
+  private droppedTaskGroup: string;
+  private teamMembers: any[];
 
   pendingTaskList= [];
   selectedEmployeeArray = [];
@@ -43,23 +47,32 @@ export class TasksComponent implements OnInit {
   }
 
   onTaskDrop(e: any, id: string) {
-    // Get the dropped data here
-    this.pendingTaskList.push(e.dragData);
-    // todo change task status
-    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
-      if (result === 'Cancel click') {
-        this.onRemoveTask(e.dragData, this.pendingTaskList);
-        this.emptySelectedEmployeeArray();
-      } else if (result === 'invitationSend') {
-        this.onRemoveTask(e.dragData, this.tasks);
-        // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
-        // todo send invitation here
-        this.emptySelectedEmployeeArray();
-      }
-    }, any => {
-      this.emptySelectedEmployeeArray();
-      this.onRemoveTask(e.dragData, this.pendingTaskList);
-    });
+
+    // FIXME: Extract this into its own serivce
+    this.http.get("http://localhost:8080/rank/" + e.dragData.id).subscribe((response) => {
+        if (response.ok) {
+           this.teamMembers = JSON.parse(response.text());
+           this.droppedTaskGroup = e.dragData.group;
+          this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
+              if (result === 'Cancel click') {
+                this.onRemoveTask(e.dragData, this.pendingTaskList);
+                this.emptySelectedEmployeeArray();
+              } else if (result === 'invitationSend') {
+                this.onRemoveTask(e.dragData, this.tasks);
+                // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
+                // todo send invitation here
+                this.emptySelectedEmployeeArray();
+              }
+            }, any => {
+              this.emptySelectedEmployeeArray();
+              this.onRemoveTask(e.dragData, this.pendingTaskList);
+            });
+           this.getAllTasks();
+        }
+      },
+      (error) => console.log(`Error:${error.toString()}`),
+      () => console.log("Complete")
+    );
   }
 
   onRemoveTask(task: any, list: Array<any>) {

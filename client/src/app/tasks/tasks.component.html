@@ -136,13 +136,15 @@
         <th>Experience</th>
         <th>Interest</th>
       </tr>
-      <tr *ngFor="let employee of employees" (click)="addThisEmployeeToArray(employee, $event)" [class.active]="isEmployeeSelected(employee)">
-        <td>{{employee.ranking}}</td>
-        <td><i class="fa fa-user" aria-hidden="true"></i>{{employee.icon}}</td>
-        <td>{{employee.name}}</td>
-        <td>{{employee.availability}}</td>
-        <td>{{employee.experience}}</td>
-        <td>{{employee.interest}}</td>
+      <tr *ngFor="let teamMember of teamMembers; let i = index;" [attr.data-index] ="i"
+          (click)="addThisEmployeeToArray(teamMember, $event)"
+          [class.active]="isEmployeeSelected(teamMember)">
+        <td>{{i+1}}</td>
+        <td><i class="fa fa-user" aria-hidden="true"></i>{{teamMember.icon}}</td>
+        <td>{{teamMember.name}}</td>
+        <td>{{teamMember.weightings[droppedTaskGroup].availability}}</td>
+        <td>{{teamMember.weightings[droppedTaskGroup].experience}}</td>
+        <td>{{teamMember.weightings[droppedTaskGroup].interest}}</td>
       </tr>
     </table>
   </div>
