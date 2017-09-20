@@ -12,6 +12,9 @@ import {Http} from '@angular/http';
 export class TasksComponent implements OnInit {
 
   private tasks: any[];
+  private draftTasks: any[];
+  private pendingTasks: any[];
+  private assignedTasks: any[];
   pendingTaskList= [];
   selectedEmployeeArray = [];
 
@@ -113,6 +116,9 @@ export class TasksComponent implements OnInit {
       (response) => {
         if(response.ok) {
           this.tasks = JSON.parse(response.text());
+          this.draftTasks = this.tasks.filter(task => task.status === "DRAFT")
+          this.pendingTasks = this.tasks.filter(task => task.status === "PENDING")
+          this.assignedTasks = this.tasks.filter(task => task.status === "ASSIGNED")
         }
       }
     );

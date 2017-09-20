@@ -7,9 +7,9 @@
       <div class="panel panel-default">
         <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
         <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" draggable="true" *ngFor="let task of tasks"
-               [dragData]="task"> 
-            <app-task-card [task]="task"></app-task-card> 
+          <div class="card task-card text-white" draggable="true" *ngFor="let draftTask of draftTasks"
+               [dragData]="draftTask"> 
+            <app-task-card [task]="draftTask"></app-task-card> 
           </div> 
         </div>
       </div>
@@ -18,7 +18,7 @@
       <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
         <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
         <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" *ngFor="let pendingTask of pendingTaskList">
+          <div class="card task-card text-white" *ngFor="let pendingTask of pendingTasks">
             <app-task-card [task]="pendingTask"></app-task-card>
           </div>
         </div>
@@ -30,10 +30,10 @@
         <div class="panel-body current-panel pre-scrollable scroll-style">
           <div class="row">
             <!--add  current card list here-->
-           <!-- <div class="card  col-sm-5 task-card current-card text-white"
-                 *ngFor="let draftTask of draftTaskList">
-              <app-task-card [task]="draftTask"></app-task-card>
-            </div>-->
+           <div class="card  col-sm-5 task-card current-card text-white"
+                 *ngFor="let assignedTask of assignedTasks">
+              <app-task-card [task]="assignedTask"></app-task-card>
+            </div>
           </div>
         </div>
       </div>
