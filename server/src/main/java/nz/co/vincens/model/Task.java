@@ -27,7 +27,7 @@ public class Task {
 	}
 
 	public Task(int id, String name, String description, Attribute attribute, Date deadline, Group group, Status
-			status, int numAssigneesRequired, int resources) {
+			status, int numAssigneesRequired) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
