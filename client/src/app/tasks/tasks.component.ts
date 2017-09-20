@@ -85,7 +85,7 @@ export class TasksComponent implements OnInit {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    this.http.put("http://localhost:8080/task/" , JSON.stringify(task), options).subscribe((response) => {
+    this.http.put("http://localhost:8080/task" , JSON.stringify(task), options).subscribe((response) => {
       if (response.ok) {
         this.getAllTasks();
       }

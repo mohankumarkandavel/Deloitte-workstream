@@ -42,5 +42,4 @@ public class LoginController {
             return ResponseEntity.badRequest().build();
         }
     }
-		if (login != null && login.getPassword()!= null && login.getUsername()!= null && !login.getPassword().isEmpty()
 }
