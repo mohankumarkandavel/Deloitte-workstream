@@ -3,9 +3,20 @@
 
 # Client
 
-_Under the client directory_:
+_Under the client directory:_
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+## Install
+
+> Run `npm install` to Install the dependencies in the local node_modules folder.
+
+This project was generated with 
+* [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+* [Bootstrap](http://getbootstrap.com/) version 4.0.0-beta.
+
+## Tests
+
+To execute unit tests, run
+> `ng e2e`
 
 ## Development server
 
