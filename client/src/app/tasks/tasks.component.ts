@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import {Http} from '@angular/http';
+import {Router} from '@angular/router';
+import {Http, Headers, RequestOptions} from '@angular/http';
+import {Task} from "./task.model";
 
 @Component({
   selector: 'app-tasks',
@@ -11,71 +12,35 @@ import {Http} from '@angular/http';
 })
 export class TasksComponent implements OnInit {
 
+  private model = new Task("","","","","","");
   private tasks: any[];
-  pendingTaskList= [];
+  pendingTaskList = [];
   selectedEmployeeArray = [];
-
-  // add dummy employee list here
-  employees = [
-    {
-      ranking: 1,
-      icon: '',
-      name: 'name1',
-      availability: '3',
-      experience: '4',
-      interest: '5'
-    },
-    {
-      ranking: 2,
-      icon: '',
-      name: 'name1',
-      availability: '3',
-      experience: '4',
-      interest: '5'
-    },
-    {
-      ranking: 3,
-      icon: '',
-      name: 'name1',
-      availability: '3',
-      experience: '4',
-      interest: '5'
-    },
-    {
-      ranking: 4,
-      icon: '',
-      name: 'name1',
-      availability: '3',
-      experience: '4',
-      interest: '5'
-    },
-    {
-      ranking: 5,
-      icon: '',
-      name: 'name1',
-      availability: '3',
-      experience: '4',
-      interest: '5'
-    }];
-
-  // open new task popup
-  onNewTask(id: string) {
-    this.modalService.open(id, { windowClass: 'task-modal' });
-    console.log('found');
-  }
 
   constructor(private modalService: NgbModal, private router: Router, private http: Http) {
   }
 
-  onAddTask() {
-    // todo add task to database
+  onNewTask(id: string) {
+    this.modalService.open(id, {windowClass: 'task-modal'});
+    console.log('found');
+  }
+
+  addTask() {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.post("http://localhost:8080/task", JSON.stringify(this.model), options)/*.map((res) => res.json())*/.subscribe(
+      data => { console.log(data) },
+      err => console.error(err),
+      () => { console.log("complete") });
+
   }
 
   onTaskDrop(e: any, id: string) {
     // Get the dropped data here
     this.pendingTaskList.push(e.dragData);
     // todo change task status
-    this.modalService.open(id, { windowClass: 'recommend-modal' }).result.then((result) => {
+    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
       if (result === 'Cancel click') {
         this.onRemoveTask(e.dragData, this.pendingTaskList);
         this.emptySelectedEmployeeArray();
@@ -85,22 +50,28 @@ export class TasksComponent implements OnInit {
         // todo send invitation here
         this.emptySelectedEmployeeArray();
       }
-    }, any => {this.emptySelectedEmployeeArray();
-      this.onRemoveTask(e.dragData, this.pendingTaskList); });
+    }, any => {
+      this.emptySelectedEmployeeArray();
+      this.onRemoveTask(e.dragData, this.pendingTaskList);
+    });
   }
+
   onRemoveTask(task: any, list: Array<any>) {
     const index = list.map(function (e) {
       return e.taskName;
     }).indexOf(task.taskName);
     list.splice(index, 1);
   }
+
   emptySelectedEmployeeArray() {
     this.selectedEmployeeArray.splice(0, this.selectedEmployeeArray.length); // clear array here
   }
+
   toggleItemInArr(arr, item) {
     const index = arr.indexOf(item);
-    index === - 1 ? arr.push(item) : arr.splice(index, 1);
+    index === -1 ? arr.push(item) : arr.splice(index, 1);
   }
+
   addThisEmployeeToArray(employee: any, event) {
     if (!event.ctrlKey) {
       this.selectedEmployeeArray = [];
@@ -111,13 +82,14 @@ export class TasksComponent implements OnInit {
   ngOnInit() {
     this.http.get('http://localhost:8080/task').subscribe(
       (response) => {
-        if(response.ok) {
+        if (response.ok) {
           this.tasks = JSON.parse(response.text());
         }
       }
     );
   }
-  newTask(id: string){
+
+  newTask(id: string) {
     this.modalService.open(id);
     console.log('found');
   }

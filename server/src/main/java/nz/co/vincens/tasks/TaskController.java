@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * API endpoints for accessing and managing nz.co.vincens.tasks
  */
-@CrossOrigin
+//@CrossOrigin(origins = "http:localhost:4200")
 @RestController
 public class TaskController {
 
@@ -36,18 +36,21 @@ public class TaskController {
                 .SOFTWARE, Status.ASSIGNED, 2, 2));
     }
 
+	@CrossOrigin
     @RequestMapping("/task")
     List<Task> getTasks() {
         return tasks;
     }
 
+	@CrossOrigin
     @RequestMapping("/task/{id}")
     Task getTask(@PathVariable int id) {
         return tasks.get(id - 1);
     }
 
+	@CrossOrigin
     @RequestMapping(value = "/task", method = RequestMethod.POST)
-    ResponseEntity<?> addNewTask(@RequestBody Task task) {
+    ResponseEntity<?> addTask(@RequestBody Task task) {
         task.setId(tasks.size() + 1);
         tasks.add(task);
         try {
