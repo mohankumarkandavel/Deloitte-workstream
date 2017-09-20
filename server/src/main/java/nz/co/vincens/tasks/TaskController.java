@@ -1,9 +1,8 @@
 package nz.co.vincens.tasks;
 
-import nz.co.vincens.model.Attribute;
-import nz.co.vincens.model.Group;
 import nz.co.vincens.model.Status;
 import nz.co.vincens.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,34 +23,27 @@ import java.util.List;
 @RestController
 public class TaskController {
 
-    private List<Task> tasks;
-
-    public TaskController() {
-        this.tasks = new ArrayList<>();
-        tasks.add(new Task(1, "Task One", "Description1", new Attribute(3, 3, 3, 3), new Date(), Group
-                .HUMAN_CAPITAL, Status.PENDING, 1));
-        tasks.add(new Task(2, "Task Two", "Description2", new Attribute(1, 4, 2, 5), new Date(), Group
-                .SOFTWARE, Status.ASSIGNED, 2));
-    }
+    @Autowired
+    TaskService taskService;
 
 	@CrossOrigin
     @RequestMapping("/task")
     List<Task> getTasks() {
-        return tasks;
+        return taskService.getTasks();
     }
 
 	@CrossOrigin
     @RequestMapping("/task/{id}")
     Task getTask(@PathVariable int id) {
-        return tasks.get(id - 1);
+        return taskService.getTask(id - 1);
     }
 
 	@CrossOrigin
     @RequestMapping(value = "/task", method = RequestMethod.POST)
     ResponseEntity<?> addTask(@RequestBody Task task) {
-        task.setId(tasks.size() + 1);
+        task.setId(taskService.getTasks().size() + 1);
         task.setStatus(Status.DRAFT);
-        tasks.add(task);
+        taskService.addTask(task);
         try {
             return ResponseEntity.created(new URI("/task/" + task.getId())).build();
         } catch (URISyntaxException e) {
