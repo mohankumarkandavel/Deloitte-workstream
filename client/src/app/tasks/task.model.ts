@@ -3,7 +3,12 @@ export class Task {
     public name: string,
     public deadline: string,
     public group: string,
-    public resource: string,
+    public attribute: {
+      experience:string,
+      interest:string,
+      availability:string,
+      resource:string,
+    },
     public availability: string,
     public peopleRequired: string,
   ) {}

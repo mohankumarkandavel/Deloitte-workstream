@@ -12,7 +12,7 @@ import {Task} from "./task.model";
 })
 export class TasksComponent implements OnInit {
 
-  private model = new Task("","","","","","");
+  private model = new Task("","","", { experience: "", interest: "", availability: "", resource: ""},"","");
   private tasks: any[];
 
   private draftTasks: any[];
@@ -34,8 +34,9 @@ export class TasksComponent implements OnInit {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    this.http.post("http://localhost:8080/task", JSON.stringify(this.model), options)/*.map((res) => res.json())*/.subscribe(
-      data => { console.log(data) },
+    this.http.post("http://localhost:8080/task", JSON.stringify(this.model), options)
+    .subscribe(
+      data => { this.getAllTasks(); },
       err => console.error(err),
       () => { console.log("complete") });
 
@@ -85,6 +86,10 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllTasks();
+  }
+
+  getAllTasks() {
     this.http.get('http://localhost:8080/task').subscribe(
       (response) => {
         if (response.ok) {

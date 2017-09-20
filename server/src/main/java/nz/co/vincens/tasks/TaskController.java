@@ -52,6 +52,7 @@ public class TaskController {
     @RequestMapping(value = "/task", method = RequestMethod.POST)
     ResponseEntity<?> addTask(@RequestBody Task task) {
         task.setId(tasks.size() + 1);
+        task.setStatus(Status.DRAFT);
         tasks.add(task);
         try {
             return ResponseEntity.created(new URI("/task/" + task.getId())).build();
