@@ -13,47 +13,79 @@ import java.util.List;
 
 /**
  * API endpoints for accessing and managing nz.co.vincens.tasks
+ * <code>
+ * <ul>
+ * <li>GET  /task</li>
+ * <li>GET  /task/{id}</li>
+ * <li>POST /task</li>
+ * <li>PUT  /task</li>
+ * </ul>
+ * </code>
  */
-//@CrossOrigin(origins = "http:localhost:4200")
 @RestController
 public class TaskController {
 
-	@Autowired
-	TaskService taskService;
+    @Autowired
+    TaskService taskService;
 
-	@CrossOrigin
-	@RequestMapping("/task")
-	List<Task> getTasks() {
-		return taskService.getTasks();
-	}
+    /**
+     * Endpoint: <code>GET /task</code>
+     * <br/>
+     * Gets all tasks, including completed
+     *
+     * @return all tasks as JSON
+     */
+    @CrossOrigin
+    @RequestMapping("/task")
+    List<Task> getTasks() {
+        return taskService.getTasks();
+    }
 
-	@CrossOrigin
-	@RequestMapping("/task/{id}")
-	Task getTask(@PathVariable int id) {
-		return taskService.getTask(id - 1);
-	}
+    /**
+     * Endpoint: <code>GET /task/{id}</code>
+     * <br/>
+     * Gets a task by the specified id
+     *
+     * @return task with the specified id as JSON
+     */
+    @CrossOrigin
+    @RequestMapping("/task/{id}")
+    Task getTask(@PathVariable int id) {
+        return taskService.getTask(id - 1);
+    }
 
-	@CrossOrigin
-	@RequestMapping(value = "/task", method = RequestMethod.POST)
-	ResponseEntity<?> addTask(@RequestBody Task task) {
-		task.setId(taskService.getTasks().size() + 1);
-		task.setStatus(Status.DRAFT);
-		taskService.addTask(task);
-		try {
-			return ResponseEntity.created(new URI("/task/" + task.getId())).build();
-		} catch (URISyntaxException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+    /**
+     * Endpoint: <code>POST /task</code>
+     * <br/>
+     * Adds a tasks specified by the request body, JSON format of a task
+     *
+     * @return 201 created response if successful, with Location header, otherwise server error
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/task", method = RequestMethod.POST)
+    ResponseEntity<?> addTask(@RequestBody Task task) {
+        task.setId(taskService.getTasks().size() + 1);
+        task.setStatus(Status.DRAFT);
+        taskService.addTask(task);
+        try {
+            return ResponseEntity.created(new URI("/task/" + task.getId())).build();
+        } catch (URISyntaxException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
-	@CrossOrigin(methods = RequestMethod.PUT)
-	@RequestMapping(value = "/task/", method = RequestMethod.PUT)
-	ResponseEntity<?> updateTask(@RequestBody Task task) {
-//		task.setStatus(Status.PENDING);
-//		List<Task> tasks = taskService.getTasks();
-//		tasks.set(task.getId() - 1, task);
-		taskService.getTask(task.getId() -1).setStatus(Status.PENDING);
-		return ResponseEntity.ok().build();
-	}
+    /**
+     * Endpoint: <code>PUT /task</code>
+     * Updates or creates the task specified with the JSON body
+     *
+     * @param task {@link Task} in JSON format
+     * @return 200 ok if the task is added or updated
+     */
+    @CrossOrigin(methods = RequestMethod.PUT)
+    @RequestMapping(value = "/task", method = RequestMethod.PUT)
+    ResponseEntity<?> updateTask(@RequestBody Task task) {
+        taskService.getTask(task.getId() - 1).setStatus(Status.PENDING);
+        return ResponseEntity.ok().build();
+    }
 
 }
