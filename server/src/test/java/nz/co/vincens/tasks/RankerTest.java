@@ -28,7 +28,7 @@ public class RankerTest {
 	@Test
 	public void findBestTeamMembers() throws Exception {
 		task = new Task(1, "Prepare Financial Model", "For the period ending 1/09/2018", new Attribute(2, 1, 1,
-				1), new Date(), Group.BUSINESS_DEVELOPMENT, Status.PENDING, 1, 1);
+				1), new Date(), Group.BUSINESS_DEVELOPMENT, Status.PENDING, 1);
 
 		for (int i = 0; i < 5; i++) {
 			HashMap<Group, Attribute> weightings = new HashMap<>();
@@ -50,7 +50,7 @@ public class RankerTest {
 	@Test
 	public void unavailableTeamMember() {
 		task = new Task(1, "Prepare Financial Model", "For the period ending 1/09/2018", new Attribute(2, 1, 1,
-				1), new Date(), Group.BUSINESS_DEVELOPMENT, Status.PENDING, 1, 1);
+				1), new Date(), Group.BUSINESS_DEVELOPMENT, Status.PENDING, 1);
 
 		HashMap<Group, Attribute> weightings = new HashMap<>();
 		weightings.put(Group.BUSINESS_DEVELOPMENT, new Attribute(1,1, 0, 1));
