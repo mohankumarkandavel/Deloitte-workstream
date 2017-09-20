@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A service which provides access to tasks
+ */
 @Service
 public class TaskService {
 
@@ -23,14 +26,26 @@ public class TaskService {
                 .SOFTWARE, Status.ASSIGNED, 2));
     }
 
+    /**
+     * @return all tasks
+     */
     public List<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * @param id the task id
+     * @return task with specified id
+     */
     public Task getTask(int id) {
         return tasks.get(id);
     }
 
+    /**
+     * Adds the specified task
+     *
+     * @param task task to add
+     */
     public void addTask(Task task) {
         tasks.add(task);
     }

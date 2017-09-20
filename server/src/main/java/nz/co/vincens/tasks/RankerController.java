@@ -16,32 +16,46 @@ import java.util.List;
 
 /**
  * API endpoint for accessing {@link Ranker}
+ * <code>
+ * <ul>
+ * <li>GET /rank/{id}</li>
+ * </ul>
+ * </code>
  */
 @CrossOrigin
 @RestController
 public class RankerController {
 
-	private List<TeamMember> teamMembers;
+    private List<TeamMember> teamMembers;
 
-	@Autowired
-	private TaskService taskService;
+    @Autowired
+    private TaskService taskService;
 
-	public RankerController() {
-		teamMembers = new ArrayList<>();
+    public RankerController() {
+        teamMembers = new ArrayList<>();
 
-		HashMap<Group, Attribute> weightings = new HashMap<>();
-		weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1,2,3,4));
-		weightings.put(Group.HUMAN_CAPITAL, new Attribute(1,2,3,4));
-		teamMembers.add(new TeamMember("Amy Lin", "xlin504", "1", weightings));
+        HashMap<Group, Attribute> weightings = new HashMap<>();
+        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1, 2, 3, 4));
+        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
+        teamMembers.add(new TeamMember("Amy Lin", "xlin504", "1", weightings));
 
-		weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1,2,3,4));
-		weightings.put(Group.HUMAN_CAPITAL, new Attribute(1,2,3,4));
-		teamMembers.add(new TeamMember("Kelvin Lau", "klau158", "2", weightings));
-	}
+        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1, 2, 3, 4));
+        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
+        teamMembers.add(new TeamMember("Kelvin Lau", "klau158", "2", weightings));
+    }
 
-	@RequestMapping("/rank/{task_id}")
-	private @ResponseBody List<TeamMember> getEmployees(@PathVariable(name = "task_id") int taskId) {
-		Ranker ranker = new Ranker();
-		return ranker.findBestTeamMembers(taskService.getTask(taskId - 1), teamMembers);
-	}
+    /**
+     * Endpoint: <code>GET /rank/{id}</code>
+     * <br/>
+     * Finds the best team member for the specified task (from id)
+     *
+     * @param taskId the task id
+     * @return ordered and filtered list of best employees
+     */
+    @RequestMapping("/rank/{task_id}")
+    private @ResponseBody
+    List<TeamMember> getEmployees(@PathVariable(name = "task_id") int taskId) {
+        Ranker ranker = new Ranker();
+        return ranker.findBestTeamMembers(taskService.getTask(taskId - 1), teamMembers);
+    }
 }
