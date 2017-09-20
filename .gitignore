@@ -101,3 +101,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 .idea/
+.gradle/
+client/node_modules/
