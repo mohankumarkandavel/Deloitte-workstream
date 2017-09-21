@@ -41,25 +41,8 @@ public class LoginController {
         // Define query result counter
         int Count = 0;
         if (login != null && Username != null && Password != null) {
-            // Generate database query sentence
-            String sql = "CALL UserLogin(" + login.getUsername() + "," + login.getPassword() + ")";
-            // Call the function of database query operation
-            ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
-            // Get the login result with the input information
-            try {
-                // Extract data from result set
-                while (rs.next()) {
-                    // Login query should only have one row of result
-                    // Retrieve by column name
-                    // Get the number of database query
-                    Count = Integer.parseInt(rs.getString("count(*)"));
-                }
-                // Clean-up environment
-                rs.close();
-            } catch (SQLException e) {
-                // Handle errors for JDBC
-                e.printStackTrace();
-            }
+            // Execute the database query and get the result
+            Count = UserHelper.Login(Username, Password);
             // If it return only one row of result, return login successful notification
             if (Count == 1) {
                 return ResponseEntity.ok().build();
