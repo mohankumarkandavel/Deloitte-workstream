@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The current database uses the Alibaba Cloud ApsaraDB for RDS (Relational Database Service) -->
+<config>
+    <db-info>
+        <!-- JDBC driver name -->
+        <driver-name>com.mysql.jdbc.Driver</driver-name>
+        <!-- database URL -->
+        <url>jdbc:mysql://rm-wz9646cu4gae4478fo.mysql.rds.aliyuncs.com:3306/workload</url>
+        <!-- Database credentials (username) -->
+        <user-name>root</user-name>
+        <!-- Database credentials (password) -->
+        <password>Student2017SoftwareEngineering</password>
+    </db-info>
+</config>
