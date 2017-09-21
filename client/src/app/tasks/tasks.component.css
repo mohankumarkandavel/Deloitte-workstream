@@ -1,66 +1,137 @@
-.new-task{
-  padding:10px 0px;
+.column-container {
+  padding-top: 1%;
+  padding-left: 2%;
+  align-content: center;
 }
-.task-layout{
+
+.columm {
+}
+
+#column-pending {
+  width: 24%;
+  display: inline-block;
+}
+
+#column-assigned {
+  width: 24%;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 2%;
+}
+
+.column-body {
+  padding: 4%;
+  background-color: #E8EAE9;
+}
+
+.column-heading {
+  color: white;
+  text-transform: uppercase;
+  background-color: rgba(26, 26, 26, 0.8);
+  padding: 4%;
+}
+
+.card-title {
+  margin-top: -5%;
+  margin-left: -5%;
+  color: black;
+  font-size: 15px;
+}
+
+.card-subtitle {
+  margin-left: -4%;
+  color: black;
+  font-size: 11px;
+  margin-top: -10%;
+}
+
+.card-description {
+  font-size: 12px;
+}
+
+.text-area {
+  width: 100%;
+  resize: none;
+  padding: 2%;
+}
+
+.task-card-employee {
+  /*background: rgba(26, 26, 26, 0.8);*/
+}
+
+.new-task {
+  padding: 10px 0px;
+}
+
+.task-layout {
   margin-bottom: 20px;
 }
+
 .panel-heading {
   padding: 10px;
 }
+
 .panel-body {
   min-height: 420px;
-  padding:10px;
-  background-color:#E8EAE9;
-  overflow-x:hidden;
+  padding: 10px;
+  background-color: #E8EAE9;
+  overflow-x: hidden;
 }
+
 .task-card {
-  background-color: rgba(26, 26,26, 0.8);
-  margin-bottom:8px;
+  background-color: rgba(26, 26, 26, 0.8);
+  margin-bottom: 8px;
 }
+
 .current-card {
-  margin-left:36px;
-  margin-bottom:18px;
+  margin-left: 36px;
+  margin-bottom: 18px;
   padding-left: 0px;
   padding-right: 0px;
 
 }
-.recommend-modal>table >th {
+
+.recommend-modal > table > th {
   background-color: #1a1a1a;
-  color:white;
+  color: white;
 }
-.draft,.pending,.current {
+
+.draft, .pending, .current {
   padding-right: 0px;
 }
-.recommend-modal>.modal-dialog,.task-modal>.modal-dialog{
-  max-width:800px;
+
+.recommend-modal > .modal-dialog, .task-modal > .modal-dialog {
+  max-width: 800px;
 }
-.task-modal>.modal-dialog {
-  margin:124px 29px;
+
+.task-modal > .modal-dialog {
+  margin: 124px 29px;
 }
-.table tr:nth-child(odd)  {
+
+.table tr:nth-child(odd) {
   background-color: #E8EAE9;
 }
-.active{
-  background-color: rgba(26, 26,26, 0.8) !important;
+
+.active {
+  background-color: rgba(26, 26, 26, 0.8) !important;
   color: #ffffff !important;
 }
-.task-modal>.modal-dialog>.modal-content>.modal-header>.close{
-  width:100%;
+
+.task-modal > .modal-dialog > .modal-content > .modal-header > .close {
+  width: 100%;
   text-align: right;
 }
-.scroll-style::-webkit-scrollbar-track
-{
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+
+.scroll-style::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #F5F5F5;
 }
 
-.scroll-style::-webkit-scrollbar
-{
+.scroll-style::-webkit-scrollbar {
   width: 6px;
   background-color: #F5F5F5;
 }
 
-.scroll-style::-webkit-scrollbar-thumb
-{
-  background-color: rgba(26, 26,26, 0.8);
+.scroll-style::-webkit-scrollbar-thumb {
+  background-color: rgba(26, 26, 26, 0.8);
 }

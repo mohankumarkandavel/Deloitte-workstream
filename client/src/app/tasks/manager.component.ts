@@ -6,19 +6,19 @@ import {Task} from "./task.model";
 
 @Component({
   selector: 'app-tasks',
-  templateUrl: './tasks.component.html',
+  templateUrl: './manager.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./tasks.component.css']
 })
 
-export class TasksComponent implements OnInit {
+export class ManagerComponent implements OnInit {
 
   private model = new Task("", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
   private tasks: any[];
 
   private draftTasks: any[];
-  private pendingTasks: any[];
   private assignedTasks: any[];
+  private pendingTasks: any[];
 
   private droppedTaskGroup: string;
   private teamMembers: any[];

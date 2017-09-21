@@ -1,5 +1,5 @@
 <div class="container-fluid home">
-  <app-header *ngIf="router.url== '/tasks'"></app-header>
+  <app-header *ngIf="router.url !== '/login' || '/home'"></app-header>
   <router-outlet></router-outlet>
-  <app-footer *ngIf="router.url== '/tasks'"></app-footer>
+  <app-footer *ngIf="router.url !== '/tasks' || '/home'"></app-footer>
 </div>
