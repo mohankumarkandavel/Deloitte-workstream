@@ -14,7 +14,7 @@ import {Subscription, Observable} from 'rxjs';
 
 export class ManagerComponent implements OnInit {
 
-  private model = new Task("", "", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
+  private model: Task = new Task();
   private tasks: any[];
 
   private draftTasks: any[];

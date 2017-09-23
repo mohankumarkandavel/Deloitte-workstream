@@ -25,8 +25,8 @@ export class TeamMemberComponent implements OnInit {
       (response) => {
         if (response.ok) {
           let tasks = JSON.parse(response.text());
-          this.pendingTasks = tasks.filter(task => task.status === "PENDING")
-          this.assignedTasks = tasks.filter(task => task.status === "ASSIGNED")
+          this.pendingTasks = tasks.filter(task => task.status === "Pending")
+          this.assignedTasks = tasks.filter(task => task.status === "Assigned")
         }
       }
     );
