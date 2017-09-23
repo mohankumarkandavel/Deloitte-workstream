@@ -38,16 +38,16 @@ public class LoginController {
         // Define user login information resource from Login Object
         String Username = login.getUsername();
         String Password = login.getPassword();
-        // Define query result counter
-        int Count = 0;
+        // Define query result(if it is 0, it means no matched user. Or it is the user id)
+        int result;
         if (login != null && Username != null && Password != null) {
             // Execute the database query and get the result
-            Count = UserHelper.Login(Username, Password);
-            // If it return only one row of result, return login successful notification
-            if (Count == 1) {
+            result = UserHelper.Login(Username, Password);
+            // If it does not return 0, login successful
+            if (result != 0) {
                 return ResponseEntity.ok().build();
             }
-            // If it return zero row of result, return incorrect inputs notification
+            // If it returns 0, login failed
             else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
