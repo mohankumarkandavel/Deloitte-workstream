@@ -13,7 +13,7 @@ import {Task} from "./task.model";
 
 export class ManagerComponent implements OnInit {
 
-  private model = new Task("", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
+  private model = new Task("1", "", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
   private tasks: any[];
 
   private draftTasks: any[];
@@ -37,6 +37,7 @@ export class ManagerComponent implements OnInit {
   addTask() {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
+    this.model.status = "Draft";
 
     this.http.post("http://localhost:8080/task", JSON.stringify(this.model), options)
       .subscribe(
@@ -124,9 +125,9 @@ export class ManagerComponent implements OnInit {
       (response) => {
         if (response.ok) {
           this.tasks = JSON.parse(response.text());
-          this.draftTasks = this.tasks.filter(task => task.status === "DRAFT")
-          this.pendingTasks = this.tasks.filter(task => task.status === "PENDING")
-          this.assignedTasks = this.tasks.filter(task => task.status === "ASSIGNED")
+          this.draftTasks = this.tasks.filter(task => task.status === "Draft");
+          this.pendingTasks = this.tasks.filter(task => task.status === "Pending");
+          this.assignedTasks = this.tasks.filter(task => task.status === "Assigned");
         }
       }
     );
