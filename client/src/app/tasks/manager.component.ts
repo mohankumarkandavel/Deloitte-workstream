@@ -3,6 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {Task} from "./task.model";
+import {Subscription, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -13,7 +14,7 @@ import {Task} from "./task.model";
 
 export class ManagerComponent implements OnInit {
 
-  private model = new Task("1", "", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
+  private model = new Task("", "", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
   private tasks: any[];
 
   private draftTasks: any[];
@@ -21,10 +22,12 @@ export class ManagerComponent implements OnInit {
   private pendingTasks: any[];
 
   private droppedTaskGroup: string;
-  private teamMembers: any[];
+  private teamMembers: any[] = [];
 
   pendingTaskList = [];
   selectedEmployeeArray = [];
+
+  loading: Subscription;
 
   constructor(private modalService: NgbModal, private router: Router, private http: Http) {
   }
@@ -53,27 +56,32 @@ export class ManagerComponent implements OnInit {
 
   onTaskDrop(e: any, id: string) {
 
+    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
+      if (result === 'Cancel') {
+        this.onRemoveTask(e.dragData, this.pendingTaskList);
+        this.emptySelectedEmployeeArray();
+      } else if (result === 'Send') {
+        this.onRemoveTask(e.dragData, this.tasks);
+        this.updateTaskStatus(e.dragData);
+        // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
+        // todo send invitation here
+        this.emptySelectedEmployeeArray();
+        this.getAllTasks();
+      }
+      this.teamMembers.length = 0;
+    }, any => {
+      this.emptySelectedEmployeeArray();
+      this.onRemoveTask(e.dragData, this.pendingTaskList);
+    });
+
     // FIXME: Extract this into its own serivce
-    this.http.get("http://localhost:8080/rank/" + e.dragData.id).subscribe((response) => {
+    this.loading = this.http.get("http://localhost:8080/rank/" + e.dragData.id)
+    .subscribe(
+      (response) => {
         if (response.ok) {
-          this.teamMembers = JSON.parse(response.text());
+          this.loadTeamMembers(JSON.parse(response.text()));
+
           this.droppedTaskGroup = e.dragData.group;
-          this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
-            if (result === 'Cancel') {
-              this.onRemoveTask(e.dragData, this.pendingTaskList);
-              this.emptySelectedEmployeeArray();
-            } else if (result === 'Send') {
-              this.onRemoveTask(e.dragData, this.tasks);
-              this.updateTaskStatus(e.dragData);
-              // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
-              // todo send invitation here
-              this.emptySelectedEmployeeArray();
-            }
-          }, any => {
-            this.emptySelectedEmployeeArray();
-            this.onRemoveTask(e.dragData, this.pendingTaskList);
-          });
-          this.getAllTasks();
         }
       },
       (error) => console.log(`Error:${error.toString()}`),
@@ -81,16 +89,31 @@ export class ManagerComponent implements OnInit {
     );
   }
 
-  updateTaskStatus(task: Task) {
+  loadTeamMembers(teamMembers: any[]) {
+    Observable.zip(
+      Observable.from(teamMembers),
+      Observable.interval(100)
+    ).subscribe(
+      res => {
+        this.teamMembers.push(res[0]);
+      },
+      err => console.log(err.toString())
+    )
+  }
 
+  updateTaskStatus(task: Task) {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    this.http.put("http://localhost:8080/task" , JSON.stringify(task), options).subscribe((response) => {
-      if (response.ok) {
-        this.getAllTasks();
-      }
-    })
+    this.http.put("http://localhost:8080/task" , JSON.stringify(task), options)
+    .subscribe(
+      (response) => {
+        if (response.ok) {
+          this.getAllTasks();
+        }
+      },
+      (error) => console.log(error.toString())
+    )
   }
 
   onRemoveTask(task: any, list: Array<any>) {

@@ -20,6 +20,9 @@ import { ManagerComponent } from './tasks/manager.component';
 import { TeamMemberComponent} from "./tasks/team-member.component";
 import {TeamMemberCardComponent} from "./tasks/team-member-card.component";
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BusyModule} from 'angular2-busy';
+
 const appRoutes: Routes = [
   {
     path: 'login',
@@ -58,6 +61,8 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    BusyModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(
       appRoutes,
