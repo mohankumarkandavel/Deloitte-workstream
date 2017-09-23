@@ -17,7 +17,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BusyModule, BusyConfig} from 'angular2-busy';
+import {BusyModule} from 'angular2-busy';
 
 const appRoutes: Routes = [
   {
