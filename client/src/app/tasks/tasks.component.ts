@@ -3,6 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {Task} from "./task.model";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -25,6 +26,8 @@ export class TasksComponent implements OnInit {
 
   pendingTaskList = [];
   selectedEmployeeArray = [];
+
+  loading: Subscription;
 
   constructor(private modalService: NgbModal, private router: Router, private http: Http) {
   }
@@ -52,32 +55,35 @@ export class TasksComponent implements OnInit {
 
   onTaskDrop(e: any, id: string) {
 
+    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
+      if (result === 'Cancel') {
+        this.onRemoveTask(e.dragData, this.pendingTaskList);
+        this.emptySelectedEmployeeArray();
+      } else if (result === 'Send') {
+        this.onRemoveTask(e.dragData, this.tasks);
+        this.updateTaskStatus(e.dragData);
+        // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
+        // todo send invitation here
+        this.emptySelectedEmployeeArray();
+        this.getAllTasks();
+      }
+    }, any => {
+      this.emptySelectedEmployeeArray();
+      this.onRemoveTask(e.dragData, this.pendingTaskList);
+    });
+    
     // FIXME: Extract this into its own serivce
-    this.http.get("http://localhost:8080/rank/" + e.dragData.id).subscribe((response) => {
+    this.loading = this.http.get("http://localhost:8080/rank/" + e.dragData.id).subscribe(
+      (response) => {
         if (response.ok) {
-          this.teamMembers = JSON.parse(response.text());
-          this.droppedTaskGroup = e.dragData.group;
-          this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
-            if (result === 'Cancel') {
-              this.onRemoveTask(e.dragData, this.pendingTaskList);
-              this.emptySelectedEmployeeArray();
-            } else if (result === 'Send') {
-              this.onRemoveTask(e.dragData, this.tasks);
-              this.updateTaskStatus(e.dragData);
-              // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
-              // todo send invitation here
-              this.emptySelectedEmployeeArray();
-            }
-          }, any => {
-            this.emptySelectedEmployeeArray();
-            this.onRemoveTask(e.dragData, this.pendingTaskList);
-          });
-          this.getAllTasks();
+                this.teamMembers = JSON.parse(response.text());
+                this.droppedTaskGroup = e.dragData.group;
         }
       },
       (error) => console.log(`Error:${error.toString()}`),
       () => console.log("Complete")
     );
+    
   }
 
   updateTaskStatus(task: Task) {

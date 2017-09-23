@@ -3,7 +3,7 @@
     <button class=" btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
   </div>
   <div class="row task-layout">
-    <div class="col-sm-3 draft">
+    <div class="col-sm-3 draft" >
       <div class="panel panel-default">
         <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
         <div class="panel-body pre-scrollable scroll-style">
@@ -127,7 +127,7 @@
     </button>
   </div>
   <div class="modal-body pre-scrollable scroll-style">
-    <table class="table">
+    <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 2000}">
       <tr class="bg-primary text-white">
         <th>Ranking</th>
         <th></th>
