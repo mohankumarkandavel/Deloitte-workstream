@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {Task} from "./task.model";
-import {Subscription} from 'rxjs';
+import {Subscription, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -22,7 +22,7 @@ export class TasksComponent implements OnInit {
   private assignedTasks: any[];
 
   private droppedTaskGroup: string;
-  private teamMembers: any[];
+  private teamMembers: any[] = [];
 
   pendingTaskList = [];
   selectedEmployeeArray = [];
@@ -67,35 +67,52 @@ export class TasksComponent implements OnInit {
         this.emptySelectedEmployeeArray();
         this.getAllTasks();
       }
+      this.teamMembers.length = 0;
     }, any => {
       this.emptySelectedEmployeeArray();
       this.onRemoveTask(e.dragData, this.pendingTaskList);
     });
     
     // FIXME: Extract this into its own serivce
-    this.loading = this.http.get("http://localhost:8080/rank/" + e.dragData.id).subscribe(
+    this.loading = this.http.get("http://localhost:8080/rank/" + e.dragData.id)
+    .subscribe(
       (response) => {
         if (response.ok) {
-                this.teamMembers = JSON.parse(response.text());
-                this.droppedTaskGroup = e.dragData.group;
+          this.loadTeamMembers(JSON.parse(response.text()));
+          
+          this.droppedTaskGroup = e.dragData.group;
         }
       },
       (error) => console.log(`Error:${error.toString()}`),
       () => console.log("Complete")
     );
-    
+  }
+
+  loadTeamMembers(teamMembers: any[]) {
+    Observable.zip(
+      Observable.from(teamMembers),
+      Observable.interval(100)
+    ).subscribe(
+      res => {
+        this.teamMembers.push(res[0]);
+      },
+      err => console.log(err.toString())
+    )
   }
 
   updateTaskStatus(task: Task) {
-
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    this.http.put("http://localhost:8080/task" , JSON.stringify(task), options).subscribe((response) => {
-      if (response.ok) {
-        this.getAllTasks();
-      }
-    })
+    this.http.put("http://localhost:8080/task" , JSON.stringify(task), options)
+    .subscribe(
+      (response) => {
+        if (response.ok) {
+          this.getAllTasks();
+        }
+      },
+      (error) => console.log(error.toString())
+    )
   }
 
   onRemoveTask(task: any, list: Array<any>) {
@@ -130,9 +147,9 @@ export class TasksComponent implements OnInit {
       (response) => {
         if (response.ok) {
           this.tasks = JSON.parse(response.text());
-          this.draftTasks = this.tasks.filter(task => task.status === "DRAFT")
-          this.pendingTasks = this.tasks.filter(task => task.status === "PENDING")
-          this.assignedTasks = this.tasks.filter(task => task.status === "ASSIGNED")
+          this.draftTasks = this.tasks.filter(task => task.status === "DRAFT");
+          this.pendingTasks = this.tasks.filter(task => task.status === "PENDING");
+          this.assignedTasks = this.tasks.filter(task => task.status === "ASSIGNED");
         }
       }
     );
