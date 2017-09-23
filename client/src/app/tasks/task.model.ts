@@ -3,6 +3,7 @@ export class Task {
     public id: string,
     public name: string,
     public description: string,
+    public status: string,
     public deadline: string,
     public group: string,
     public attribute: {

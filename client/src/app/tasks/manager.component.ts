@@ -7,19 +7,19 @@ import {Subscription, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
-  templateUrl: './tasks.component.html',
+  templateUrl: './manager.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./tasks.component.css']
 })
 
-export class TasksComponent implements OnInit {
+export class ManagerComponent implements OnInit {
 
-  private model = new Task("", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
+  private model = new Task("", "", "", "", "", "", {experience:"", interest:"", availability:"", resource:""}, "");
   private tasks: any[];
 
   private draftTasks: any[];
-  private pendingTasks: any[];
   private assignedTasks: any[];
+  private pendingTasks: any[];
 
   private droppedTaskGroup: string;
   private teamMembers: any[] = [];
@@ -40,6 +40,7 @@ export class TasksComponent implements OnInit {
   addTask() {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
+    this.model.status = "Draft";
 
     this.http.post("http://localhost:8080/task", JSON.stringify(this.model), options)
       .subscribe(
@@ -72,14 +73,14 @@ export class TasksComponent implements OnInit {
       this.emptySelectedEmployeeArray();
       this.onRemoveTask(e.dragData, this.pendingTaskList);
     });
-    
+
     // FIXME: Extract this into its own serivce
     this.loading = this.http.get("http://localhost:8080/rank/" + e.dragData.id)
     .subscribe(
       (response) => {
         if (response.ok) {
           this.loadTeamMembers(JSON.parse(response.text()));
-          
+
           this.droppedTaskGroup = e.dragData.group;
         }
       },
@@ -147,9 +148,9 @@ export class TasksComponent implements OnInit {
       (response) => {
         if (response.ok) {
           this.tasks = JSON.parse(response.text());
-          this.draftTasks = this.tasks.filter(task => task.status === "DRAFT");
-          this.pendingTasks = this.tasks.filter(task => task.status === "PENDING");
-          this.assignedTasks = this.tasks.filter(task => task.status === "ASSIGNED");
+          this.draftTasks = this.tasks.filter(task => task.status === "Draft");
+          this.pendingTasks = this.tasks.filter(task => task.status === "Pending");
+          this.assignedTasks = this.tasks.filter(task => task.status === "Assigned");
         }
       }
     );

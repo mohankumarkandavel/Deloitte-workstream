@@ -47,11 +47,11 @@
     </button>
   </div>
   <div class="modal-body">
-    <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask()" #f="ngForm" novalidate>
+    <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask(); c('Close click')" #f="ngForm" novalidate>
       <div class="form-group row">
         <label class="control-label col-sm-2">Task Name</label>
         <div class="col-sm-10">
-          <input class="form-control" type="text" required minlength="3" [(ngModel)]="model.name" name="name" #name="ngModel">
+          <input class="form-control" type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
           <div *ngIf="f.submitted && !name.valid" class="help-block">Task name is required</div>
         </div>
       </div>
@@ -156,7 +156,7 @@
 <ng-template #invitationSend let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h5 class="modal-title">Successfully send</h5>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <button type="button" class="close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
