@@ -113,7 +113,7 @@ export class ManagerComponent implements OnInit {
         }
       },
       (error) => console.log(error.toString())
-    )
+    );
   }
 
   onRemoveTask(task: any, list: Array<any>) {
