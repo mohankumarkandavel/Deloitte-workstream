@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Http} from '@angular/http';
+import {Task} from "./task.model";
 
 @Component({
   selector: 'app-team-member',
@@ -8,13 +10,25 @@ import {Component, OnInit} from '@angular/core';
 
 export class TeamMemberComponent implements OnInit {
 
-  shown: string = 'NONE';
+  private pendingTasks: Task[];
+  private assignedTasks: Task[];
 
-  private pendingTasks: any[];
-  private assignedTasks: any[];
-
-  ngOnInit(): void {
-    this.shown = 'NONE';
+  constructor(private http: Http) {
   }
 
+  ngOnInit(): void {
+    this.getAllTasks();
+  }
+
+  getAllTasks() {
+    this.http.get('http://localhost:8080/task').subscribe(
+      (response) => {
+        if (response.ok) {
+          let tasks = JSON.parse(response.text());
+          this.pendingTasks = tasks.filter(task => task.status === "PENDING")
+          this.assignedTasks = tasks.filter(task => task.status === "ASSIGNED")
+        }
+      }
+    );
+  }
 }

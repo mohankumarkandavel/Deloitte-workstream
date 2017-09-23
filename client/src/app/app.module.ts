@@ -18,6 +18,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { ManagerComponent } from './tasks/manager.component';
 import { TeamMemberComponent} from "./tasks/team-member.component";
+import {TeamMemberCardComponent} from "./tasks/team-member-card.component";
 
 const appRoutes: Routes = [
   {
@@ -52,7 +53,8 @@ const appRoutes: Routes = [
     FooterComponent,
     TaskCardComponent,
     ManagerComponent,
-    TeamMemberComponent
+    TeamMemberComponent,
+    TeamMemberCardComponent
   ],
   imports: [
     BrowserModule,
