@@ -49,6 +49,11 @@
   font-size: 12px;
 }
 
+.material-icons {
+  right:0px;
+  position: absolute;
+  margin-right: 3%;
+}
 .text-area {
   width: 100%;
   resize: none;

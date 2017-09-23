@@ -8,12 +8,13 @@ import {Component, OnInit} from '@angular/core';
 
 export class TeamMemberComponent implements OnInit {
 
-  private shown: string = 'NONE';
+  shown: string = 'NONE';
 
   private pendingTasks: any[];
   private assignedTasks: any[];
 
   ngOnInit(): void {
+    this.shown = 'NONE';
   }
 
 }

@@ -4,27 +4,39 @@
     <div class="column-body">
       <md-card class="task-card-employee">
         <md-card-header>
-          <md-card-title class="card-title">Complete Financial Analysis</md-card-title>
+          <md-card-title class="card-title">Complete Financial Analysis <i class="material-icons">info</i></md-card-title>
           <md-card-subtitle class="card-subtitle">Due 1:00pm 12/08/2018</md-card-subtitle>
         </md-card-header>
         <md-card-content class="card-description">
           <div *ngIf="shown === 'NONE'">Lorem ipsum dolor sit amet, id mei agam viris prodesset.
-            Sea corpora luptatum comprehensam an, ad mei malorum maiorum necessitatibus.</div>
+            Sea corpora luptatum comprehensam an, ad mei malorum maiorum necessitatibus.
+          </div>
           <div *ngIf="shown === 'REQUEST'">
             <md-card-content
-              class="card-description"><textarea class="text-area" placeholder="Request more information here"></textarea>
+              class="card-description"><textarea class="text-area"
+                                                 placeholder="Request more information here"></textarea>
             </md-card-content>
-            <md-card-actions layout="row" layout-align="center">
-              <button md-button>Cancel</button>
-              <button md-button>Send</button>
-            </md-card-actions>
+          </div>
+          <div *ngIf="shown === 'DECLINE'">
+            <md-card-content
+              class="card-description"><textarea class="text-area"
+                                                 placeholder="Please state your reason for declining"></textarea>
+            </md-card-content>
           </div>
         </md-card-content>
-        <md-card-actions layout="row" layout-align="start center">
-          <button md-button>Accept</button>
-          <button md-button (click)="shown == 'REQUEST'">Request More Information</button>
-          <button md-button (click)="shown == 'DECLINE'">Decline</button>
-        </md-card-actions>
+        <div *ngIf="shown === 'NONE'">
+          <md-card-actions layout="row" layout-align="center">
+            <button md-button>Accept</button>
+            <button md-button (click)="shown = 'REQUEST'">Request More Information</button>
+            <button md-button (click)="shown = 'DECLINE'">Decline</button>
+          </md-card-actions>
+        </div>
+        <div *ngIf="shown != 'NONE'">
+          <md-card-actions layout="row" layout-align="center">
+            <button md-button (click)="shown= 'NONE'">Cancel</button>
+            <button md-button>Send</button>
+          </md-card-actions>
+        </div>
       </md-card>
     </div>
   </div>
@@ -34,38 +46,12 @@
     <div class="column-body">
       <md-card class="task-card-employee">
         <md-card-header>
-          <md-card-title class="card-title">Complete Financial Analysis</md-card-title>
-          <md-card-subtitle class="card-subtitle">Due 1:00pm 12/08/2018</md-card-subtitle>
+          <md-card-title class="card-title">Attend Networking Event  <i class="material-icons">info</i></md-card-title>
+          <md-card-subtitle class="card-subtitle">Due 1:00pm 08/08/2018</md-card-subtitle>
         </md-card-header>
-        <md-card-content
-          class="card-description"><textarea class="text-area" placeholder="Request more information here"></textarea>
-        </md-card-content>
-        <md-card-actions layout="row" layout-align="center">
-          <button md-button>Cancel</button>
-          <button md-button>Send</button>
-        </md-card-actions>
+        <md-card-content class="card-description">Lorem ipsum dolor sit amet, id mei agam viris prodesset.
+          Sea corpora luptatum comprehensam an, ad mei malorum maiorum necessitatibus.</md-card-content>
       </md-card>
     </div>
   </div>
-</div>
-
-<div *ngIf="shown === 'REQUEST'">
-  <md-card-content
-    class="card-description"><textarea class="text-area" placeholder="Request more information here"></textarea>
-  </md-card-content>
-  <md-card-actions layout="row" layout-align="center">
-    <button md-button>Cancel</button>
-    <button md-button>Send</button>
-  </md-card-actions>
-</div>
-
-<div *ngIf="shown === 'DECLINE'">
-  <md-card-content
-    class="card-description"><textarea class="text-area"
-                                       placeholder="Please state your reason for declining"></textarea>
-  </md-card-content>
-  <md-card-actions layout="row" layout-align="center">
-    <button md-button>Cancel</button>
-    <button md-button>Send</button>
-  </md-card-actions>
 </div>
