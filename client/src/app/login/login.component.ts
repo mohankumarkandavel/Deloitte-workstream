@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Login} from './login.model';
 import {Http, URLSearchParams} from '@angular/http';
+import {getResponseURL} from "@angular/http/src/http_utils";
+import {error} from "util";
 
 @Component({
   selector: 'app-login',
@@ -28,13 +30,12 @@ export class LoginComponent implements OnInit {
     params.set("password", this.model.password);
     this.http.get("http://localhost:8080/login", {search : params} ).subscribe(
       (response) => {
-        if(response.ok) {
+        if (response.ok) {
           this.router.navigateByUrl("/tasks");
         }
       },
-      (error) => console.log(`Error:${error.toString()}`),
+      (error) => alert("Password is wrong!"),
       () => console.log("Complete")
     );
   }
-
 }
