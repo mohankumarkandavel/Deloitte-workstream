@@ -1,4 +1,4 @@
-package nz.co.vincens.model;
+	package nz.co.vincens.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +15,7 @@ public class Task {
 
 	@JsonProperty("attribute")
 	private Attribute attribute;
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm")
 	private Date deadline;
 	private Group group;
 	private Status status;

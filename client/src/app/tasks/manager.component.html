@@ -67,7 +67,7 @@
           <div class="form-group row">
             <label class="control-label col-sm-4">Deadline</label>
             <div class="col-sm-8">
-              <input class="form-control" type="date" name="deadline" [(ngModel)]="model.deadline">
+              <input class="form-control" type="datetime-local" name="deadline" [(ngModel)]="model.deadline">
             </div>
           </div>
           <div class="form-group row">
@@ -90,7 +90,7 @@
           <div class="form-group row">
             <label class="control-label col-sm-4">Resource</label>
             <div class="col-sm-8">
-              <input class="form-control" type="text" name="attribute.resource" [(ngModel)]="model.attribute.resource">
+              <input class="form-control" type="number" name="attribute.resource" [(ngModel)]="model.attribute.resource">
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
           <div class="form-group row">
             <label class="control-label col-sm-4">Availability</label>
             <div class="col-sm-8">
-              <input class="form-control" name="attribute.availability" [(ngModel)]="model.attribute.availability">
+              <input class="form-control" type="number" name="attribute.availability" [(ngModel)]="model.attribute.availability">
             </div>
           </div>
           <div class="form-group row">
@@ -107,7 +107,6 @@
               <input class="form-control" type="number" name="peopleRequired" [(ngModel)]="model.peopleRequired">
             </div>
           </div>
-
         </div>
       </div>
       <div class="form-group">
