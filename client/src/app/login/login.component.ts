@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Login} from './login.model';
 import {Http, URLSearchParams} from '@angular/http';
-import {getResponseURL} from "@angular/http/src/http_utils";
-import {error} from "util";
 
 @Component({
   selector: 'app-login',
