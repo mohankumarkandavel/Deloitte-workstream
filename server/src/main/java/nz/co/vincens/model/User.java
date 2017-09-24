@@ -6,25 +6,51 @@ package nz.co.vincens.model;
  */
 public class User {
 
-	String name;
-	String email;
-	String id;
+    String username;
+    String name;
+    String email;
+    String id;
+    String role;
+    String password;
 
-	public User(String name, String email, String id) {
-		this.name = name;
-		this.email = email;
-		this.id = id;
-	}
+    public User(String id, String username, String name, String email, String role, String password) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public User(String id, String username, String name, String email, String role) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

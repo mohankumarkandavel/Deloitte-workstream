@@ -11,8 +11,8 @@ public class TeamMember extends User {
 	private HashMap<Group, Attribute> weightings;
 	private List<Task> tasks;
 
-	public TeamMember(String name, String email, String id, HashMap<Group, Attribute> weightings) {
-		super(name, email, id);
+	public TeamMember(String name, String username, String email, String id, HashMap<Group, Attribute> weightings) {
+		super(id, username, name, email, "team-member");
 		this.weightings = weightings;
 	}
 
