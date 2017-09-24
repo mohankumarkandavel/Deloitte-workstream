@@ -10,8 +10,8 @@ import {Task} from "./task.model";
 
 export class TeamMemberComponent implements OnInit {
 
-  private pendingTasks: Task[];
-  private assignedTasks: Task[];
+  private pendingTasks: Task[] = [];
+  private assignedTasks: Task[] = [];
 
   constructor(private http: Http) {
   }

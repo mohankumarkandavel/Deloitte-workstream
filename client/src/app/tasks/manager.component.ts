@@ -144,7 +144,9 @@ export class ManagerComponent implements OnInit {
   }
 
   getAllTasks() {
-    this.http.get('http://localhost:8080/task').subscribe(
+    let userId = localStorage.getItem("userId");
+
+    this.http.get(`http://localhost:8080/task/${userId}`).subscribe(
       (response) => {
         if (response.ok) {
           this.tasks = JSON.parse(response.text());
