@@ -17,37 +17,37 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @WebMvcTest(LoginController.class)
 public class LoginControllerTest {
-    
+
     @Autowired
     private MockMvc mockMvc;
-    
+
     @Test
     public void loginSucceed() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login").param("username",
-                "James").param("password", "123")
+                "10001").param("password", "111111")
                 .accept(MediaType.APPLICATION_JSON);
-        
+
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
     }
-    
+
     @Test
     public void loginFail() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login").param("username",
-                "Hacker").param("password", "abc")
+                "10001").param("password", "111")
                 .accept(MediaType.APPLICATION_JSON);
-        
+
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(HttpStatus.UNAUTHORIZED.value(), result.getResponse().getStatus());
     }
-    
+
     @Test
     public void loginBadRequest() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login")
                 .accept(MediaType.APPLICATION_JSON);
-        
+
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
     }
-    
+
 }
