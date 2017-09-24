@@ -20,12 +20,14 @@ export class AuthenticationService {
         if (response.ok) {
           let role = response.headers.get("role");
           localStorage.setItem("role", role);
+          let userId = JSON.parse(response.text()).id;
+          localStorage.setItem("userId", userId);
           return role;
         } else {
           return "unauthorised";
         }
       },
-    ).catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    ).catch((error:any) => Observable.throw('Server error'));
   }
 
   logout() {

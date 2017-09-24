@@ -38,16 +38,14 @@ public class LoginController {
     public ResponseEntity login(Login login) {
         if (login != null && login.getPassword() != null && login.getUsername() != null && !login.getPassword().isEmpty()
                 && !login.getUsername().isEmpty()) {
-            boolean doesUserExist = false;
-            String role = null;
+            User actualUser = null;
             for (User user : userService.getUsers()) {
                 if (user.getUsername().equals(login.getUsername()) && user.getPassword().equals(login.getPassword())) {
-                    doesUserExist = true;
-                    role = user.getRole();
+                    actualUser = user;
                 }
             }
-            if (doesUserExist) {
-                return ResponseEntity.ok().header("role", role).build();
+            if (actualUser != null) {
+                return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId() + "}");
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
