@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {Task} from "./task.model";
 import {Subscription, Observable} from 'rxjs';
+import {AbstractControl, Validator} from "@angular/forms";
 
 @Component({
   selector: 'app-tasks',
@@ -154,6 +155,16 @@ export class ManagerComponent implements OnInit {
         }
       }
     );
+  }
+
+  _keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
   }
 
   newTask(id: string) {
