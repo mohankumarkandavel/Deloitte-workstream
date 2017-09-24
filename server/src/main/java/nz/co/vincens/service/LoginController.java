@@ -32,7 +32,7 @@ public class LoginController {
      * @return 200 ok if login is successful, 401 Unauthorized if incorrect credentials, 400 bad request if fields
      * are empty
      */
-    @CrossOrigin
+    @CrossOrigin(exposedHeaders = "role")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ResponseEntity login(Login login) {
         List<User> users = new ArrayList<User>();
