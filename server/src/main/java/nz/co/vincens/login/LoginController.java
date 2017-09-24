@@ -1,16 +1,14 @@
-package nz.co.vincens.service;
+package nz.co.vincens.login;
 
 import nz.co.vincens.model.Login;
 import nz.co.vincens.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * API endpoint(s) for logging in.
@@ -22,6 +20,9 @@ import java.util.List;
  */
 @RestController
 public class LoginController {
+
+    @Autowired
+    UserService userService;
 
     /**
      * Endpoint: <code>GET /login</code>
@@ -35,15 +36,11 @@ public class LoginController {
     @CrossOrigin(exposedHeaders = "role")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ResponseEntity login(Login login) {
-        List<User> users = new ArrayList<User>();
-        users.add( new User("1","James123", "James Too","James@hotmail.com","manager", "123"));
-        users.add( new User("1","Bob123", "Bob Ross","Bob@ross.com","team-member", "123"));
-
-        if (login != null && login.getPassword()!= null && login.getUsername()!= null && !login.getPassword().isEmpty() 
-              && !login.getUsername().isEmpty()) {
+        if (login != null && login.getPassword() != null && login.getUsername() != null && !login.getPassword().isEmpty()
+                && !login.getUsername().isEmpty()) {
             boolean doesUserExist = false;
             String role = null;
-            for (User user: users) {
+            for (User user : userService.getUsers()) {
                 if (user.getUsername().equals(login.getUsername()) && user.getPassword().equals(login.getPassword())) {
                     doesUserExist = true;
                     role = user.getRole();
