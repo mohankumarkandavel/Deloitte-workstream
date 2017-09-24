@@ -30,3 +30,16 @@ Before running the tests make sure you are serving the app via `ng serve`.
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 #Server
+
+## Login accounts
+# Admin
+Username: 10001
+Password: 111111
+# Manager
+Username: 10002
+Password: 222222
+# Employee
+Username: 10003
+Password: 333333
+Username: 10004
+Password: 444444
