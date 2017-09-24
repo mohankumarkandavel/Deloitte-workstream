@@ -1,5 +1,6 @@
 package nz.co.vincens.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,10 +10,15 @@ import java.util.List;
 public class TeamMember extends User {
 
 	private HashMap<Group, Attribute> weightings;
-	private List<Task> tasks;
+	private List<Task> tasks = new ArrayList<>();
 
 	public TeamMember(String name, String username, String email, String id, HashMap<Group, Attribute> weightings) {
 		super(id, username, name, email, "team-member");
+		this.weightings = weightings;
+	}
+
+	public TeamMember(String id, String username, String name, String email, String password) {
+		super(id, username, name, email, "team-member", password);
 		this.weightings = weightings;
 	}
 

@@ -6,12 +6,12 @@ package nz.co.vincens.model;
  */
 public class User {
 
-    String username;
-    String name;
-    String email;
-    String id;
-    String role;
-    String password;
+    private String username;
+    private String name;
+    private String email;
+    private String id;
+    private String role;
+    private String password;
 
     public User(String id, String username, String name, String email, String role, String password) {
         this.id = id;

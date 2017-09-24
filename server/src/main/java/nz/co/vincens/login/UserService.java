@@ -1,5 +1,7 @@
 package nz.co.vincens.login;
 
+import nz.co.vincens.model.Manager;
+import nz.co.vincens.model.TeamMember;
 import nz.co.vincens.model.User;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,8 @@ public class UserService {
 
     public UserService() {
         users = new ArrayList<>();
-        users.add(new User("1", "James123", "James Too", "James@hotmail.com", "manager", "123"));
-        users.add(new User("1", "Bob123", "Bob Ross", "Bob@ross.com", "team-member", "123"));
+        users.add(new Manager("1", "James123", "James Too", "James@hotmail.com", "123"));
+        users.add(new TeamMember("1", "Bob123", "Bob Ross", "Bob@ross.com",  "123"));
     }
 
     public List<User> getUsers() {

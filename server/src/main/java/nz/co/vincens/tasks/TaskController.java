@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * API endpoints for accessing and managing nz.co.vincens.tasks
@@ -36,9 +37,12 @@ public class TaskController {
      * @return all tasks as JSON
      */
     @CrossOrigin
-    @RequestMapping("/task")
-    List<Task> getTasks() {
-        return taskService.getTasks();
+    @RequestMapping("/task/{userId}")
+    List<Task> getTasks(@PathVariable(name = "userId") int userId) {
+        return taskService.getTasks().stream()
+                .filter(task -> task.getAssignees().stream()
+                        .anyMatch(assignee ->  assignee.getId().equals(String.valueOf(userId))
+        )).collect(Collectors.toList());
     }
 
     /**
@@ -49,8 +53,8 @@ public class TaskController {
      * @return task with the specified id as JSON
      */
     @CrossOrigin
-    @RequestMapping("/task/{id}")
-    Task getTask(@PathVariable int id) {
+    @RequestMapping("/task/{userId}/{id}")
+    Task getTask(@PathVariable int userId, @PathVariable int id) {
         return taskService.getTask(id - 1);
     }
 
