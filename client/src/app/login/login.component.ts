@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl("/tasks");
         }
       },
-      (error) => alert("Password is wrong!"),
+      (error) => console.log(`Error:${error.toString()}`),
       () => console.log("Complete")
     );
   }
