@@ -11,7 +11,7 @@ import {error} from "util";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  passwordError: boolean;
   constructor(private router: Router, private http: Http) {
   }
 
@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   private authenticate(): void {
+
     let params: URLSearchParams = new URLSearchParams();
     params.set("username", this.model.username);
     params.set("password", this.model.password);
@@ -34,7 +35,10 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl("/tasks");
         }
       },
-      (error) => console.log(`Error:${error.toString()}`),
+      (error) => {
+        console.log(`Error:${error.toString()}`);
+        this.passwordError = true;
+      },
       () => console.log("Complete")
     );
   }
