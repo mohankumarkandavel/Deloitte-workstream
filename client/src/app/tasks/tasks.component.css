@@ -31,8 +31,9 @@
   padding: 4%;
 }
 
-.task-card-employee {
-  /*background: rgba(26, 26, 26, 0.8);*/
+.background{
+  background: url('../../assets/Y01VDYAX63.jpg') no-repeat center;
+  min-height: 90vh;
 }
 
 .new-task {
