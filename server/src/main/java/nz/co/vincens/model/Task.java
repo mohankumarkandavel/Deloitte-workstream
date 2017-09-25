@@ -1,4 +1,4 @@
-	package nz.co.vincens.model;
+package nz.co.vincens.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
