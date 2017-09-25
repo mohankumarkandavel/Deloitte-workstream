@@ -39,10 +39,17 @@ public class TaskController {
     @CrossOrigin
     @RequestMapping("/task/{userId}")
     List<Task> getTasks(@PathVariable(name = "userId") int userId) {
+        // return taskService.getTasks().stream()
+        //         .filter(task ->
+        //                 task.getAssignees().stream()
+        //                 .anyMatch(assignee ->  assignee.getId().equals(String.valueOf(userId))
+        // )).collect(Collectors.toList());
+
         return taskService.getTasks().stream()
                 .filter(task -> task.getAssignees().stream()
-                        .anyMatch(assignee ->  assignee.getId().equals(String.valueOf(userId))
-        )).collect(Collectors.toList());
+                        .anyMatch(assignee -> assignee.getId().equals(String.valueOf(userId)))
+                        || task.getOwner().getId().equals(String.valueOf(userId)))
+                .collect(Collectors.toList());
     }
 
     /**
