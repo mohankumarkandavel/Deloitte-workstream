@@ -2,6 +2,9 @@ package nz.co.vincens.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +25,8 @@ public class Task {
 	private Group group;
 	private Status status;
 	private int numAssigneesRequired;
+	@JsonSerialize(using=ManagerSerializer.class)
+	@JsonDeserialize(using=ManagerDeserializer.class)
 	private Manager owner;
 	private List<TeamMember> assignees = new ArrayList<>();
 
