@@ -96,4 +96,28 @@ public class DatabaseHelper {
             return null;
         }
     }
+
+    public static int DatabaseConnection() {
+        LoadDatabaseParameters();
+        // Create the connection statement
+        Connection con = null;
+        // Create the statement
+        Statement statement = null;
+        try {
+            // Register JDBC driver
+            Class.forName(driver);
+            // Open a connection
+            con = DriverManager.getConnection(url, user, password);
+            // Check connection status
+            if (!con.isClosed()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            // Handle errors for Class.forName
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }
