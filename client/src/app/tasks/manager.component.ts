@@ -157,16 +157,6 @@ export class ManagerComponent implements OnInit {
     );
   }
 
-  _keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
-    let inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
-  }
-
   newTask(id: string) {
     this.modalService.open(id);
     console.log('found');
