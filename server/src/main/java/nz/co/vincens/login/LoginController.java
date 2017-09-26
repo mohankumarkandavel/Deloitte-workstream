@@ -1,6 +1,9 @@
-package nz.co.vincens.service;
+package nz.co.vincens.login;
 
 import nz.co.vincens.model.Login;
+import nz.co.vincens.model.User;
+import nz.co.vincens.service.UserHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +26,9 @@ import java.sql.SQLException;
 @RestController
 public class LoginController {
 
+    @Autowired
+    private UserService userService;
+
     /**
      * Endpoint: <code>GET /login</code>
      * <br/>
@@ -32,23 +38,21 @@ public class LoginController {
      * @return 200 ok if login is successful, 401 Unauthorized if incorrect credentials, 400 bad request if fields
      * are empty
      */
-    @CrossOrigin
+    @CrossOrigin(exposedHeaders = "role")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ResponseEntity login(Login login) {
         // Define user login information resource from Login Object
-        String Username = login.getUsername();
-        String Password = login.getPassword();
         // Define query result(if it is 0, it means no matched user. Or it is the user id)
-        int result;
-        if (login != null && Username != null && Password != null) {
-            // Execute the database query and get the result
-            result = UserHelper.Login(Username, Password);
-            // If it does not return 0, login successful
+        int result = 0;
+        String role = null;
+        if (login != null && login.getPassword() != null && login.getUsername() != null && !login.getPassword().isEmpty()
+                && !login.getUsername().isEmpty()) {
+            User actualUser = null;
+            result = UserHelper.Login(login.getUsername(), login.getPassword());
             if (result != 0) {
-                return ResponseEntity.ok().build();
-            }
-            // If it returns 0, login failed
-            else {
+                role = UserHelper.GetRoleById(result);
+                return ResponseEntity.ok().header("role", role).body("{\"id\": " + actualUser.getId() + "}");
+            } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
         }
