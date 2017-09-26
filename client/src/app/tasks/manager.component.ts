@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Http, Headers, RequestOptions} from '@angular/http';
 import {Task} from "./task.model";
-import {Subscription, Observable} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {TaskService} from "../services/task.service";
 import {RankService} from "../services/rank.service";
 
@@ -24,7 +23,7 @@ export class ManagerComponent implements OnInit {
 
   loading: Subscription;
 
-  constructor(private modalService: NgbModal, private http: Http, private taskService: TaskService, private rankService: RankService) {
+  constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
   }
 
   ngOnInit() {
@@ -42,11 +41,9 @@ export class ManagerComponent implements OnInit {
   }
 
   addTask() {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
     this.model.status = "Draft";
     this.model.owner = localStorage.getItem("userId");
-    this.taskService.addTask(options, this.model);
+    this.taskService.addTask(this.model);
   }
 
   onTaskDrop(e: any, id: string) {
@@ -70,9 +67,7 @@ export class ManagerComponent implements OnInit {
   }
 
   updateTaskStatus(task: Task) {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    this.taskService.updateTaskStatus(options, task);
+    this.taskService.updateTaskStatus(task, "Pending");
   }
 
   emptySelectedEmployeeArray() {

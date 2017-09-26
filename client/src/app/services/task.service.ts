@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, RequestOptions} from "@angular/http";
+import {Http, Headers, RequestOptions} from "@angular/http";
 import {Task} from "../tasks/task.model";
 
 @Injectable()
@@ -10,7 +10,7 @@ export class TaskService {
   private tasks: any[];
   draftTasks: any[];
   assignedTasks: any[];
-  pendingTasks: any[];
+  pendingTasks: any[] = [];
 
   constructor(private http: Http) {
   }
@@ -28,11 +28,13 @@ export class TaskService {
     );
   }
 
-  addTask(options: RequestOptions, task: Task) {
+  addTask(task: Task) {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
     this.http.post(this.taskURL, JSON.stringify(task), options)
       .subscribe(
         data => {
-          this.getUsersTasks(task.owner);
+          this.getUsersTasks(localStorage.getItem("userId"));
         },
         err => console.error(err),
         () => {
@@ -40,12 +42,15 @@ export class TaskService {
         });
   }
 
-  updateTaskStatus(options: RequestOptions, task: Task) {
+  updateTaskStatus(task: Task, status: string) {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    task.status = status;
     this.http.put(this.taskURL, JSON.stringify(task), options)
       .subscribe(
         (response) => {
           if (response.ok) {
-            this.getUsersTasks(task.owner);
+            this.getUsersTasks(localStorage.getItem("userId"));
           }
         },
         (error) => console.log(error.toString())
