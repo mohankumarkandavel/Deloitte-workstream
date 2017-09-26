@@ -1,9 +1,10 @@
-<div class="card-block">
-  <div class="card-text">
-    <div class="hide-overflow">{{task.name}} <span class="float-right"><i class="fa fa-info-circle"></i></span></div>
-    <div>{{task.deadLine}}</div>
-    <div class="hide-overflow">{{task.description}}</div>
-    <div *ngIf="!!task.member">{{task.member}} <span class="float-right"><i class="fa fa-info-circle"></i></span></div>
-  </div>
-</div>
+<md-card-header>
+  <md-card-title class="hide-overflow">{{task.name}}
+    <span class="info-icon"><i class="fa fa-info-circle"></i></span></md-card-title>
+    <md-card-subtitle>
+      {{task.deadLine}}</md-card-subtitle>
+</md-card-header>
+    <md-card-content class="hide-overflow">{{task.description}}</md-card-content>
+    <md-card-footer *ngIf="!!task.member"> temamekfmrl{{task.member}} <span class="float-right"><i class="fa fa-info-circle"></i></span></md-card-footer>
+
 
