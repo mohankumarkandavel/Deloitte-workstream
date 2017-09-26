@@ -41,6 +41,7 @@ export class ManagerComponent implements OnInit {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     this.model.status = "Draft";
+    this.model.owner = localStorage.getItem("userId");
 
     this.http.post("http://localhost:8080/task", JSON.stringify(this.model), options)
       .subscribe(

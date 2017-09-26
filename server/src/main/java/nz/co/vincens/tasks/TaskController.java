@@ -26,8 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 public class TaskController {
 
-    @Autowired
-    TaskService taskService;
+    @Autowired private TaskService taskService;
 
     /**
      * Endpoint: <code>GET /task</code>
@@ -41,8 +40,9 @@ public class TaskController {
     List<Task> getTasks(@PathVariable(name = "userId") int userId) {
         return taskService.getTasks().stream()
                 .filter(task -> task.getAssignees().stream()
-                        .anyMatch(assignee ->  assignee.getId().equals(String.valueOf(userId))
-        )).collect(Collectors.toList());
+                        .anyMatch(assignee -> assignee.getId().equals(String.valueOf(userId)))
+                        || task.getOwner().getId().equals(String.valueOf(userId)))
+                .collect(Collectors.toList());
     }
 
     /**
