@@ -14,5 +14,6 @@ export class Task {
     resource: ""
   };
   public peopleRequired: string;
-
+  public owner: string;
+  public assignees: any[];
 }

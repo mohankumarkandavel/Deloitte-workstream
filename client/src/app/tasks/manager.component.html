@@ -32,6 +32,9 @@
             <!--add  current card list here-->
             <md-card class="col-sm-5 task-card current-card text-white"
                  *ngFor="let assignedTask of assignedTasks">
+
+            <div class="card  col-sm-5 task-card current-card text-white"
+                 *ngFor="let assignedTask of taskService.assignedTasks">
               <app-task-card [task]="assignedTask"></app-task-card>
             </md-card>
           </div>
@@ -127,7 +130,7 @@
     </button>
   </div>
   <div class="modal-body pre-scrollable scroll-style">
-    <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 2000}">
+    <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 1000}">
       <tr class="bg-primary text-white">
         <th>Ranking</th>
         <th></th>
@@ -136,7 +139,7 @@
         <th>Experience</th>
         <th>Interest</th>
       </tr>
-      <tr *ngFor="let teamMember of teamMembers; let i = index;" [attr.data-index]="i"
+      <tr *ngFor="let teamMember of rankService.teamMembers; let i = index;" [attr.data-index]="i"
           (click)="addThisEmployeeToArray(teamMember, $event)"
           [class.active]="isEmployeeSelected(teamMember)">
         <td>{{i+1}}</td>
