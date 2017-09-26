@@ -24,6 +24,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
 import {AuthenticationGuardService} from "./services/authentication-guard.service";
 import {AuthenticationService} from "./services/authentication.service";
+import {TaskService} from "./services/task.service";
+import {RankService} from "./services/rank.service";
 
 const appRoutes: Routes = [
   {
@@ -80,7 +82,9 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthenticationGuardService,
-    AuthenticationService
+    AuthenticationService,
+    TaskService,
+    RankService
   ],
   bootstrap: [AppComponent]
 })
