@@ -15,7 +15,6 @@ import {RankService} from "../services/rank.service";
 export class ManagerComponent implements OnInit {
 
   private model: Task = new Task();
-  private tasks: any[];
 
   private droppedTaskGroup: string;
 
@@ -51,6 +50,7 @@ export class ManagerComponent implements OnInit {
       if (result === 'Cancel') {
         this.emptySelectedEmployeeArray();
       } else if (result === 'Send') {
+
         this.updateTaskStatus(e.dragData);
         // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
         // todo send invitation here

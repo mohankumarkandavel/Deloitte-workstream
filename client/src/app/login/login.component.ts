@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
           } else {
             //todo handle error logging
           }
-    });
+    },
+      (error => console.log(error.toString())));
   }
 }
