@@ -1,10 +1,15 @@
 <md-card-header>
   <md-card-title class="hide-overflow">{{task.name}}
-    <span class="info-icon"><i class="fa fa-info-circle"></i></span></md-card-title>
-    <md-card-subtitle>
-      {{task.deadLine}}</md-card-subtitle>
+    <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after"><i
+      class="fa fa-info-circle"></i></span>
+  </md-card-title>
+  <md-card-subtitle>
+    {{task.deadLine}}
+  </md-card-subtitle>
 </md-card-header>
-    <md-card-content class="hide-overflow">{{task.description}}</md-card-content>
-    <md-card-footer *ngIf="!!task.member"> temamekfmrl{{task.member}} <span class="float-right"><i class="fa fa-info-circle"></i></span></md-card-footer>
+<md-card-content class="hide-overflow">{{task.description}}</md-card-content>
+<md-card-footer *ngIf="!!task.member">{{task.member}} <span class="info-icon" md-tooltip="{{task.member}}"
+                                                            mdTooltipPosition="after"><i class="fa fa-info-circle"></i></span>
+</md-card-footer>
 
 
