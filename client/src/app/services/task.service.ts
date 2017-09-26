@@ -56,4 +56,14 @@ export class TaskService {
         (error) => console.log(error.toString())
       )
   }
+
+  sendInvite(task:Task, selectedTeamMembersId: Task[]) {
+    this.http.put(this.taskURL + '/' + task.id, selectedTeamMembersId[0].id).subscribe((response) => {
+      if (response.ok) {
+        console.log("Sent")
+      }
+    },
+      (error) => console.log(error.toString())
+    )
+  }
 }

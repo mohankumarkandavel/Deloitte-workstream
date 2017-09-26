@@ -1,7 +1,9 @@
 package nz.co.vincens.tasks;
 
+import nz.co.vincens.login.UserService;
 import nz.co.vincens.model.Status;
 import nz.co.vincens.model.Task;
+import nz.co.vincens.model.TeamMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 public class TaskController {
 
     @Autowired private TaskService taskService;
+    @Autowired private UserService userService;
 
     /**
      * Endpoint: <code>GET /task</code>
@@ -39,7 +42,7 @@ public class TaskController {
     @RequestMapping("/task/{userId}")
     List<Task> getTasks(@PathVariable(name = "userId") int userId) {
         return taskService.getTasks().stream()
-                .filter(task -> task.getAssignees().stream()
+                .filter(task -> task.getRequestedAssignees().stream()
                         .anyMatch(assignee -> assignee.getId().equals(String.valueOf(userId)))
                         || task.getOwner().getId().equals(String.valueOf(userId)))
                 .collect(Collectors.toList());
@@ -55,7 +58,7 @@ public class TaskController {
     @CrossOrigin
     @RequestMapping("/task/{userId}/{id}")
     Task getTask(@PathVariable int userId, @PathVariable int id) {
-        return taskService.getTask(id - 1);
+        return taskService.getTask(id);
     }
 
     /**
@@ -88,8 +91,15 @@ public class TaskController {
     @CrossOrigin(methods = RequestMethod.PUT)
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
     ResponseEntity<?> updateTask(@RequestBody Task task) {
-        taskService.getTask(task.getId() - 1).setStatus(task.getStatus());
+        taskService.getTask(task.getId()).setStatus(task.getStatus());
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/task/{taskId}", method = RequestMethod.PUT)
+    ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody String userId) {
+        TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
+        taskService.getTask(taskId).addAssignee(teamMember);
+        return ResponseEntity.ok().build();
+    }
 }

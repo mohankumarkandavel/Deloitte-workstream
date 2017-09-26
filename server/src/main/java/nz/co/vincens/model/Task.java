@@ -27,6 +27,7 @@ public class Task {
 	@JsonSerialize(using=ManagerSerializer.class)
 	@JsonDeserialize(using=ManagerDeserializer.class)
 	private Manager owner;
+	private List<TeamMember> requestedAssignees = new ArrayList<>();
 	private List<TeamMember> assignees = new ArrayList<>();
 
 	public Task() {
@@ -114,17 +115,26 @@ public class Task {
 		this.numAssigneesRequired = numAssigneesRequired;
 	}
 
-	public List<TeamMember> getAssignees() {
-		return assignees;
+	public List<TeamMember> getRequestedAssignees() {
+		return requestedAssignees;
 	}
 
-	public void setAssignees(List<TeamMember> assignees) {
-		this.assignees = assignees;
+	public void setRequestedAssignees(List<TeamMember> requestedAssignees) {
+		this.requestedAssignees = requestedAssignees;
+	}
+
+	public void addRequestedAssignee(TeamMember teamMember) {
+		requestedAssignees.add(teamMember);
 	}
 
 	public void addAssignee(TeamMember teamMember) {
 		assignees.add(teamMember);
 	}
+
+	public List<TeamMember> getAssignees(TeamMember teamMember) {
+		return assignees;
+	}
+
 
 	public Manager getOwner() {
 		return owner;

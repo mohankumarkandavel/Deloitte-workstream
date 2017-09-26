@@ -21,15 +21,10 @@ public class TeamMember extends User {
 		this.weightings = weightings;
 	}
 
-	public TeamMember(String id, String username, String name, String email, String password) {
+	public TeamMember(String id, String username, String name, String email, String password, Map<Group,
+			Attribute> weightings) {
 		super(id, username, name, email, "team-member", password);
-	}
-
-	public TeamMember(String id, String username, String name, String email, String role, String password, Map<Group,
-			Attribute> weightings, List<Task> tasks) {
-		super(id, username, name, email, role, password);
 		this.weightings = weightings;
-		this.tasks = tasks;
 	}
 
 	public Map<Group, Attribute> getWeightings() {
