@@ -30,4 +30,14 @@ public class UserHelperTest {
         assertEquals(0, UserHelper.Login("''", "''"));
     }
 
+    @Test
+    public void GetUserRoleOfManager() throws Exception {
+        assertEquals("Manager", UserHelper.GetRoleById(1));
+    }
+
+    @Test
+    public void GetUserRoleOfTeammember() throws Exception {
+        assertEquals("Team Member", UserHelper.GetRoleById(2));
+    }
+
 }

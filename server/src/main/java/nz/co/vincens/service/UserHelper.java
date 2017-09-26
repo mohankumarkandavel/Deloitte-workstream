@@ -54,6 +54,36 @@ public class UserHelper {
         }
     }
 
+    public static String GetRoleById(int id) {
+        String name = null;
+        // Generate database query sentence
+        String sql = "CALL GetUserRoleById(" + id + ")";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
+        try {
+            // Extract data from result set
+            while (rs.next()) {
+                // Login query should only have one row of result
+                name = rs.getString("name");
+            }
+            return name;
+        } catch (SQLException e) {
+            // Handle errors for JDBC
+            e.printStackTrace();
+            return name;
+        } finally {
+            try {
+                // Clean-up environment
+                if (!rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public static User GetUserInfoById(int id) {
         String username;
         String name;
