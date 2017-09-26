@@ -88,7 +88,7 @@ public class TaskController {
     @CrossOrigin(methods = RequestMethod.PUT)
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
     ResponseEntity<?> updateTask(@RequestBody Task task) {
-        taskService.getTask(task.getId() - 1).setStatus(Status.PENDING);
+        taskService.getTask(task.getId() - 1).setStatus(task.getStatus());
         return ResponseEntity.ok().build();
     }
 

@@ -119,6 +119,10 @@ public class Task {
 		return assignees;
 	}
 
+	public void setAssignees(List<TeamMember> assignees) {
+		this.assignees = assignees;
+	}
+
 	public void addAssignee(TeamMember teamMember) {
 		assignees.add(teamMember);
 	}
