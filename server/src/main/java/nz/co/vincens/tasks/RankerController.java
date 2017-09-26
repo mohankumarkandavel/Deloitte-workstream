@@ -57,7 +57,7 @@ public class RankerController {
         weightings = new HashMap<>();
         weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(2, 4, 3, 2));
         weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Rick Ying", "rick", "\"klau158@aucklanduni.ac.nz","5", weightings));
+        teamMembers.add(new TeamMember("Rick Ying", "rick", "klau158@aucklanduni.ac.nz","5", weightings));
 
         weightings = new HashMap<>();
         weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(4, 3, 1, 4));

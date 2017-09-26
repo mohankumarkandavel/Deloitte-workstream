@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     /**
      * Endpoint: <code>GET /login</code>
