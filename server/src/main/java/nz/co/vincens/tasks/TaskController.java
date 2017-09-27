@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -41,11 +43,26 @@ public class TaskController {
     @CrossOrigin
     @RequestMapping("/task/{userId}")
     List<Task> getTasks(@PathVariable(name = "userId") int userId) {
-        return taskService.getTasks().stream()
-                .filter(task -> task.getAssignees().stream()
-                        .anyMatch(assignee -> assignee.getId().equals(String.valueOf(userId)))
-                        || task.getOwner().getId().equals(String.valueOf(userId)))
-                .collect(Collectors.toList());
+
+		// for manager, find tasks that they own, for assignees, find tasks that are either requested or assigned
+		List<Task> tasks = new ArrayList<>();
+		for (Task task : taskService.getTasks()) {
+			if (task.getOwner().getId().equals(String.valueOf(userId))) {
+				tasks.add(task);
+			} else if (!task.getStatus().equals(Status.DRAFT)) {
+					for (int i = 0; i < task.getAssignees().size(); i++) {
+						if (task.getAssignees().get(i).getId().equals(String.valueOf(userId))) {
+							tasks.add(task);
+						}
+					}
+					for (int i = 0; i < task.getRequestedAssignees().size(); i++) {
+						if (task.getRequestedAssignees().get(i).getId().equals(String.valueOf(userId))) {
+							tasks.add(task);
+						}
+					}
+			}
+		}
+		return tasks;
     }
 
     /**
