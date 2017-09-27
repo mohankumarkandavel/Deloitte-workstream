@@ -18,12 +18,6 @@ public class TeamMember extends User {
 
 	public TeamMember(String name, String username, String email, String id, Map<Group, Attribute> weightings, String
 					  password) {
-		super(id, username, name, email, "team-member");
-		this.weightings = weightings;
-	}
-
-	public TeamMember(String id, String username, String name, String email, String password, Map<Group,
-			Attribute> weightings) {
 		super(id, username, name, email, "team-member", password);
 		this.weightings = weightings;
 	}

@@ -13,6 +13,11 @@ public class User {
     private String role;
     private String password;
 
+	// default constructor required by Spring
+	public User() {
+
+	}
+
     public User(String id, String username, String name, String email, String role, String password) {
         this.id = id;
         this.username = username;
@@ -21,18 +26,6 @@ public class User {
         this.role = role;
         this.password = password;
     }
-
-    public User(String id, String username, String name, String email, String role) {
-        this.id = id;
-        this.username = username;
-        this.name = name;
-        this.email = email;
-        this.role = role;
-    }
-
-	public User() {
-
-	}
 
 	public String getUsername() {
         return username;
