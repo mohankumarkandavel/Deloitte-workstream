@@ -2,8 +2,12 @@ package nz.co.vincens.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A task which team members get assigned to.
@@ -20,14 +24,17 @@ public class Task {
 	private Group group;
 	private Status status;
 	private int numAssigneesRequired;
-	private TeamMember[] assignees;
+	@JsonSerialize(using=ManagerSerializer.class)
+	@JsonDeserialize(using=ManagerDeserializer.class)
+	private Manager owner;
+	private List<TeamMember> assignees = new ArrayList<>();
 
 	public Task() {
 
 	}
 
 	public Task(int id, String name, String description, Attribute attribute, Date deadline, Group group, Status
-			status, int numAssigneesRequired) {
+			status, int numAssigneesRequired, Manager owner) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -36,6 +43,7 @@ public class Task {
 		this.group = group;
 		this.status = status;
 		this.numAssigneesRequired = numAssigneesRequired;
+		this.owner = owner;
 	}
 
 	public int getId() {
@@ -74,10 +82,6 @@ public class Task {
 		return attribute.getResource();
 	}
 
-	public TeamMember[] getAssignees() {
-		return assignees;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -110,7 +114,23 @@ public class Task {
 		this.numAssigneesRequired = numAssigneesRequired;
 	}
 
-	public void setAssignees(TeamMember[] assignees) {
+	public List<TeamMember> getAssignees() {
+		return assignees;
+	}
+
+	public void setAssignees(List<TeamMember> assignees) {
 		this.assignees = assignees;
+	}
+
+	public void addAssignee(TeamMember teamMember) {
+		assignees.add(teamMember);
+	}
+
+	public Manager getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Manager owner) {
+		this.owner = owner;
 	}
 }
