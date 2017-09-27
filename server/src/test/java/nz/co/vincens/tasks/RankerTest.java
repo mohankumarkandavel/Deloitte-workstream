@@ -28,12 +28,12 @@ public class RankerTest {
 	@Test
 	public void findBestTeamMembers() throws Exception {
 		task = new Task(1, "Prepare Financial Model", "For the period ending 1/09/2018", new Attribute(2, 1, 1,
-				1), new Date(), Group.BUSINESS_AND_DEVELOPMENT, Status.PENDING, 1);
+				1), new Date(), Group.BUSINESS_AND_DEVELOPMENT, Status.PENDING, 1, null);
 
 		for (int i = 0; i < 5; i++) {
 			HashMap<Group, Attribute> weightings = new HashMap<>();
 			weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(i, i, i + 1, i));
-			TeamMember teamMember = new TeamMember("Member " + i, i + "@email.com", String.valueOf(i), weightings);
+			TeamMember teamMember = new TeamMember("Member " + i,"Member " + i, i + "@email.com", String.valueOf(i), weightings);
 			teamMembers.add(teamMember);
 		}
 
@@ -50,11 +50,12 @@ public class RankerTest {
 	@Test
 	public void unavailableTeamMember() {
 		task = new Task(1, "Prepare Financial Model", "For the period ending 1/09/2018", new Attribute(2, 1, 1,
-				1), new Date(), Group.BUSINESS_AND_DEVELOPMENT, Status.PENDING, 1);
+				1), new Date(), Group.BUSINESS_AND_DEVELOPMENT, Status.PENDING, 1, null);
 
 		HashMap<Group, Attribute> weightings = new HashMap<>();
 		weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1,1, 0, 1));
-		TeamMember teamMember = new TeamMember("Member " + 0, 0 + "@email.com", String.valueOf(0), weightings);
+		TeamMember teamMember = new TeamMember("Member " + 0, "Member " + 0, 0 + "@email.com", String.valueOf(0),
+				weightings);
 		teamMembers.add(teamMember);
 		List<TeamMember> rankedTeamMembers = ranker.findBestTeamMembers(task, teamMembers);
 
