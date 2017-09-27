@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  private model = new Login("","","");
+  private model = new Login('', '', '');
 
   ngOnInit() {
     this.authenticationService.logout();
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
-          if (result !== "unauthorised") {
+          if (result !== 'unauthorised') {
               this.router.navigateByUrl(`/${result}`);
           } else {
             this.passwordError = true; // todo handle error logging
