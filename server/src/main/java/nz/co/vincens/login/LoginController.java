@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
     /**
      * Endpoint: <code>GET /login</code>

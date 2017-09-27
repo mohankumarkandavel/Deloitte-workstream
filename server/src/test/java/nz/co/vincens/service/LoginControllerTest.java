@@ -29,11 +29,8 @@ import static org.mockito.BDDMockito.given;
 @WebMvcTest(LoginController.class)
 public class LoginControllerTest {
 
-    @MockBean
-    private UserService userService;
-
-    @Autowired
-    private MockMvc mockMvc;
+    @MockBean private UserService userService;
+    @Autowired private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -49,6 +46,16 @@ public class LoginControllerTest {
                 "Team Member").param("password", "123")
                 .accept(MediaType.APPLICATION_JSON);
         
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+    }
+
+    @Test
+    public void loginSuccessManager() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login").param("username",
+                "Manager").param("password", "123")
+                .accept(MediaType.APPLICATION_JSON);
+
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
     }
