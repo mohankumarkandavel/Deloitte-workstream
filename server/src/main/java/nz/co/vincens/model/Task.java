@@ -131,7 +131,7 @@ public class Task {
 		assignees.add(teamMember);
 	}
 
-	public List<TeamMember> getAssignees(TeamMember teamMember) {
+	public List<TeamMember> getAssignees() {
 		return assignees;
 	}
 

@@ -42,7 +42,7 @@ public class TaskController {
     @RequestMapping("/task/{userId}")
     List<Task> getTasks(@PathVariable(name = "userId") int userId) {
         return taskService.getTasks().stream()
-                .filter(task -> task.getRequestedAssignees().stream()
+                .filter(task -> task.getAssignees().stream()
                         .anyMatch(assignee -> assignee.getId().equals(String.valueOf(userId)))
                         || task.getOwner().getId().equals(String.valueOf(userId)))
                 .collect(Collectors.toList());
@@ -90,16 +90,25 @@ public class TaskController {
      */
     @CrossOrigin(methods = RequestMethod.PUT)
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
-    ResponseEntity<?> updateTask(@RequestBody Task task) {
+    ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
         taskService.getTask(task.getId()).setStatus(task.getStatus());
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/task/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/task/request-assignee/{taskId}", method = RequestMethod.PUT)
     ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody String userId) {
         TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
-        taskService.getTask(taskId).addAssignee(teamMember);
+        taskService.getTask(taskId).addRequestedAssignee(teamMember);
         return ResponseEntity.ok().build();
     }
+
+    @CrossOrigin
+	@RequestMapping(value = "/task/add-assignee/{taskId}", method = RequestMethod.PUT)
+	ResponseEntity<?> updateTaskAssignees(@PathVariable int taskId, @RequestBody String userId) {
+		TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
+		taskService.getTask(taskId).addAssignee(teamMember);
+		return ResponseEntity.ok().build();
+	}
+
 }
