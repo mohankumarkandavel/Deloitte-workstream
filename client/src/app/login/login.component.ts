@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
           if (result !== 'unauthorised') {
               this.router.navigateByUrl(`/${result}`);
           } else {
-            this.passwordError = true; // todo handle error logging
+            this.passwordError = true;
           }
     },
       (error => console.log(error.toString())));
