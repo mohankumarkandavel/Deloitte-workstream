@@ -22,6 +22,10 @@ export class ManagerComponent implements OnInit {
 
   loading: Subscription;
 
+  private availabilityRangeError: boolean = false;
+  private peopleRangeError: boolean = false;
+  private resourceRangeError: boolean = false;
+
   constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
   }
 
@@ -40,9 +44,15 @@ export class ManagerComponent implements OnInit {
   }
 
   addTask() {
-    this.model.status = "Draft";
-    this.model.owner = localStorage.getItem("userId");
-    this.taskService.addTask(this.model);
+    this.resourceRangeError = Number(this.model.attribute.resource) < 1 || Number(this.model.attribute.resource) > 6;
+    this.availabilityRangeError = Number(this.model.attribute.availability) < 1 || Number(this.model.attribute.resource) > 6;
+    this.peopleRangeError = Number(this.model.peopleRequired) < 1;
+
+    if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError ) {
+      this.model.status = "Draft";
+      this.model.owner = localStorage.getItem("userId");
+      this.taskService.addTask(this.model);
+    }
   }
 
   onTaskDrop(e: any, id: string) {
