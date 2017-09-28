@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.LinkedTreeMap;
 import nz.co.vincens.login.UserService;
@@ -81,18 +82,21 @@ public class RankerControllerTest {
         assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
 
         // TODO: 28/09/2017 assert more things (based off of what userService will return)
+
         JsonParser jsonParser = new JsonParser();
         JsonElement jsonElement = jsonParser.parse(result.getResponse().getContentAsString());
         JsonArray jsonArray = jsonElement.getAsJsonArray();
-        final boolean[] valid = {true};
-        jsonArray.forEach(teamMember -> {
+
+        boolean valid = true;
+        for (JsonElement teamMember: jsonArray) {
             int availability = teamMember.getAsJsonObject().get("weightings")
                     .getAsJsonObject().get("Business and Development")
                     .getAsJsonObject().get("availability")
                     .getAsInt();
-            valid[0] = valid[0] && availability == 5;
-        });
-        assertTrue(valid[0]);
+            valid = valid && availability == 5;
+        }
+
+        assertTrue(valid);
     }
 
 }
