@@ -17,8 +17,8 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { ManagerComponent } from './tasks/manager.component';
-import { TeamMemberComponent} from "./tasks/team-member.component";
-import {TeamMemberCardComponent} from "./tasks/team-member-card.component";
+import { TeamMemberComponent} from './tasks/team-member.component';
+import {TeamMemberCardComponent} from './tasks/team-member-card.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
