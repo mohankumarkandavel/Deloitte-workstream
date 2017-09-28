@@ -27,12 +27,16 @@
 .card-description {
   font-size: 12px;
 }
+.cd-footer {
+  margin-left:0%;
+  padding-bottom:5%;
+}
 
 .info-icon {
   right:0px;
   position: absolute;
   margin-right: 3%;
-
+  font-size: 15px;
 }
 
 .text-area {

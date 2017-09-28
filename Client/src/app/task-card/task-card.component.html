@@ -9,10 +9,10 @@
 <md-card-content class="card-description">
   <div>{{task.description}}</div>
 </md-card-content>
-<md-card-footer class="card-description">
-  <!--<div *ngIf="task.assignees.length > 0"><span *ngFor="let assignees of task.assignees ">{{task.assignees}}</span><span
-    class="info-icon" md-tooltip="{{task.assignees}}" mdTooltipPosition="after"><i class="fa fa-info-circle"></i></span>
-  </div>-->
+<md-card-footer class="card-description cd-footer">
+  <div *ngIf="task.assignees.length > 0"><span *ngFor="let assignees of task.assignees ">{{assignees.name}}</span><!--<span
+    class="info-icon" md-tooltip="<span *ngFor="let assignees of task.assignees">{{assignees.name}}</span>" mdTooltipPosition="after"><i class="fa fa-info-circle"></i></span>
+ --> </div>
 </md-card-footer>
 
 

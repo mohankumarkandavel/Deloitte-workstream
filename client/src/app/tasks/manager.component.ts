@@ -27,6 +27,7 @@ export class ManagerComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTasks();
+
   }
 
   getAllTasks() {
