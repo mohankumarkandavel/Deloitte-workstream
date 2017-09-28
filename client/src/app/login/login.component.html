@@ -12,6 +12,7 @@
         <input name="password" type="password" [(ngModel)]="model.password" #password="ngModel"
                placeholder="Password" required>
         <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+        <div *ngIf="f.submitted && passwordError && password.valid" class="help-block">Password is wrong</div>
       </div>
       <div class="login-btn">
         <input type="submit" value="Login" class="btn btn-dark btn-medium btn-block">
