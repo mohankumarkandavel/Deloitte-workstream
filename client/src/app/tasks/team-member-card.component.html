@@ -1,6 +1,7 @@
 <md-card class="task-card-employee">
   <md-card-header>
-    <md-card-title class="card-title">{{task.name}} <i class="material-icons">info</i></md-card-title>
+    <md-card-title class="card-title">{{task.name}} <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after"><i
+      class="fa fa-info-circle"></i></span></md-card-title>
     <md-card-subtitle class="card-subtitle">Deadline: {{task.deadline}}</md-card-subtitle>
   </md-card-header>
   <md-card-content class="card-description">

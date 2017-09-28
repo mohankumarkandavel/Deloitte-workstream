@@ -48,22 +48,17 @@
 }
 
 .panel-body {
-  min-height: 420px;
-  padding: 10px;
+  min-height: 65vh;
   background-color: #E8EAE9;
   overflow-x: hidden;
 }
 
 .task-card {
-  background-color: rgba(26, 26, 26, 0.8);
-  margin-bottom: 8px;
+  margin:4%;
 }
 
 .current-card {
-  margin-left: 36px;
-  margin-bottom: 18px;
-  padding-left: 0px;
-  padding-right: 0px;
+margin:4.15%;
 
 }
 

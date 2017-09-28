@@ -7,7 +7,7 @@
       <div class="panel panel-default">
         <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
         <div class="panel-body pre-scrollable scroll-style">
-          <md-card class="task-card text-white" draggable="true" *ngFor="let draftTask of taskService.draftTasks"
+          <md-card class="task-card" draggable="true" *ngFor="let draftTask of taskService.draftTasks"
                [dragData]="draftTask">
             <app-task-card [task]="draftTask"></app-task-card>
           </md-card>
@@ -18,7 +18,7 @@
       <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
         <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
         <div class="panel-body pre-scrollable scroll-style">
-          <md-card class="task-card text-white" *ngFor="let pendingTask of taskService.pendingTasks">
+          <md-card class="task-card " *ngFor="let pendingTask of taskService.pendingTasks">
             <app-task-card [task]="pendingTask"></app-task-card>
           </md-card>
         </div>
@@ -30,7 +30,7 @@
         <div class="panel-body current-panel pre-scrollable scroll-style">
           <div class="row">
             <!--add  current card list here-->
-            <md-card class="col-sm-5 task-card current-card text-white"
+            <md-card class="col-sm-5 current-card"
                  *ngFor="let assignedTask of taskService.assignedTasks">
               <app-task-card [task]="assignedTask"></app-task-card>
             </md-card>
