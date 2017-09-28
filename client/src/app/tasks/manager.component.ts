@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Task} from "./task.model";
+import {Task} from './task.model';
 import {Subscription} from 'rxjs';
-import {TaskService} from "../services/task.service";
-import {RankService} from "../services/rank.service";
+import {TaskService} from '../services/task.service';
+import {RankService} from '../services/rank.service';
 
 @Component({
   selector: 'app-tasks',
