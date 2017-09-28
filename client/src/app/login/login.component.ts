@@ -10,7 +10,7 @@ import {AuthenticationService} from '../services/authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-  passwordError: boolean;
+  private passwordError: boolean = false;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
 
@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
   login() {
     this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
           if (result !== 'unauthorised') {
-              this.router.navigateByUrl(`/${result}`);
+            this.passwordError = false;
+            this.router.navigateByUrl(`/${result}`);
           } else {
             this.passwordError = true;
           }
