@@ -1,14 +1,17 @@
 .column-container {
-  padding-top: 1%;
-  padding-left: 2%;
+  padding: 2% 0 0 2%;
   align-content: center;
 }
 
-.columm {
+#column-drafts {
+  width: 24%;
+  display: inline-block;
+  vertical-align: top;
 }
 
 #column-pending {
   width: 24%;
+  margin-left: 2%;
   display: inline-block;
 }
 
@@ -22,6 +25,8 @@
 .column-body {
   padding: 4%;
   background-color: #E8EAE9;
+  max-height: 57vh;
+  overflow-y: auto;
 }
 
 .column-heading {
@@ -31,13 +36,13 @@
   padding: 4%;
 }
 
+.add-new-task {
+  padding: 1% 0 0 2%;
+}
+
 .help-block {
   font-size: 12px;
   color: red;
-}
-
-.new-task {
-  padding: 10px 0px;
 }
 
 .task-layout {
@@ -49,22 +54,17 @@
 }
 
 .panel-body {
-  min-height: 420px;
-  padding: 10px;
+  min-height: 65vh;
   background-color: #E8EAE9;
   overflow-x: hidden;
 }
 
 .task-card {
-  background-color: rgba(26, 26, 26, 0.8);
-  margin-bottom: 8px;
+  margin:4%;
 }
 
 .current-card {
-  margin-left: 36px;
-  margin-bottom: 18px;
-  padding-left: 0px;
-  padding-right: 0px;
+margin:4.15%;
 
 }
 

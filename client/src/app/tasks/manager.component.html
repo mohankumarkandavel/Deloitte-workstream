@@ -1,42 +1,25 @@
-<div class="container-fluid fill">
-  <div class="new-task">
-    <button class=" btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
+<div class="add-new-task">
+  <button class="btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
+</div>
+<div class="column-container">
+  <div id="column-drafts">
+    <div class="column-heading">Drafts</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let draftTask of taskService.draftTasks" draggable="true" [dragData]="draftTask"
+                        [task]="draftTask"></app-manager-card>
+    </div>
   </div>
-  <div class="row task-layout">
-    <div class="col-sm-3 draft">
-      <div class="panel panel-default">
-        <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" draggable="true" *ngFor="let draftTask of taskService.draftTasks"
-               [dragData]="draftTask">
-            <app-task-card [task]="draftTask"></app-task-card>
-          </div>
-        </div>
-      </div>
+  <div id="column-pending" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
+    <div class="column-heading">Pending</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let pendingTask of taskService.pendingTasks" [task]="pendingTask"></app-manager-card>
     </div>
-    <div class="col-sm-3 pending">
-      <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" *ngFor="let pendingTask of taskService.pendingTasks">
-            <app-task-card [task]="pendingTask"></app-task-card>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 current">
-      <div class="panel panel-default">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Current Tasks</div>
-        <div class="panel-body current-panel pre-scrollable scroll-style">
-          <div class="row">
-            <!--add  current card list here-->
-            <div class="card  col-sm-5 task-card current-card text-white"
-                 *ngFor="let assignedTask of taskService.assignedTasks">
-              <app-task-card [task]="assignedTask"></app-task-card>
-            </div>
-          </div>
-        </div>
-      </div>
+  </div>
+  <div id="column-assigned">
+    <div class="column-heading">Assigned</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks"
+                        [task]="assignedTask"></app-manager-card>
     </div>
   </div>
 </div>

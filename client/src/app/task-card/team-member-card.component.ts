@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {TaskService} from "../services/task.service";
-import {Task} from "./task.model";
+import {Task} from "../tasks/task.model";
 
 @Component({
   selector: 'app-team-member-card',

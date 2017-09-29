@@ -1,14 +1,13 @@
-<md-card class="task-card-employee">
+<md-card>
   <md-card-header>
-    <md-card-title class="card-title">{{task.name}} <i class="material-icons">info</i></md-card-title>
-    <md-card-subtitle class="card-subtitle">Deadline: {{task.deadline}}</md-card-subtitle>
+    <md-card-title>{{task.name}} <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after">
+      <i class="fa fa-info-circle"></i></span></md-card-title>
+    <md-card-subtitle>Deadline: {{task.deadline}}</md-card-subtitle>
   </md-card-header>
-  <md-card-content class="card-description">
+  <md-card-content>
     <div *ngIf="shown === 'NONE'">{{task.description}}</div>
     <div *ngIf="shown === 'REQUEST'">
-      <md-card-content
-        class="card-description"><textarea class="text-area"
-                                           placeholder="Request more information here"></textarea>
+      <md-card-content><textarea class="text-area" placeholder="Request more information here"></textarea>
       </md-card-content>
     </div>
     <div *ngIf="shown === 'DECLINE'">
