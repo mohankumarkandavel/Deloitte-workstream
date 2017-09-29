@@ -1,6 +1,8 @@
 .background {
-  background: url('../../assets/Y01VDYAX63.jpg') no-repeat center;
-  min-height: 90vh;
+  overflow: hidden;
+  background: url('../../assets/eclipse.png') center;
+  background-size: cover;
+  min-height: 81vh;
 }
 
 .column-container {
