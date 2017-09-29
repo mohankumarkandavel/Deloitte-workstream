@@ -18,7 +18,7 @@ export class ManagerComponent implements OnInit {
 
   private droppedTaskGroup: string;
 
-  selectedEmployeeArray = [];
+  selectedEmployeeArray:Task[] = [];
 
   loading: Subscription;
 
@@ -62,8 +62,7 @@ export class ManagerComponent implements OnInit {
       } else if (result === 'Send') {
 
         this.updateTaskStatus(e.dragData);
-        // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
-        // todo send invitation here
+        this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
         this.emptySelectedEmployeeArray();
         this.getAllTasks();
       }
@@ -84,16 +83,16 @@ export class ManagerComponent implements OnInit {
     this.selectedEmployeeArray.splice(0, this.selectedEmployeeArray.length); // clear array here
   }
 
-  toggleItemInArr(arr, item) {
-    const index = arr.indexOf(item);
-    index === -1 ? arr.push(item) : arr.splice(index, 1);
-  }
-
   addThisEmployeeToArray(employee: any, event) {
     if (!event.ctrlKey) {
       this.selectedEmployeeArray = [];
     }
     this.toggleItemInArr(this.selectedEmployeeArray, employee);
+  }
+
+  toggleItemInArr(arr, item) {
+    const index = arr.indexOf(item);
+    index === -1 ? arr.push(item) : arr.splice(index, 1);
   }
 
   newTask(id: string) {

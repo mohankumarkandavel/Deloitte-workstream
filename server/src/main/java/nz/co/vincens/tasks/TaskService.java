@@ -42,7 +42,7 @@ public class TaskService {
 
         task = new Task(tasks.size() + 1, "Task tree", "Description of a tree", new Attribute(2, 5, 3, 1), new Date()
                 , Group.HUMAN_CAPITAL, Status.PENDING, 1, manager);
-        task.addAssignee(teamMember);
+        task.addRequestedAssignee(teamMember);
         tasks.add(task);
     }
 
@@ -58,7 +58,10 @@ public class TaskService {
      * @return task with specified id
      */
     public Task getTask(int id) {
-        return tasks.get(id);
+        for( Task task: tasks) {
+            if (task.getId() == id) return task;
+        }
+        return null;
     }
 
     /**
