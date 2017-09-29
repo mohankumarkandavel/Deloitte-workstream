@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
-import {Task} from "./task.model";
 import {TaskService} from "../services/task.service";
 
 @Component({

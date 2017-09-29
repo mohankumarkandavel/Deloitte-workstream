@@ -128,6 +128,7 @@ public class Task {
 	}
 
 	public void addAssignee(TeamMember teamMember) {
+		requestedAssignees.remove(teamMember);
 		assignees.add(teamMember);
 	}
 
