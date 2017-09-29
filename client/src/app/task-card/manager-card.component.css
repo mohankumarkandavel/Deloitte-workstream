@@ -31,6 +31,12 @@
   margin-bottom: 0;
 }
 
+.cd-footer {
+  margin-left:0%;
+  padding-bottom:5%;
+  font-size: smaller;
+}
+
 .info-icon {
   right: 0;
   position: absolute;
