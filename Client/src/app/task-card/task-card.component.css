@@ -1,0 +1,47 @@
+.hide-overflow {
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  width:100%;
+  display:block;
+}
+
+.card-block{
+  padding:10px;
+}
+
+.card-title {
+  margin-top: -5%;
+  margin-left: -5%;
+  color: black;
+  font-size: 15px;
+}
+
+.card-subtitle {
+  margin-left: -4%;
+  color: black;
+  font-size: 11px;
+  margin-top: -10%;
+}
+
+.card-description {
+  font-size: 12px;
+}
+.cd-footer {
+  margin-left:0%;
+  padding-bottom:5%;
+}
+
+.info-icon {
+  right:0px;
+  position: absolute;
+  margin-right: 3%;
+  font-size: 15px;
+}
+
+.text-area {
+  width: 100%;
+  resize: none;
+  padding: 2%;
+}
+
