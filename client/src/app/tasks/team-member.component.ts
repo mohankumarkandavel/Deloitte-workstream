@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
 import {Task} from "./task.model";
+import {TaskService} from "../services/task.service";
 
 @Component({
   selector: 'app-team-member',
@@ -10,10 +10,10 @@ import {Task} from "./task.model";
 
 export class TeamMemberComponent implements OnInit {
 
-  private pendingTasks: Task[];
-  private assignedTasks: Task[];
+  private pendingTasks: Task[] = [];
+  private assignedTasks: Task[] = [];
 
-  constructor(private http: Http) {
+  constructor(private taskService: TaskService) {
   }
 
   ngOnInit(): void {
@@ -21,14 +21,7 @@ export class TeamMemberComponent implements OnInit {
   }
 
   getAllTasks() {
-    this.http.get('http://localhost:8080/task').subscribe(
-      (response) => {
-        if (response.ok) {
-          let tasks = JSON.parse(response.text());
-          this.pendingTasks = tasks.filter(task => task.status === "Pending")
-          this.assignedTasks = tasks.filter(task => task.status === "Assigned")
-        }
-      }
-    );
+    let userId = localStorage.getItem("userId");
+    this.taskService.getUsersTasks(userId);
   }
 }
