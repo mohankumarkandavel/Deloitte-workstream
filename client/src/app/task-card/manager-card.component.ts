@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manager-card.component.css'],
   inputs: ['task']
 })
-export class TaskCardComponent implements OnInit {
+export class ManagerCardComponent implements OnInit {
 
   constructor() {
-
   }
 
   ngOnInit() {
