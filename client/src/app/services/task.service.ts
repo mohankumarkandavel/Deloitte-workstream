@@ -56,4 +56,25 @@ export class TaskService {
         (error) => console.log(error.toString())
       )
   }
+
+  sendInvite(task: Task, selectedTeamMembersId: Task[]) {
+    this.http.put(this.taskURL + '/request-assignee/' + task.id, selectedTeamMembersId[0].id).subscribe((response) => {
+        if (response.ok) {
+          console.log("Invite was sent");
+        }
+      },
+      (error) => console.log(error.toString())
+    )
+  }
+
+  acceptPendingTask(task: Task) {
+    // set the tasks status to Assigned and update the task's assignees
+    this.updateTaskStatus(task, "Assigned");
+    this.http.put(this.taskURL + '/add-assignee/' + task.id, localStorage.getItem("userId")).subscribe((response) => {
+      if (response.ok) {
+        console.log("Task was accepted")
+      }
+    },
+      (error => console.log(error.toString)))
+  }
 }
