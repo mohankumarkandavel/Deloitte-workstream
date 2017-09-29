@@ -1,42 +1,25 @@
-<div class="container-fluid fill">
-  <div class="new-task">
-    <button class=" btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
+<div class="new-task">
+  <button class=" btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
+</div>
+<div class="column-container">
+  <div class="" id="column-drafts">
+    <div class="column-heading">Drafts</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let draftTask of taskService.draftTasks" draggable="true" [dragData]="draftTask"
+                        [task]="draftTask"></app-manager-card>
+    </div>
   </div>
-  <div class="row task-layout">
-    <div class="col-sm-3 draft" >
-      <div class="panel panel-default">
-        <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <md-card class="task-card" draggable="true" *ngFor="let draftTask of taskService.draftTasks"
-               [dragData]="draftTask">
-            <app-task-card [task]="draftTask"></app-task-card>
-          </md-card>
-        </div>
-      </div>
+  <div class="" id="column-pending" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
+    <div class="column-heading">Pending</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let pendingTask of taskService.pendingTasks" [task]="pendingTask"></app-manager-card>
     </div>
-    <div class="col-sm-3 pending">
-      <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <md-card class="task-card " *ngFor="let pendingTask of taskService.pendingTasks">
-            <app-task-card [task]="pendingTask"></app-task-card>
-          </md-card>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 current">
-      <div class="panel panel-default">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Current Tasks</div>
-        <div class="panel-body current-panel pre-scrollable scroll-style">
-          <div class="row">
-            <!--add  current card list here-->
-            <md-card class="col-sm-5 current-card"
-                 *ngFor="let assignedTask of taskService.assignedTasks">
-              <app-task-card [task]="assignedTask"></app-task-card>
-            </md-card>
-          </div>
-        </div>
-      </div>
+  </div>
+  <div class="" id="column-assigned">
+    <div class="column-heading">Assigned</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks"
+                        [task]="assignedTask"></app-manager-card>
     </div>
   </div>
 </div>
@@ -46,7 +29,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" >
+  <div class="modal-body">
     <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask();" #f="ngForm" novalidate>
       <div class="form-group row">
         <label class="control-label col-sm-2">Task Name</label>
@@ -58,7 +41,8 @@
       <div class="form-group row">
         <label class="control-label col-sm-2">Description</label>
         <div class="col-sm-10">
-          <textarea class="form-control" rows="3" id="description" required [(ngModel)]="model.description" name="description" #description="ngModel"></textarea>
+          <textarea class="form-control" rows="3" id="description" required [(ngModel)]="model.description"
+                    name="description" #description="ngModel"></textarea>
           <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
         </div>
       </div>
@@ -67,7 +51,8 @@
           <div class="form-group row">
             <label class="control-label col-sm-4">Deadline</label>
             <div class="col-sm-8">
-              <input class="form-control" type="date" name="deadline" [(ngModel)]="model.deadline" required #deadline="ngModel">
+              <input class="form-control" type="date" name="deadline" [(ngModel)]="model.deadline" required
+                     #deadline="ngModel">
               <div *ngIf="f.submitted && !deadline.valid" class="help-block">Deadline is required</div>
             </div>
           </div>
@@ -103,7 +88,7 @@
             <label class="control-label col-sm-4">Availability (days per week free)</label>
             <div class="col-sm-8">
               <input class="form-control" type="number" name="attribute.availability" min="1" max="5"
-              [(ngModel)]="model.attribute.availability"
+                     [(ngModel)]="model.attribute.availability"
                      #availability="ngModel">
               <div *ngIf="f.submitted && !availability.valid" class="help-block">Availability is required</div>
             </div>
