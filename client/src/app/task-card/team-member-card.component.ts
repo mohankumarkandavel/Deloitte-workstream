@@ -17,6 +17,6 @@ export class TeamMemberCardComponent {
   }
 
   onTaskAccept() {
-    this.taskService.updateTaskStatus(this.task, "Assigned");
+    this.taskService.acceptPendingTask(this.task);
   }
 }

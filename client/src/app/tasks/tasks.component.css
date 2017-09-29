@@ -40,6 +40,11 @@
   padding: 1% 0 0 2%;
 }
 
+.help-block {
+  font-size: 12px;
+  color: red;
+}
+
 .task-layout {
   margin-bottom: 20px;
 }
