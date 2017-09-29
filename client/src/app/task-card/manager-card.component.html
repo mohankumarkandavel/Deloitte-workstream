@@ -8,7 +8,13 @@
   </md-card-header>
   <md-card-content> {{task.description}}</md-card-content>
   <md-card-footer class="card-description cd-footer">
-    <div *ngIf="task.assignees.length > 0"><span *ngFor="let assignees of task.assignees ">{{assignees.name}}</span>
+    <div *ngIf="task.status === 'Pending'">Requested to: <span
+      *ngFor="let assignee of task.requestedAssignees ">
+      {{assignee.name}}</span>
+    </div>
+    <div *ngIf="task.assignees.length > 0 && task.status === 'Assigned'">Assigned to:<span
+      *ngFor="let assignee of task.assignees ">
+      {{assignee.name}}</span>
     </div>
   </md-card-footer>
 </md-card>

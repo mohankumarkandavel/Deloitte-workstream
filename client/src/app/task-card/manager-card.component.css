@@ -32,9 +32,9 @@
 }
 
 .cd-footer {
-  margin-left:0%;
+  margin-left:0;
   padding-bottom:5%;
-  font-size: smaller;
+  font-size: x-small;
 }
 
 .info-icon {
@@ -55,5 +55,10 @@
   width: 100%;
   resize: none;
   padding: 2%;
+}
+
+.mat-card-footer {
+  display: block;
+  margin: 0 0 -7%;
 }
 
