@@ -1,5 +1,5 @@
 .column-container {
-  padding-left: 2%;
+  padding: 2% 0 0 2%;
   align-content: center;
   max-height: 80%;
 }
@@ -12,6 +12,7 @@
 
 #column-pending {
   width: 24%;
+  margin-left: 2%;
   display: inline-block;
 }
 
@@ -36,8 +37,8 @@
   padding: 4%;
 }
 
-.new-task {
-  padding: 10px 0px;
+.add-new-task {
+  padding: 1% 0 0 2%;
 }
 
 .task-layout {
