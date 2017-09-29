@@ -36,7 +36,8 @@ public class LoginControllerTest {
     public void setUp() {
         List<User> users = new ArrayList<>();
         users.add(new Manager("1", "Manager", "James Too", "James@hotmail.com", "123"));
-        users.add(new TeamMember("2", "Team Member", "Bob Ross", "Bob@ross.com",  "123"));
+        users.add(new TeamMember("Bob Ross", "Team Member", "Bob@ross.com", String.valueOf(users.size() + 1),
+                null, "123"));
         given(this.userService.getUsers()).willReturn(users);
     }
     

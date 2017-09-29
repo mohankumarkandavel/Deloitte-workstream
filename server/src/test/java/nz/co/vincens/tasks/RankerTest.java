@@ -33,7 +33,8 @@ public class RankerTest {
 		for (int i = 0; i < 5; i++) {
 			HashMap<Group, Attribute> weightings = new HashMap<>();
 			weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(i, i, i + 1, i));
-			TeamMember teamMember = new TeamMember("Member " + i,"Member " + i, i + "@email.com", String.valueOf(i), weightings);
+			TeamMember teamMember = new TeamMember("Member " + i,"Member " + i, i + "@email.com", String.valueOf(i),
+					weightings, "pw");
 			teamMembers.add(teamMember);
 		}
 
@@ -55,7 +56,7 @@ public class RankerTest {
 		HashMap<Group, Attribute> weightings = new HashMap<>();
 		weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1,1, 0, 1));
 		TeamMember teamMember = new TeamMember("Member " + 0, "Member " + 0, 0 + "@email.com", String.valueOf(0),
-				weightings);
+				weightings, "pw");
 		teamMembers.add(teamMember);
 		List<TeamMember> rankedTeamMembers = ranker.findBestTeamMembers(task, teamMembers);
 
