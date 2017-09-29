@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Login} from './login.model';
-import {AuthenticationService} from "../services/authentication.service";
+import {AuthenticationService} from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +10,13 @@ import {AuthenticationService} from "../services/authentication.service";
 })
 export class LoginComponent implements OnInit {
 
+  private passwordError: boolean = false;
+
   constructor(private router: Router, private authenticationService: AuthenticationService) {
+
   }
 
-  private model = new Login("","","");
+  private model = new Login('', '', '');
 
   ngOnInit() {
     this.authenticationService.logout();
@@ -21,10 +24,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
-          if (result !== "unauthorised") {
-              this.router.navigateByUrl(`/${result}`);
+          if (result !== 'unauthorised') {
+            this.passwordError = false;
+            this.router.navigateByUrl(`/${result}`);
           } else {
-            //todo handle error logging
+            this.passwordError = true;
           }
     },
       (error => console.log(error.toString())));

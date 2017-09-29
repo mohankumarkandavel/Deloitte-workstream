@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Task} from "./task.model";
 import {TaskService} from "../services/task.service";
 
 @Component({
@@ -9,9 +8,6 @@ import {TaskService} from "../services/task.service";
 })
 
 export class TeamMemberComponent implements OnInit {
-
-  private pendingTasks: Task[] = [];
-  private assignedTasks: Task[] = [];
 
   constructor(private taskService: TaskService) {
   }
