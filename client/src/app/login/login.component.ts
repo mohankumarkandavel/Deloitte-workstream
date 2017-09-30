@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Login} from './login.model';
-import {Http, URLSearchParams} from '@angular/http';
+import {AuthenticationService} from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -10,30 +10,27 @@ import {Http, URLSearchParams} from '@angular/http';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private http: Http) {
+  private passwordError: boolean = false;
+
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
+
   }
 
-  private model = new Login("","");
+  private model = new Login('', '', '');
 
   ngOnInit() {
+    this.authenticationService.logout();
   }
 
   login() {
-    this.authenticate();
-  }
-
-  private authenticate(): void {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set("username", this.model.username);
-    params.set("password", this.model.password);
-    this.http.get("http://localhost:8080/login", {search : params} ).subscribe(
-      (response) => {
-        if(response.ok) {
-          this.router.navigateByUrl("/tasks");
-        }
-      },
-      (error) => console.log(`Error:${error.toString()}`),
-      () => console.log("Complete")
-    );
+    this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
+          if (result !== 'unauthorised') {
+            this.passwordError = false;
+            this.router.navigateByUrl(`/${result}`);
+          } else {
+            this.passwordError = true;
+          }
+    },
+      (error => console.log(error.toString())));
   }
 }

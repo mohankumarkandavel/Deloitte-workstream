@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Router} from '@angular/router';
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {Task} from "./task.model";
-import {Subscription, Observable} from 'rxjs';
+import {Task} from './task.model';
+import {Subscription} from 'rxjs';
+import {TaskService} from '../services/task.service';
+import {RankService} from '../services/rank.service';
 
 @Component({
   selector: 'app-tasks',
@@ -15,21 +15,27 @@ import {Subscription, Observable} from 'rxjs';
 export class ManagerComponent implements OnInit {
 
   private model: Task = new Task();
-  private tasks: any[];
-
-  private draftTasks: any[];
-  private assignedTasks: any[];
-  private pendingTasks: any[];
 
   private droppedTaskGroup: string;
-  private teamMembers: any[] = [];
 
-  pendingTaskList = [];
-  selectedEmployeeArray = [];
+  selectedEmployeeArray:Task[] = [];
 
   loading: Subscription;
 
-  constructor(private modalService: NgbModal, private router: Router, private http: Http) {
+  private availabilityRangeError: boolean = false;
+  private peopleRangeError: boolean = false;
+  private resourceRangeError: boolean = false;
+
+  constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
+  }
+
+  ngOnInit() {
+    this.getAllTasks();
+  }
+
+  getAllTasks() {
+    let userId = localStorage.getItem("userId");
+    this.taskService.getUsersTasks(userId);
   }
 
   onNewTask(id: string) {
@@ -38,98 +44,43 @@ export class ManagerComponent implements OnInit {
   }
 
   addTask() {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    this.model.status = "Draft";
+    this.resourceRangeError = Number(this.model.attribute.resource) < 1 || Number(this.model.attribute.resource) > 6;
+    this.availabilityRangeError = Number(this.model.attribute.availability) < 1 || Number(this.model.attribute.resource) > 6;
+    this.peopleRangeError = Number(this.model.peopleRequired) < 1;
 
-    this.http.post("http://localhost:8080/task", JSON.stringify(this.model), options)
-      .subscribe(
-        data => {
-          this.getAllTasks();
-        },
-        err => console.error(err),
-        () => {
-          console.log("complete")
-        });
-
+    if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError ) {
+      this.model.status = "Draft";
+      this.model.owner = localStorage.getItem("userId");
+      this.taskService.addTask(this.model);
+    }
   }
 
   onTaskDrop(e: any, id: string) {
-
     this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
       if (result === 'Cancel') {
-        this.onRemoveTask(e.dragData, this.pendingTaskList);
         this.emptySelectedEmployeeArray();
       } else if (result === 'Send') {
-        this.onRemoveTask(e.dragData, this.tasks);
+
         this.updateTaskStatus(e.dragData);
-        // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
-        // todo send invitation here
+        this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
         this.emptySelectedEmployeeArray();
         this.getAllTasks();
       }
-      this.teamMembers.length = 0;
+      this.rankService.teamMembers.length = 0;
     }, any => {
       this.emptySelectedEmployeeArray();
-      this.onRemoveTask(e.dragData, this.pendingTaskList);
     });
 
-    // FIXME: Extract this into its own serivce
-    this.loading = this.http.get("http://localhost:8080/rank/" + e.dragData.id)
-    .subscribe(
-      (response) => {
-        if (response.ok) {
-          this.loadTeamMembers(JSON.parse(response.text()));
-
-          this.droppedTaskGroup = e.dragData.group;
-        }
-      },
-      (error) => console.log(`Error:${error.toString()}`),
-      () => console.log("Complete")
-    );
-  }
-
-  loadTeamMembers(teamMembers: any[]) {
-    Observable.zip(
-      Observable.from(teamMembers),
-      Observable.interval(100)
-    ).subscribe(
-      res => {
-        this.teamMembers.push(res[0]);
-      },
-      err => console.log(err.toString())
-    )
+    this.loading = this.rankService.getBestTeamMembers(e.dragData);
+    this.droppedTaskGroup = e.dragData.group;
   }
 
   updateTaskStatus(task: Task) {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-
-    this.http.put("http://localhost:8080/task" , JSON.stringify(task), options)
-    .subscribe(
-      (response) => {
-        if (response.ok) {
-          this.getAllTasks();
-        }
-      },
-      (error) => console.log(error.toString())
-    )
-  }
-
-  onRemoveTask(task: any, list: Array<any>) {
-    const index = list.map(function (e) {
-      return e.taskName;
-    }).indexOf(task.taskName);
-    list.splice(index, 1);
+    this.taskService.updateTaskStatus(task, "Pending");
   }
 
   emptySelectedEmployeeArray() {
     this.selectedEmployeeArray.splice(0, this.selectedEmployeeArray.length); // clear array here
-  }
-
-  toggleItemInArr(arr, item) {
-    const index = arr.indexOf(item);
-    index === -1 ? arr.push(item) : arr.splice(index, 1);
   }
 
   addThisEmployeeToArray(employee: any, event) {
@@ -139,21 +90,9 @@ export class ManagerComponent implements OnInit {
     this.toggleItemInArr(this.selectedEmployeeArray, employee);
   }
 
-  ngOnInit() {
-    this.getAllTasks();
-  }
-
-  getAllTasks() {
-    this.http.get('http://localhost:8080/task').subscribe(
-      (response) => {
-        if (response.ok) {
-          this.tasks = JSON.parse(response.text());
-          this.draftTasks = this.tasks.filter(task => task.status === "Draft");
-          this.pendingTasks = this.tasks.filter(task => task.status === "Pending");
-          this.assignedTasks = this.tasks.filter(task => task.status === "Assigned");
-        }
-      }
-    );
+  toggleItemInArr(arr, item) {
+    const index = arr.indexOf(item);
+    index === -1 ? arr.push(item) : arr.splice(index, 1);
   }
 
   newTask(id: string) {

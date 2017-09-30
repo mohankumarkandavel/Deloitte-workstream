@@ -1,42 +1,25 @@
-<div class="container-fluid fill">
-  <div class="new-task">
-    <button class=" btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
+<div class="add-new-task">
+  <button class="btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
+</div>
+<div class="column-container">
+  <div id="column-drafts">
+    <div class="column-heading">Drafts</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let draftTask of taskService.draftTasks" draggable="true" [dragData]="draftTask"
+                        [task]="draftTask"></app-manager-card>
+    </div>
   </div>
-  <div class="row task-layout">
-    <div class="col-sm-3 draft" >
-      <div class="panel panel-default">
-        <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" draggable="true" *ngFor="let draftTask of draftTasks"
-               [dragData]="draftTask">
-            <app-task-card [task]="draftTask"></app-task-card>
-          </div>
-        </div>
-      </div>
+  <div id="column-pending" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
+    <div class="column-heading">Pending</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let pendingTask of taskService.pendingTasks" [task]="pendingTask"></app-manager-card>
     </div>
-    <div class="col-sm-3 pending">
-      <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" *ngFor="let pendingTask of pendingTasks">
-            <app-task-card [task]="pendingTask"></app-task-card>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 current">
-      <div class="panel panel-default">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Current Tasks</div>
-        <div class="panel-body current-panel pre-scrollable scroll-style">
-          <div class="row">
-            <!--add  current card list here-->
-            <div class="card  col-sm-5 task-card current-card text-white"
-                 *ngFor="let assignedTask of assignedTasks">
-              <app-task-card [task]="assignedTask"></app-task-card>
-            </div>
-          </div>
-        </div>
-      </div>
+  </div>
+  <div id="column-assigned">
+    <div class="column-heading">Assigned</div>
+    <div class="column-body">
+      <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks"
+                        [task]="assignedTask"></app-manager-card>
     </div>
   </div>
 </div>
@@ -47,7 +30,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask(); c('Close click')" #f="ngForm" novalidate>
+    <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask();" #f="ngForm" novalidate>
       <div class="form-group row">
         <label class="control-label col-sm-2">Task Name</label>
         <div class="col-sm-10">
@@ -58,7 +41,8 @@
       <div class="form-group row">
         <label class="control-label col-sm-2">Description</label>
         <div class="col-sm-10">
-          <textarea class="form-control" rows="3" id="description" required [(ngModel)]="model.description" name="description" #description="ngModel"></textarea>
+          <textarea class="form-control" rows="3" id="description" required [(ngModel)]="model.description"
+                    name="description" #description="ngModel"></textarea>
           <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
         </div>
       </div>
@@ -67,13 +51,17 @@
           <div class="form-group row">
             <label class="control-label col-sm-4">Deadline</label>
             <div class="col-sm-8">
-              <input class="form-control" type="datetime-local" name="deadline" [(ngModel)]="model.deadline" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+              <input class="form-control" type="datetime-local" name="deadline" [(ngModel)]="model.deadline" 
+                     pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required #deadline="ngModel">
+              <div *ngIf="f.submitted && !deadline.valid" class="help-block">
+                Deadline is required in the form yyyy-MM-ddThh:mm (type "T" between date and time)
+              </div>
             </div>
           </div>
           <div class="form-group row">
             <label class="control-label col-sm-4">Group</label>
             <div class="col-sm-8">
-              <select class="form-control" id="group" name="group" [(ngModel)]="model.group">
+              <select class="form-control" id="group" name="group" [(ngModel)]="model.group" required #group="ngModel">
                 <option>Financial Analysis</option>
                 <option>Project Management</option>
                 <option>Strategy</option>
@@ -85,26 +73,42 @@
                 <option>Business and Development</option>
                 <option>Marketing and Sales</option>
               </select>
+              <div *ngIf="f.submitted && !group.valid" class="help-block">Group is required</div>
             </div>
           </div>
           <div class="form-group row">
-            <label class="control-label col-sm-4">Resource</label>
+            <label class="control-label col-sm-4">Resource (1-5)</label>
             <div class="col-sm-8">
-              <input class="form-control" type="number" name="attribute.resource" [(ngModel)]="model.attribute.resource">
+              <input class="form-control" type="number" name="attribute.resource" min="1" max="5"
+                     [(ngModel)]="model.attribute.resource" #resource="ngModel" required>
+              <div *ngIf="f.submitted && !resource.valid" class="help-block">Resource is required</div>
+              <div *ngIf="f.submitted && resourceRangeError && resource.valid" class="help-block">Please enter a value
+                between 1 and 5
+              </div>
             </div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group row">
-            <label class="control-label col-sm-4">Availability</label>
+            <label class="control-label col-sm-4">Availability (days per week free)</label>
             <div class="col-sm-8">
-              <input class="form-control" type="number" name="attribute.availability" [(ngModel)]="model.attribute.availability">
+              <input class="form-control" type="number" name="attribute.availability" min="1" max="5"
+                     [(ngModel)]="model.attribute.availability" #availability="ngModel" required>
+              <div *ngIf="f.submitted && !availability.valid" class="help-block">Availability is required</div>
+              <div *ngIf="f.submitted && availabilityRangeError && availability.valid"
+                   class="help-block">Please enter a value between 1 and 5
+              </div>
             </div>
           </div>
           <div class="form-group row">
-            <label class="control-label col-sm-4">#People Required</label>
+            <label class="control-label col-sm-4">People Required</label>
             <div class="col-sm-8">
-              <input class="form-control" type="number" name="peopleRequired" [(ngModel)]="model.peopleRequired">
+              <input class="form-control" type="number" name="peopleRequired" min="1"
+                     [(ngModel)]="model.peopleRequired" #peopleRequired="ngModel" required>
+              <div *ngIf="f.submitted && !peopleRequired.valid" class="help-block">Number of people is required</div>
+              <div *ngIf="f.submitted && peopleRangeError && peopleRequired.valid" class="help-block">Please enter a
+                value greater than 1
+              </div>
             </div>
           </div>
         </div>
@@ -112,7 +116,7 @@
       <div class="form-group">
         <div class="modal-footer">
           <button class="btn btn-secondary button_cancel" (click)="c('Close click')">Cancel</button>
-          <button class="btn btn-primary button_add">Add</button>
+          <button type="submit" class="btn btn-primary button_add">Add</button>
         </div>
       </div>
     </form>
@@ -126,7 +130,7 @@
     </button>
   </div>
   <div class="modal-body pre-scrollable scroll-style">
-    <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 2000}">
+    <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 1000}">
       <tr class="bg-primary text-white">
         <th>Ranking</th>
         <th></th>
@@ -135,7 +139,7 @@
         <th>Experience</th>
         <th>Interest</th>
       </tr>
-      <tr *ngFor="let teamMember of teamMembers; let i = index;" [attr.data-index]="i"
+      <tr *ngFor="let teamMember of rankService.teamMembers; let i = index;" [attr.data-index]="i"
           (click)="addThisEmployeeToArray(teamMember, $event)"
           [class.active]="isEmployeeSelected(teamMember)">
         <td>{{i+1}}</td>

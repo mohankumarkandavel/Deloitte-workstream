@@ -1,5 +1,6 @@
 package nz.co.vincens.tasks;
 
+import nz.co.vincens.login.UserService;
 import nz.co.vincens.model.Attribute;
 import nz.co.vincens.model.Group;
 import nz.co.vincens.model.TeamMember;
@@ -26,48 +27,11 @@ import java.util.List;
 @RestController
 public class RankerController {
 
-    private List<TeamMember> teamMembers;
+    @Autowired private TaskService taskService;
+    @Autowired private UserService userService;
 
-    @Autowired
-    private TaskService taskService;
 
     public RankerController() {
-        teamMembers = new ArrayList<>();
-
-        HashMap<Group, Attribute> weightings = new HashMap<>();
-        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(4, 2, 3, 4));
-        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Amy Lin", "xlin504", "1", weightings));
-
-        weightings = new HashMap<>();
-        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1, 1, 2, 2));
-        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Kelvin Lau", "klau158", "2", weightings));
-
-        weightings = new HashMap<>();
-        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(3, 2, 4, 3));
-        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Bowen Wu", "bowen", "3", weightings));
-
-        weightings = new HashMap<>();
-        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(1, 3, 5, 4));
-        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Shenghong Huang", "shenghong", "4", weightings));
-
-        weightings = new HashMap<>();
-        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(2, 4, 3, 2));
-        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Rick Ying", "rick", "5", weightings));
-
-        weightings = new HashMap<>();
-        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(4, 3, 1, 4));
-        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Mohan Kumar", "mohan", "6", weightings));
-
-        weightings = new HashMap<>();
-        weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(5, 5, 5, 5));
-        weightings.put(Group.HUMAN_CAPITAL, new Attribute(1, 2, 3, 4));
-        teamMembers.add(new TeamMember("Fraser Lewis-Smith", "fralewsmi", "7", weightings));
     }
 
     /**
@@ -82,6 +46,6 @@ public class RankerController {
     private @ResponseBody
     List<TeamMember> getEmployees(@PathVariable(name = "task_id") int taskId) {
         Ranker ranker = new Ranker();
-        return ranker.findBestTeamMembers(taskService.getTask(taskId - 1), teamMembers);
+        return ranker.findBestTeamMembers(taskService.getTask(taskId), userService.getTeamMembers());
     }
 }

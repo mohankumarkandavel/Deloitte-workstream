@@ -1,27 +1,31 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {RouterModule, Routes} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
-import {MdCardModule} from '@angular/material';
+import {MdCardModule, MdTooltipModule} from '@angular/material';
 
-import { AlertModule } from 'ngx-bootstrap';
-import { Ng2DragDropModule } from 'ng2-drag-drop';
+import {AlertModule} from 'ngx-bootstrap';
+import {Ng2DragDropModule} from 'ng2-drag-drop';
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { FooterComponent } from './footer/footer.component';
-import { TaskCardComponent } from './task-card/task-card.component';
-import { ManagerComponent } from './tasks/manager.component';
-import { TeamMemberComponent} from "./tasks/team-member.component";
-import {TeamMemberCardComponent} from "./tasks/team-member-card.component";
+import {AppComponent} from './app.component';
+import {HeaderComponent} from './header/header.component';
+import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home/home.component';
+import {FooterComponent} from './footer/footer.component';
+import {ManagerCardComponent} from './task-card/manager-card.component';
+import {ManagerComponent} from './tasks/manager.component';
+import {TeamMemberComponent} from './tasks/team-member.component';
+import {TeamMemberCardComponent} from './task-card/team-member-card.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
+import {AuthenticationGuardService} from "./services/authentication-guard.service";
+import {AuthenticationService} from "./services/authentication.service";
+import {TaskService} from "./services/task.service";
+import {RankService} from "./services/rank.service";
 
 const appRoutes: Routes = [
   {
@@ -33,12 +37,14 @@ const appRoutes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'tasks',
-    component: ManagerComponent
+    path: 'manager',
+    component: ManagerComponent,
+    canActivate: [AuthenticationGuardService]
   },
   {
     path: 'team-member',
-    component: TeamMemberComponent
+    component: TeamMemberComponent,
+    canActivate: [AuthenticationGuardService]
   },
   {
     path: '',
@@ -54,7 +60,7 @@ const appRoutes: Routes = [
     LoginComponent,
     HomeComponent,
     FooterComponent,
-    TaskCardComponent,
+    ManagerCardComponent,
     ManagerComponent,
     TeamMemberComponent,
     TeamMemberCardComponent
@@ -72,9 +78,15 @@ const appRoutes: Routes = [
     HttpModule,
     AlertModule.forRoot(),
     Ng2DragDropModule.forRoot(),
-    MdCardModule
+    MdCardModule,
+    MdTooltipModule
   ],
-  providers: [],
+  providers: [
+    AuthenticationGuardService,
+    AuthenticationService,
+    TaskService,
+    RankService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
