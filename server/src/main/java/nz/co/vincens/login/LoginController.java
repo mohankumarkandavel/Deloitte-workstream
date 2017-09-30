@@ -45,7 +45,8 @@ public class LoginController {
                 }
             }
             if (actualUser != null) {
-                return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId() + "}");
+                return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
+						() + ", \"name\": \"" + actualUser.getName() + "\"}");
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
