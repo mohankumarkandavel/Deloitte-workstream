@@ -1,6 +1,13 @@
 .mat-card {
-  padding-bottom: 5%;
-  margin-bottom: 5%;
+  padding: 8% 7% 5% 7%;
+}
+.mat-card-content > :first-child, .mat-card > :first-child {
+  margin-top: -6%;
+}
+
+.more-info-section {
+  float: right;
+  margin: -7% -6% 0 0;
 }
 
 .mat-card-title {
@@ -32,23 +39,9 @@
 }
 
 .cd-footer {
-  margin-left:0;
-  padding-bottom:5%;
+  margin-left: 0;
+  padding-bottom: 5%;
   font-size: x-small;
-}
-
-.info-icon {
-  right: 0;
-  position: absolute;
-  margin-right: 3%;
-  margin-top: -2%;
-}
-
-.info-icon {
-  right: 0px;
-  position: absolute;
-  margin-right: 3%;
-
 }
 
 .text-area {
