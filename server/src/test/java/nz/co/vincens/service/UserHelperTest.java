@@ -11,18 +11,18 @@ public class UserHelperTest {
     }
 
     @Test
-    public void LoginSucceedEmployee() throws Exception {
-        assertEquals(2, UserHelper.Login("10002", "222222"));
+    public void LoginSucceedTeammember() throws Exception {
+        assertEquals(5, UserHelper.Login("20001", "222222"));
     }
 
     @Test
     public void LoginFailManager() throws Exception {
-        assertEquals(0, UserHelper.Login("10001", "555555"));
+        assertEquals(0, UserHelper.Login("10001", "000000"));
     }
 
     @Test
-    public void LoginFailEmployee() throws Exception {
-        assertEquals(0, UserHelper.Login("10002", "555555"));
+    public void LoginFailTeammember() throws Exception {
+        assertEquals(0, UserHelper.Login("20001", "000000"));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class UserHelperTest {
 
     @Test
     public void GetUserRoleOfTeammember() throws Exception {
-        assertEquals("Team Member", UserHelper.GetRoleById(2));
+        assertEquals("Team Member", UserHelper.GetRoleById(5));
     }
 
 }

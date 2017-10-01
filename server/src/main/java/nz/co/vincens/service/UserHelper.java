@@ -21,7 +21,7 @@ public class UserHelper {
         int count = 0;
         int id = 0;
         // Generate database query sentence
-        String sql = "CALL Login(" + Username + "," + Password + ")";
+        String sql = "CALL User_Login(" + "'" + Username + "'" + "," + "'" + Password + "'" + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
         try {
@@ -54,23 +54,31 @@ public class UserHelper {
         }
     }
 
+    /**
+     * The function of database execution.
+     * Database queries use call procedure functions.
+     *
+     * @param id The user's id
+     * @return If the no matched user, return 0, or return user role.
+     * @throws SQLException Handle errors for JDBC
+     */
     public static String GetRoleById(int id) {
-        String name = null;
+        String role = null;
         // Generate database query sentence
-        String sql = "CALL GetUserRoleById(" + id + ")";
+        String sql = "CALL User_LoadInfo(" + id + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
         try {
             // Extract data from result set
             while (rs.next()) {
                 // Login query should only have one row of result
-                name = rs.getString("name");
+                role = rs.getString("role");
             }
-            return name;
+            return role;
         } catch (SQLException e) {
             // Handle errors for JDBC
             e.printStackTrace();
-            return name;
+            return role;
         } finally {
             try {
                 // Clean-up environment
@@ -91,7 +99,7 @@ public class UserHelper {
         String email;
         int roleid;
         // Generate database query sentence
-        String sql = "CALL GetUserInfoById(" + id + ")";
+        String sql = "CALL User_LoadInfo(" + id + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
         try {

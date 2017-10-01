@@ -29,8 +29,10 @@ import static org.mockito.BDDMockito.given;
 @WebMvcTest(LoginController.class)
 public class LoginControllerTest {
 
-    @MockBean private UserService userService;
-    @Autowired private MockMvc mockMvc;
+    @MockBean
+    private UserService userService;
+    @Autowired
+    private MockMvc mockMvc;
 
 
     @Test

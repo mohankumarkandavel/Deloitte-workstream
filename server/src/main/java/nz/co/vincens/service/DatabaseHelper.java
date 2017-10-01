@@ -65,6 +65,8 @@ public class DatabaseHelper {
      * @throws Exception    Handle errors for Class.forName
      */
     public static ResultSet DatabaseExecution(String sql) {
+        // Just check the SQL recommend
+        System.out.println(sql);
         // Call a function to load database connection parameters;
         LoadDatabaseParameters();
         // Create the connection statement
