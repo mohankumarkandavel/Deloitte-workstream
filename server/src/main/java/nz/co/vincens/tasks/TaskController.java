@@ -109,6 +109,8 @@ public class TaskController {
         taskService.getTask(task.getId()).setStatus(task.getStatus());
         if (task.getReasonForDeclining().length() != 0) {
             taskService.getTask(task.getId()).setReasonForDeclining(task.getReasonForDeclining());
+            taskService.getTask(task.getId()).addDeclinedAssignee(task.getRequestedAssignees().get(0));
+            taskService.getTask(task.getId()).removeRequestedAssignee(task.getRequestedAssignees().get(0));
         }
         return ResponseEntity.ok().build();
     }

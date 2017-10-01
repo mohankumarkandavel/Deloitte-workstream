@@ -17,5 +17,6 @@ export class Task {
   public owner: string;
   public assignees: any[];
   public requestedAssignees: any[];
+  public declinedAssignees: any[];
   public reasonForDeclining: string;
 }

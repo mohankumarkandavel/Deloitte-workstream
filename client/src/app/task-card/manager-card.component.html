@@ -1,6 +1,6 @@
 <md-card>
   <div class="more-info-section">
-    <i class="material-icons" md-tooltip="{{task.requestedAssignees[0].name}} declined this task for the following reason: {{task.reasonForDeclining}}" *ngIf="task.reasonForDeclining !== null">error</i>
+    <i class="material-icons" md-tooltip="{{task.declinedAssignees[0].name}} declined this task for the following reason: {{task.reasonForDeclining}}" *ngIf="task.status ==='Draft' && task.reasonForDeclining !== null">error</i>
     <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after">
     <i class="material-icons">info</i></span>
   </div>
