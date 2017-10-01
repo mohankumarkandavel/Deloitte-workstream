@@ -107,9 +107,18 @@ public class TaskController {
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
     ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
         taskService.getTask(task.getId()).setStatus(task.getStatus());
+        if (task.getReasonForDeclining().length() != 0) {
+            taskService.getTask(task.getId()).setReasonForDeclining(task.getReasonForDeclining());
+        }
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Endpoint: <code>PUT /task/request-assignee/{taskId}</code>
+     * @param taskId The id of the {@link Task}
+     * @param userId The id of the {@link nz.co.vincens.model.User} who has been requested for the task
+     * @return 200 ok if the task is added or updated
+     */
     @CrossOrigin
     @RequestMapping(value = "/task/request-assignee/{taskId}", method = RequestMethod.PUT)
     ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody String userId) {
@@ -118,6 +127,12 @@ public class TaskController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Endpoint: <code>PUT /task/add-assignee/{taskId}</code>
+     * @param taskId The id of the {@link Task}
+     * @param userId The id of the {@link nz.co.vincens.model.User} assigned to the task
+     * @return 200 ok if the task is added or updated
+     */
     @CrossOrigin
 	@RequestMapping(value = "/task/add-assignee/{taskId}", method = RequestMethod.PUT)
 	ResponseEntity<?> updateTaskAssignees(@PathVariable int taskId, @RequestBody String userId) {

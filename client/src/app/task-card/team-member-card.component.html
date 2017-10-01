@@ -12,7 +12,7 @@
     </div>
     <div *ngIf="shown === 'DECLINE'">
       <md-card-content
-        class="card-description"><textarea class="text-area"
+        class="card-description"><textarea class="text-area" name="reasonForDeclining" [(ngModel)]="task.reasonForDeclining"
                                            placeholder="Please state your reason for declining"></textarea>
       </md-card-content>
     </div>
@@ -27,7 +27,7 @@
   <div *ngIf="shown != 'NONE'">
     <md-card-actions layout="row" layout-align="center">
       <button md-button (click)="shown= 'NONE'">Cancel</button>
-      <button md-button>Send</button>
+      <button md-button (click)="onTaskDecline()">Send</button>
     </md-card-actions>
   </div>
 </md-card>

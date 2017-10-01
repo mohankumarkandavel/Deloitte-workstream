@@ -76,7 +76,7 @@ export class ManagerComponent implements OnInit {
   }
 
   updateTaskStatus(task: Task) {
-    this.taskService.updateTaskStatus(task, "Pending");
+    this.taskService.updateTaskStatus(task, "Pending", "");
   }
 
   emptySelectedEmployeeArray() {

@@ -29,6 +29,7 @@ public class Task {
 	private Manager owner;
 	private List<TeamMember> requestedAssignees = new ArrayList<>();
 	private List<TeamMember> assignees = new ArrayList<>();
+	private String reasonForDeclining;
 
 	public Task() {
 
@@ -143,5 +144,13 @@ public class Task {
 
 	public void setOwner(Manager owner) {
 		this.owner = owner;
+	}
+
+	public String getReasonForDeclining() {
+		return reasonForDeclining;
+	}
+
+	public void setReasonForDeclining(String reasonForDeclining) {
+		this.reasonForDeclining = reasonForDeclining;
 	}
 }

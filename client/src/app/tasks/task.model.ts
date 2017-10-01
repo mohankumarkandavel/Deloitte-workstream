@@ -17,4 +17,5 @@ export class Task {
   public owner: string;
   public assignees: any[];
   public requestedAssignees: any[];
+  public reasonForDeclining: string;
 }
