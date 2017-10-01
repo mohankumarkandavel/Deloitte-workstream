@@ -16,4 +16,5 @@ export class Task {
   public peopleRequired: string;
   public owner: string;
   public assignees: any[];
+  public requestedAssignees: any[];
 }

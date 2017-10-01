@@ -1,12 +1,30 @@
-# Workload Management App
+ Workload Management App
+ ===
 
 # Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+_Under the client directory:_
+
+## Install
+
+> Run `npm install` to Install the dependencies in the local node_modules folder.
+
+This project was generated with 
+* [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+* [Bootstrap](http://getbootstrap.com/) version 4.0.0-beta.
+
+## Tests
+
+To execute unit tests, run
+> `ng e2e`
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/` on your browser. The app will automatically reload if you change any of the source files.
+
+Log in with these credentials
+> username: James\
+> password: 123
 
 ## Code scaffolding
 
@@ -29,17 +47,39 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-#Server
+# Server
+
+_Under the server directory_:
+
+## Start the server
+
+To start the server, run
+> `./gradlew bootRun`
+
+The server will run on port 8080.
+
+## Tests
+
+To execute unit tests, run
+> `./gradlew test`
+
+## Build an executable JAR file
+
+To build the JAR, run
+>`./gradlew build`
+
+It will also run the tests.
+
+Then start the server with the command
+> `java -jar build/libs/gs-rest-nz.co.vincens.service-0.1.0.jar`
+
+The server will run on port 8080.
+
 
 ## Login accounts
-# Admin
+# Manager
 Username: 10001
 Password: 111111
-# Manager
-Username: 10002
+# Team member
+Username: 20001
 Password: 222222
-# Employee
-Username: 10003
-Password: 333333
-Username: 10004
-Password: 444444
