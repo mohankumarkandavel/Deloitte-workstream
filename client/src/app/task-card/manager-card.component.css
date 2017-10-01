@@ -1,5 +1,6 @@
 .mat-card {
   padding: 8% 7% 5% 7%;
+  margin-bottom: 5%;
 }
 .mat-card-content > :first-child, .mat-card > :first-child {
   margin-top: -6%;
