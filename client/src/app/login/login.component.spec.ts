@@ -22,4 +22,8 @@ describe('LoginComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should return flase from Authenticated when there is no token', () => {
+    expect(component).toBeFalsy();
+  });
 });
