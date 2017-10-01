@@ -22,6 +22,8 @@ export class AuthenticationService {
           localStorage.setItem("role", role);
           let userId = JSON.parse(response.text()).id;
           localStorage.setItem("userId", userId);
+          let name = JSON.parse(response.text()).name;
+          localStorage.setItem("name", name);
           return role;
         }
       },
@@ -31,7 +33,7 @@ export class AuthenticationService {
       } else if(error.status === 400) {
         return Observable.of('Bad request');
       } else {
-        return Observable.throw('Server error');
+        return Observable.throw(error);
       }
     });
   }
