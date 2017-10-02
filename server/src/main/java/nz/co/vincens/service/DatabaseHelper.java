@@ -35,7 +35,7 @@ public class DatabaseHelper {
      *
      * @throws Exception Handle errors for file reading
      */
-    private static void LoadDatabaseParameters() {
+    private static void loadDatabaseParameters() {
         try {
             // Create a DocumentBuilderFactory object
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -64,11 +64,11 @@ public class DatabaseHelper {
      * @throws SQLException Handle errors for JDBC
      * @throws Exception    Handle errors for Class.forName
      */
-    public static ResultSet DatabaseExecution(String sql) {
+    public static ResultSet databaseExecution(String sql) {
         // Just check the SQL recommend
         System.out.println(sql);
         // Call a function to load database connection parameters;
-        LoadDatabaseParameters();
+        loadDatabaseParameters();
         // Create the connection statement
         Connection con = null;
         // Create the statement
@@ -99,8 +99,8 @@ public class DatabaseHelper {
         }
     }
 
-    public static int DatabaseConnection() {
-        LoadDatabaseParameters();
+    public static int databaseConnection() {
+        loadDatabaseParameters();
         // Create the connection statement
         Connection con = null;
         // Create the statement

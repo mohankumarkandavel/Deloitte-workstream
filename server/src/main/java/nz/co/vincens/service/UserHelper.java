@@ -22,7 +22,7 @@ public class UserHelper {
         // Generate database query sentence
         String sql = "CALL User_Login(" + "'" + username + "'" + "," + "'" + password + "'" + ")";
         // Call the function of database query operation
-        ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
             // Extract data from result set
             while (rs.next()) {
@@ -61,20 +61,20 @@ public class UserHelper {
      * @return If the no matched user, return 0, or return user info(username, name,email,role).
      * @throws SQLException Handle errors for JDBC
      */
-    public static User loadUserInfo(int id) {
+    public static User getUserDetail(int id) {
         User user = new User();
         user.setId(String.valueOf(id));
         // Generate database query sentence
-        String sql = "CALL User_LoadInfo(" + id + ")";
+        String sql = "CALL User_LoadDetail(" + id + ")";
         // Call the function of database query operation
-        ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
             // Extract data from result set
             while (rs.next()) {
                 // Login query should only have one row of result
                 user.setUsername(rs.getString("username"));
                 user.setName(rs.getString("name"));
-                user.setPassword(rs.getString("password"));;
+                user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
                 user.setRole(rs.getString("role"));
             }
@@ -92,10 +92,5 @@ public class UserHelper {
             }
         }
         return user;
-    }
-
-    public class loadUserInfo {
-        public loadUserInfo(int i) {
-        }
     }
 }

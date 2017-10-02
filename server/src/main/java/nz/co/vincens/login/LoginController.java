@@ -47,7 +47,7 @@ public class LoginController {
             // Query the user info by the database
             result = UserHelper.login(login.getUsername(), login.getPassword());
             if (result != 0) {
-                actualUser = UserHelper.loadUserInfo(result);
+                actualUser = UserHelper.getUserDetail(result);
                 return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
                         () + ", \"name\": \"" + actualUser.getName() + "\"}");
             } else {
