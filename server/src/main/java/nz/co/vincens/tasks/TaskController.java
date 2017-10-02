@@ -107,11 +107,17 @@ public class TaskController {
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
     ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
         taskService.getTask(task.getId()).setStatus(task.getStatus());
-        if (task.getReasonForDeclining().length() != 0) {
-            taskService.getTask(task.getId()).setReasonForDeclining(task.getReasonForDeclining());
-            taskService.getTask(task.getId()).addDeclinedAssignee(task.getRequestedAssignees().get(0));
-            taskService.getTask(task.getId()).removeRequestedAssignee(task.getRequestedAssignees().get(0));
-        }
+        if (task.getReasonForDeclining() != null) {
+			if (task.getReasonForDeclining().length() != 0) {
+				taskService.getTask(task.getId()).setReasonForDeclining(task.getReasonForDeclining());
+				taskService.getTask(task.getId()).addDeclinedAssignee(task.getRequestedAssignees().get(0));
+				taskService.getTask(task.getId()).removeRequestedAssignee(task.getRequestedAssignees().get(0));
+			}
+		}
+
+		if (task.isRequestMoreInformation()) {
+        	taskService.getTask(task.getId()).setRequestMoreInformation(true);
+		}
         return ResponseEntity.ok().build();
     }
 

@@ -31,6 +31,11 @@
   margin-bottom: 0;
 }
 
+.mat-button {
+  background: papayawhip;
+  margin: 1%;
+}
+
 .info-icon {
   right: 0;
   position: absolute;

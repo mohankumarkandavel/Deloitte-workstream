@@ -19,4 +19,5 @@ export class Task {
   public requestedAssignees: any[];
   public declinedAssignees: any[];
   public reasonForDeclining: string;
+  public requestMoreInformation: boolean;
 }

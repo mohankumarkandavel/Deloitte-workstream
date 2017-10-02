@@ -20,7 +20,11 @@
   <div *ngIf="shown === 'NONE' && task.status ==='Pending'">
     <md-card-actions layout="row" layout-align="center">
       <button md-button (click)="onTaskAccept()">Accept</button>
-      <button md-button (click)="shown = 'REQUEST'">Request More Information</button>
+      <button md-button *ngIf="showRequestMoreInfo === 'false'"
+              (click)="shown = 'NONE'; onRequestMoreInformation(); showRequestMoreInfo = 'true'">Request
+        More Information</button>
+      <button md-button *ngIf="showRequestMoreInfo === 'true'" [disabled]=true> You requested more information
+      </button>
       <button md-button (click)="shown = 'DECLINE'">Decline</button>
     </md-card-actions>
   </div>

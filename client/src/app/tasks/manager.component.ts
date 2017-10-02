@@ -60,7 +60,6 @@ export class ManagerComponent implements OnInit {
       if (result === 'Cancel') {
         this.emptySelectedEmployeeArray();
       } else if (result === 'Send') {
-
         this.updateTaskStatus(e.dragData);
         this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
         this.emptySelectedEmployeeArray();
@@ -76,7 +75,7 @@ export class ManagerComponent implements OnInit {
   }
 
   updateTaskStatus(task: Task) {
-    this.taskService.updateTaskStatus(task, "Pending", "");
+    this.taskService.updateTaskStatus(task, "Pending", "", false);
   }
 
   emptySelectedEmployeeArray() {

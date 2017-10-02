@@ -33,6 +33,8 @@ public class Task {
 
 	private String reasonForDeclining;
 
+	private boolean requestMoreInformation;
+
 	public Task() {
 
 	}
@@ -166,5 +168,13 @@ public class Task {
 
 	public void addDeclinedAssignee(TeamMember declinedAssignee) {
 		declinedAssignees.add(declinedAssignee);
+	}
+
+	public boolean isRequestMoreInformation() {
+		return requestMoreInformation;
+	}
+
+	public void setRequestMoreInformation(boolean requestMoreInformation) {
+		this.requestMoreInformation = requestMoreInformation;
 	}
 }

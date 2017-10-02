@@ -12,6 +12,7 @@ export class TeamMemberCardComponent {
   @Input()
   task: Task;
   shown: string = 'NONE';
+  showRequestMoreInfo: string = 'false';
 
   constructor(private taskService:TaskService) {
   }
@@ -20,7 +21,11 @@ export class TeamMemberCardComponent {
     this.taskService.acceptPendingTask(this.task);
   }
 
+  onRequestMoreInformation() {
+    this.taskService.updateTaskStatus(this.task, "Pending", this.task.reasonForDeclining, true);
+  }
+
   onTaskDecline(){
-    this.taskService.updateTaskStatus(this.task, "Draft", this.task.reasonForDeclining);
+    this.taskService.updateTaskStatus(this.task, "Draft", this.task.reasonForDeclining, false);
   }
 }
