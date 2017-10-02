@@ -13,10 +13,10 @@ public class User {
     private String role;
     private String password;
 
-	// default constructor required by Spring
-	public User() {
+    // default constructor required by Spring
+    public User() {
 
-	}
+    }
 
     public User(String id, String username, String name, String email, String role, String password) {
         this.id = id;
@@ -27,7 +27,7 @@ public class User {
         this.password = password;
     }
 
-	public String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -49,5 +49,29 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

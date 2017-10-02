@@ -4,7 +4,6 @@ import nz.co.vincens.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
 
 public class UserHelper {
 
@@ -12,16 +11,16 @@ public class UserHelper {
      * The function of database execution.
      * Database queries use call procedure functions.
      *
-     * @param Username The username
-     * @param Password The password
+     * @param username The username
+     * @param password The password
      * @return If the no matched user, return 0, or return user id.
      * @throws SQLException Handle errors for JDBC
      */
-    public static int Login(String Username, String Password) {
+    public static int login(String username, String password) {
         int count = 0;
         int id = 0;
         // Generate database query sentence
-        String sql = "CALL User_Login(" + "'" + Username + "'" + "," + "'" + Password + "'" + ")";
+        String sql = "CALL User_Login(" + "'" + username + "'" + "," + "'" + password + "'" + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
         try {
@@ -59,11 +58,12 @@ public class UserHelper {
      * Database queries use call procedure functions.
      *
      * @param id The user's id
-     * @return If the no matched user, return 0, or return user role.
+     * @return If the no matched user, return 0, or return user info(username, name,email,role).
      * @throws SQLException Handle errors for JDBC
      */
-    public static String GetRoleById(int id) {
-        String role = null;
+    public static User loadUserInfo(int id) {
+        User user = new User();
+        user.setId(String.valueOf(id));
         // Generate database query sentence
         String sql = "CALL User_LoadInfo(" + id + ")";
         // Call the function of database query operation
@@ -72,13 +72,15 @@ public class UserHelper {
             // Extract data from result set
             while (rs.next()) {
                 // Login query should only have one row of result
-                role = rs.getString("role");
+                user.setUsername(rs.getString("username"));
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));;
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
             }
-            return role;
         } catch (SQLException e) {
             // Handle errors for JDBC
             e.printStackTrace();
-            return role;
         } finally {
             try {
                 // Clean-up environment
@@ -89,45 +91,11 @@ public class UserHelper {
                 e.printStackTrace();
             }
         }
+        return user;
     }
 
-
-    public static User GetUserInfoById(int id) {
-        String username;
-        String name;
-        String password;
-        String email;
-        int roleid;
-        // Generate database query sentence
-        String sql = "CALL User_LoadInfo(" + id + ")";
-        // Call the function of database query operation
-        ResultSet rs = DatabaseHelper.DatabaseExecution(sql);
-        try {
-            // Extract data from result set
-            while (rs.next()) {
-                // Login query should only have one row of result
-                username = rs.getString("username");
-                name = rs.getString("name");
-                password = rs.getString("password");
-                email = rs.getString("email");
-                roleid = Integer.parseInt(rs.getString("roleid"));
-            }
-        } catch (SQLException e) {
-            // Handle errors for JDBC
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                // Clean-up environment
-                if (!rs.isClosed()) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public class loadUserInfo {
+        public loadUserInfo(int i) {
         }
-        return null;
     }
-
-
 }

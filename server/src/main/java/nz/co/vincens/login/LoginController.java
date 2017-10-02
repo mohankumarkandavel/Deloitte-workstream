@@ -1,6 +1,7 @@
 package nz.co.vincens.login;
 
 import nz.co.vincens.model.Login;
+import nz.co.vincens.model.User;
 import nz.co.vincens.service.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @Autowired private UserService userService;
+    @Autowired
+    private UserService userService;
 
     /**
      * Endpoint: <code>GET /login</code>
@@ -38,16 +40,16 @@ public class LoginController {
     public ResponseEntity login(Login login) {
         // Define user login information resource from Login Object
         // Define query result
-        int result = 0; // if it is 0, it means no matched user. Or it is the user id
-        String role = null;
+        int result = 0; // if it is 0, it means no matched user. Otherwise it is the user id
         if (login != null && login.getPassword() != null && login.getUsername() != null && !login.getPassword().isEmpty()
                 && !login.getUsername().isEmpty()) {
+            User actualUser;
             // Query the user info by the database
-            result = UserHelper.Login(login.getUsername(), login.getPassword());
+            result = UserHelper.login(login.getUsername(), login.getPassword());
             if (result != 0) {
-                // Get user's role
-                role = UserHelper.GetRoleById(result);
-                return ResponseEntity.ok().header("role", role).body("{\"id\": " + result + "}");
+                actualUser = UserHelper.loadUserInfo(result);
+                return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
+                        () + ", \"name\": \"" + actualUser.getName() + "\"}");
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }

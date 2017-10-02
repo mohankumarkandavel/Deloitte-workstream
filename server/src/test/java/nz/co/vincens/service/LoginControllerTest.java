@@ -34,11 +34,19 @@ public class LoginControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+//    @Before
+//    public void setUp() {
+//        List<User> users = new ArrayList<>();
+//        users.add(new Manager("1", "Manager", "James Too", "James@hotmail.com", "123"));
+//        users.add(new TeamMember("Bob Ross", "Team Member", "Bob@ross.com", String.valueOf(users.size() + 1),
+//                null, "123"));
+//        given(this.userService.getUsers()).willReturn(users);
+//    }
 
     @Test
     public void loginSuccessTeamMember() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login").param("username",
-                "20001").param("password", "222222")
+                "bob").param("password", "123")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -48,7 +56,7 @@ public class LoginControllerTest {
     @Test
     public void loginSuccessManager() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login").param("username",
-                "10001").param("password", "111111")
+                "james").param("password", "123")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -73,5 +81,4 @@ public class LoginControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
     }
-
 }

@@ -11,17 +11,17 @@ import static org.junit.Assert.assertNotEquals;
 
 public class DatabaseHelperTest {
     @Test
-    public void ConnectionSucceed() throws Exception {
+    public void connectionSucceed() throws Exception {
         assertEquals(1, DatabaseHelper.DatabaseConnection());
     }
 
     @Test
-    public void ConnectionNotFail() throws Exception {
+    public void connectionNotFail() throws Exception {
         assertNotEquals(0, DatabaseHelper.DatabaseConnection());
     }
 
     @Test
-    public void DriverUsable() throws Exception {
+    public void driverUsable() throws Exception {
         assertNotEquals(-1, DatabaseHelper.DatabaseConnection());
     }
 }
