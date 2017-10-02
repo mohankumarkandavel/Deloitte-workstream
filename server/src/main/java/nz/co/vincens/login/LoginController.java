@@ -43,11 +43,16 @@ public class LoginController {
         int result = 0; // if it is 0, it means no matched user. Otherwise it is the user id
         if (login != null && login.getPassword() != null && login.getUsername() != null && !login.getPassword().isEmpty()
                 && !login.getUsername().isEmpty()) {
-            User actualUser;
+            User actualUser = null;
             // Query the user info by the database
             result = UserHelper.login(login.getUsername(), login.getPassword());
+            UserHelper.getUserDetail(result);
+            for (User user : userService.getUsers()) {
+                if (user.getUsername().equals(login.getUsername()) && user.getPassword().equals(login.getPassword())) {
+                    actualUser = user;
+                }
+            }
             if (result != 0) {
-                actualUser = UserHelper.getUserDetail(result);
                 return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
                         () + ", \"name\": \"" + actualUser.getName() + "\"}");
             } else {

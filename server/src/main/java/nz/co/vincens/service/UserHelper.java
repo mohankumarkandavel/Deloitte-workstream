@@ -1,9 +1,15 @@
 package nz.co.vincens.service;
 
+import nz.co.vincens.model.Attribute;
+import nz.co.vincens.model.Group;
+import nz.co.vincens.model.Manager;
 import nz.co.vincens.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class UserHelper {
 
@@ -61,9 +67,10 @@ public class UserHelper {
      * @return If the no matched user, return 0, or return user info(username, name,email,role).
      * @throws SQLException Handle errors for JDBC
      */
-    public static User getUserDetail(int id) {
-        User user = new User();
-        user.setId(String.valueOf(id));
+    public static void getUserDetail(int id) {
+        String role;
+        HashMap<Group, Attribute> weightings;
+        List<User> users = new ArrayList<>();
         // Generate database query sentence
         String sql = "CALL User_LoadDetail(" + id + ")";
         // Call the function of database query operation
@@ -72,11 +79,16 @@ public class UserHelper {
             // Extract data from result set
             while (rs.next()) {
                 // Login query should only have one row of result
-                user.setUsername(rs.getString("username"));
-                user.setName(rs.getString("name"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setRole(rs.getString("role"));
+                role = rs.getString("role");
+                String username = rs.getString("username");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                System.out.println(role);
+                if (role == "manager") {
+                    users.add(new Manager(String.valueOf(id), username, name, email, password));
+                } else {
+                }
             }
         } catch (SQLException e) {
             // Handle errors for JDBC
@@ -91,6 +103,6 @@ public class UserHelper {
                 e.printStackTrace();
             }
         }
-        return user;
+//        return user;
     }
 }
