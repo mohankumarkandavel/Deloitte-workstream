@@ -12,7 +12,7 @@ export class TeamMemberCardComponent {
   @Input()
   task: Task;
   shown: string = 'NONE';
-  showRequestMoreInfo: string = 'false';
+  showRequestMoreInfo: boolean = false;
 
   constructor(private taskService:TaskService) {
   }
