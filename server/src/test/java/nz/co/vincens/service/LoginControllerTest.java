@@ -56,7 +56,7 @@ public class LoginControllerTest {
     @Test
     public void loginSuccessManager() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login").param("username",
-                "james").param("password", "123")
+                "Manager").param("password", "123")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();

@@ -45,6 +45,7 @@ public class RankerController {
     @RequestMapping("/rank/{task_id}")
     private @ResponseBody
     List<TeamMember> getEmployees(@PathVariable(name = "task_id") int taskId) {
+        System.out.println("Rankkkkkkkkkkkkkkkkk");
         Ranker ranker = new Ranker();
         return ranker.findBestTeamMembers(taskService.getTask(taskId), userService.getTeamMembers());
     }

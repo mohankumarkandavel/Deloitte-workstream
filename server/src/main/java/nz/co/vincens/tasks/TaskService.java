@@ -28,6 +28,7 @@ public class TaskService {
     }
 
     @PostConstruct
+    // 提供虚假数据，用于关联已有任务和员工
     private void init() {
         this.tasks = new ArrayList<>();
         Manager manager = (Manager) userService.getUsers().get(0);

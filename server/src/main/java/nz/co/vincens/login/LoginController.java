@@ -46,13 +46,14 @@ public class LoginController {
             User actualUser = null;
             // Query the user info by the database
             result = UserHelper.login(login.getUsername(), login.getPassword());
-            UserHelper.getUserDetail(result);
-            for (User user : userService.getUsers()) {
-                if (user.getUsername().equals(login.getUsername()) && user.getPassword().equals(login.getPassword())) {
-                    actualUser = user;
-                }
-            }
             if (result != 0) {
+                actualUser = UserHelper.getUserDetails(result);
+                System.out.println("Id: " + actualUser.getId());
+                System.out.println("Username: " + actualUser.getUsername());
+                System.out.println("Name: " + actualUser.getName());
+                System.out.println("Password: " + actualUser.getPassword());
+                System.out.println("Role: " + actualUser.getRole());
+                System.out.println("Email: " + actualUser.getEmail());
                 return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
                         () + ", \"name\": \"" + actualUser.getName() + "\"}");
             } else {

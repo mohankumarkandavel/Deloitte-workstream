@@ -1,9 +1,7 @@
 package nz.co.vincens.service;
 
-import nz.co.vincens.model.Attribute;
-import nz.co.vincens.model.Group;
-import nz.co.vincens.model.Manager;
-import nz.co.vincens.model.User;
+import nz.co.vincens.login.UserService;
+import nz.co.vincens.model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +24,7 @@ public class UserHelper {
         int count = 0;
         int id = 0;
         // Generate database query sentence
-        String sql = "CALL User_Login(" + "'" + username + "'" + "," + "'" + password + "'" + ")";
+        String sql = "CALL User_login(" + "'" + username + "'" + "," + "'" + password + "'" + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
@@ -59,36 +57,25 @@ public class UserHelper {
         }
     }
 
-    /**
-     * The function of database execution.
-     * Database queries use call procedure functions.
-     *
-     * @param id The user's id
-     * @return If the no matched user, return 0, or return user info(username, name,email,role).
-     * @throws SQLException Handle errors for JDBC
-     */
-    public static void getUserDetail(int id) {
-        String role;
-        HashMap<Group, Attribute> weightings;
-        List<User> users = new ArrayList<>();
-        // Generate database query sentence
-        String sql = "CALL User_LoadDetail(" + id + ")";
+    public static User getUserDetails(int id) {
+        User actualUser = new User();
+        String username = null;
+        String name = null;
+        String password = null;
+        String email = null;
+        String role = null;
+        String sql = "CALL User_getUserDetails(" + id + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
             // Extract data from result set
             while (rs.next()) {
                 // Login query should only have one row of result
+                username = rs.getString("username");
+                name = rs.getString("name");
+                password = rs.getString("password");
+                email = rs.getString("email");
                 role = rs.getString("role");
-                String username = rs.getString("username");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String password = rs.getString("password");
-                System.out.println(role);
-                if (role == "manager") {
-                    users.add(new Manager(String.valueOf(id), username, name, email, password));
-                } else {
-                }
             }
         } catch (SQLException e) {
             // Handle errors for JDBC
@@ -103,6 +90,49 @@ public class UserHelper {
                 e.printStackTrace();
             }
         }
-//        return user;
+        actualUser.setId(String.valueOf(id));
+        actualUser.setUsername(username);
+        actualUser.setName(name);
+        actualUser.setPassword(password);
+        actualUser.setEmail(email);
+        actualUser.setRole(role);
+        return actualUser;
+    }
+
+
+    public static Manager getManagerById(int id) {
+        Manager actualManager = null;
+        String username = null;
+        String name = null;
+        String password = null;
+        String email = null;
+        String sql = "CALL User_getManagerById(" + id + ")";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            // Extract data from result set
+            while (rs.next()) {
+                // Login query should only have one row of result
+                username = rs.getString("username");
+                name = rs.getString("name");
+                password = rs.getString("password");
+                email = rs.getString("email");
+            }
+        } catch (SQLException e) {
+            // Handle errors for JDBC
+            e.printStackTrace();
+        } finally {
+            try {
+                // Clean-up environment
+                if (!rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        new Manager(String.valueOf(id), username, name, email, password);
+        System.out.println(String.valueOf(id)+username);
+        return actualManager;
     }
 }
