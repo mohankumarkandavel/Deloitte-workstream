@@ -4,6 +4,7 @@ import nz.co.vincens.login.UserService;
 import nz.co.vincens.model.Status;
 import nz.co.vincens.model.Task;
 import nz.co.vincens.model.TeamMember;
+import nz.co.vincens.service.TaskHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,7 +93,6 @@ public class TaskController {
      * <br/>
      * Adds a tasks specified by the request body, JSON format of a task
      * 仅限于manager
-     * taskname, description, deadline, group, resource, availability, people required
      * 增加一个任务
      * 添加后，重新加载全部任务（执行11111111）
      *
@@ -102,6 +102,8 @@ public class TaskController {
     @RequestMapping(value = "/task", method = RequestMethod.POST)
     ResponseEntity<?> addTask(@RequestBody Task task) {
         System.out.printf("3333333333");
+        task.setId(taskService.getTasks().size() + 1);
+        task.setStatus(Status.DRAFT);
         System.out.println(task.getName());
         System.out.println(task.getDescription());
         System.out.println(task.getDeadline());
@@ -109,12 +111,9 @@ public class TaskController {
         System.out.println(task.getResources());
         System.out.println(task.getAvailability());
         System.out.println(task.getNumAssigneesRequired());
-        System.out.println("Status before: " + task.getStatus());
-        task.setId(taskService.getTasks().size() + 1);
-        task.setStatus(Status.DRAFT);
-        System.out.println(task.getId());
-        System.out.println("Status after: " + task.getStatus());
-        taskService.addTask(task);
+        System.out.println(task.getStatus());
+        TaskHelper.addTask(task,1);
+//        taskService.addTask(task);
         try {
             return ResponseEntity.created(new URI("/task/" + task.getId())).build();
         } catch (URISyntaxException e) {

@@ -43,7 +43,7 @@ public class LoginController {
         int result = 0; // if it is 0, it means no matched user. Otherwise it is the user id
         if (login != null && login.getPassword() != null && login.getUsername() != null && !login.getPassword().isEmpty()
                 && !login.getUsername().isEmpty()) {
-            User actualUser = null;
+            User actualUser;
             // Query the user info by the database
             result = UserHelper.login(login.getUsername(), login.getPassword());
             if (result != 0) {

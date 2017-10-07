@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class TaskHelper {
-    public static void addTask(Task task) {
+    public static void addTask(Task task, int ownId) {
         String name = task.getName();
         String description = task.getDescription();
         String deadline = String.valueOf(task.getDeadline());
@@ -20,8 +20,8 @@ public class TaskHelper {
         String resource = String.valueOf(task.getResources());
         String availability = String.valueOf(task.getAvailability());
         String numAssigneesRequired = String.valueOf(task.getNumAssigneesRequired());
-        String status = "Draft";
-        String sql = "CALL User_getAddTask(" + "'" + name + "'" + "'" + description + "'" + "'" + deadline + "'" + "'" + group + "'" + "'" + resource + "'" + "'" + availability + "'" + "'" + numAssigneesRequired + "'" + "'" + status + "'" + ")";
+        String status = String.valueOf(task.getStatus());
+        String sql = "CALL Task_addTask(" + "'" + name + "'" + "," + "'" + description + "'" + "," + availability + "," + resource + "," + "'" + deadline + "'" + "," + "'" + group + "'" + "," + "'" + status + "'" + "," + "'" + numAssigneesRequired + "'" + "," + ownId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
