@@ -1,7 +1,9 @@
 package nz.co.vincens.tasks;
 
+import nz.co.vincens.login.UserService;
 import nz.co.vincens.model.Status;
 import nz.co.vincens.model.Task;
+import nz.co.vincens.model.TeamMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * API endpoints for accessing and managing nz.co.vincens.tasks
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 public class TaskController {
 
     @Autowired private TaskService taskService;
+    @Autowired private UserService userService;
 
     /**
      * Endpoint: <code>GET /task</code>
@@ -38,11 +41,26 @@ public class TaskController {
     @CrossOrigin
     @RequestMapping("/task/{userId}")
     List<Task> getTasks(@PathVariable(name = "userId") int userId) {
-        return taskService.getTasks().stream()
-                .filter(task -> task.getAssignees().stream()
-                        .anyMatch(assignee -> assignee.getId().equals(String.valueOf(userId)))
-                        || task.getOwner().getId().equals(String.valueOf(userId)))
-                .collect(Collectors.toList());
+
+		// for manager, find tasks that they own, for assignees, find tasks that are either requested or assigned
+		List<Task> tasks = new ArrayList<>();
+		for (Task task : taskService.getTasks()) {
+			if (task.getOwner().getId().equals(String.valueOf(userId))) {
+				tasks.add(task);
+			} else if (!task.getStatus().equals(Status.DRAFT)) {
+					for (int i = 0; i < task.getAssignees().size(); i++) {
+						if (task.getAssignees().get(i).getId().equals(String.valueOf(userId))) {
+							tasks.add(task);
+						}
+					}
+					for (int i = 0; i < task.getRequestedAssignees().size(); i++) {
+						if (task.getRequestedAssignees().get(i).getId().equals(String.valueOf(userId))) {
+							tasks.add(task);
+						}
+					}
+			}
+		}
+		return tasks;
     }
 
     /**
@@ -55,7 +73,7 @@ public class TaskController {
     @CrossOrigin
     @RequestMapping("/task/{userId}/{id}")
     Task getTask(@PathVariable int userId, @PathVariable int id) {
-        return taskService.getTask(id - 1);
+        return taskService.getTask(id);
     }
 
     /**
@@ -87,9 +105,60 @@ public class TaskController {
      */
     @CrossOrigin(methods = RequestMethod.PUT)
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
-    ResponseEntity<?> updateTask(@RequestBody Task task) {
-        taskService.getTask(task.getId() - 1).setStatus(task.getStatus());
+    ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
+        taskService.getTask(task.getId()).setStatus(task.getStatus());
+        if (task.getReasonForDeclining() != null) {
+			if (task.getReasonForDeclining().length() != 0) {
+				taskService.getTask(task.getId()).setReasonForDeclining(task.getReasonForDeclining());
+				taskService.getTask(task.getId()).addDeclinedAssignee(task.getRequestedAssignees().get(0));
+				taskService.getTask(task.getId()).removeRequestedAssignee(task.getRequestedAssignees().get(0));
+			}
+		}
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Endpoint: <code>PUT /task/request-assignee/{taskId}</code>
+     * @param taskId The id of the {@link Task}
+     * @param userId The id of the {@link nz.co.vincens.model.User} who has been requested for the task
+     * @return 200 ok if the task is added or updated
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/task/request-assignee/{taskId}", method = RequestMethod.PUT)
+    ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody String userId) {
+        TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
+        taskService.getTask(taskId).addRequestedAssignee(teamMember);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Endpoint: <code>PUT /task/add-assignee/{taskId}</code>
+     * @param taskId The id of the {@link Task}
+     * @param userId The id of the {@link nz.co.vincens.model.User} assigned to the task
+     * @return 200 ok if the task is added or updated
+     */
+    @CrossOrigin
+	@RequestMapping(value = "/task/add-assignee/{taskId}", method = RequestMethod.PUT)
+	ResponseEntity<?> updateTaskAssignees(@PathVariable int taskId, @RequestBody String userId) {
+		TeamMember teamMember = (TeamMember) userService.getUser(Integer.parseInt(userId));
+		taskService.getTask(taskId).addAssignee(teamMember);
+		return ResponseEntity.ok().build();
+	}
+
+    /**
+     * Endpoint: <code>PUT /task/{taskId}/requestsById</code>
+     * Specifies that the given user has requested more information for the given task
+     * @param taskId the id of the task
+     * @param userId the id of the user
+     * @return 303 See Other, URI location is the task that has been modified
+     * @throws URISyntaxException if the URI location is invalid
+     */
+	@CrossOrigin
+    @RequestMapping(value = "/task/{taskId}/requestsById", method = RequestMethod.PUT)
+    ResponseEntity<?> requestMoreInformation(@PathVariable int taskId, @RequestBody String userId) throws
+            URISyntaxException {
+        taskService.getTask(taskId).requestMoreInfo(Integer.parseInt(userId));
+        return ResponseEntity.status(HttpStatus.SEE_OTHER).location(new URI("/task/" + taskId)).build();
     }
 
 }

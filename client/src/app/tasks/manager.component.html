@@ -1,173 +1,178 @@
-<div class="container-fluid fill">
-  <div class="row task-row">
-  <div class="new-task col-md-8">
-    <button class=" btn btn-primary" (click)="onNewTask(newTaskModal);">Add New Task</button>
+<div class="background">
+  <div class="add-new-task">
+    <button class="btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
   </div>
-  <div class="col-md-4 search-bar">
+  <div class="search-bar">
     <div class="form-group">
       <input class="form-control" placeholder="Please enter task name" [formControl] = "titleFilter" >
     </div>
   </div>
+  <div class="column-container">
+    <div id="column-drafts">
+      <div class="column-heading">Drafts</div>
+      <div class="column-body">
+        <div *ngIf="taskService.draftTasks.length === 0"> You currently have no draft tasks.</div>
+        <app-manager-card *ngFor="let draftTask of taskService.draftTasks | filter :'name' : keyword" draggable="true" [dragData]="draftTask"
+                          [task]="draftTask"></app-manager-card>
+      </div>
+    </div>
+    <div id="column-pending" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
+      <div class="column-heading">Pending</div>
+      <div class="column-body">
+        <div *ngIf="taskService.pendingTasks.length === 0"> You currently have no pending tasks.</div>
+        <app-manager-card *ngFor="let pendingTask of taskService.pendingTasks | filter :'name' : keyword" [task]="pendingTask"></app-manager-card>
+      </div>
+    </div>
+    <div id="column-assigned">
+      <div class="column-heading">Assigned</div>
+      <div class="column-body">
+        <div *ngIf="taskService.assignedTasks.length === 0"> You currently have no assigned tasks.</div>
+        <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks | filter :'name' : keyword"
+        [task]="assignedTask"></app-manager-card>
+      </div>
+    </div>
   </div>
-  <div class="row task-layout">
-    <div class="col-sm-3 draft" >
-      <div class="panel panel-default">
-        <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" draggable="true" *ngFor="let draftTask of taskService.draftTasks | filter :'name' : keyword"
-               [dragData]="draftTask">
-            <app-task-card [task]="draftTask"></app-task-card>
+  <ng-template #newTaskModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask();" #f="ngForm" novalidate>
+        <div class="form-group row">
+          <label class="control-label col-sm-2">Task Name</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
+            <div *ngIf="f.submitted && !name.valid" class="help-block">Task name is required</div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-3 pending">
-      <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
-        <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" *ngFor="let pendingTask of taskService.pendingTasks | filter :'name' : keyword">
-            <app-task-card [task]="pendingTask"></app-task-card>
+        <div class="form-group row">
+          <label class="control-label col-sm-2">Description</label>
+          <div class="col-sm-10">
+          <textarea class="form-control" rows="3" id="description" required [(ngModel)]="model.description"
+                    name="description" #description="ngModel"></textarea>
+            <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-6 current">
-      <div class="panel panel-default">
-        <div class="panel-heading  bg-primary text-white text-uppercase">Current Tasks</div>
-        <div class="panel-body current-panel pre-scrollable scroll-style">
-          <div class="row">
-            <!--add  current card list here-->
-            <div class="card  col-sm-5 task-card current-card text-white"
-                 *ngFor="let assignedTask of taskService.assignedTasks | filter :'name' : keyword">
-              <app-task-card [task]="assignedTask"></app-task-card>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label class="control-label col-sm-4">Deadline</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="date" name="deadline" [(ngModel)]="model.deadline" required
+                       #deadline="ngModel">
+                <div *ngIf="f.submitted && !deadline.valid" class="help-block">Deadline is required</div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="control-label col-sm-4">Group</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="group" name="group" [(ngModel)]="model.group" required
+                        #group="ngModel">
+                  <option>Financial Analysis</option>
+                  <option>Project Management</option>
+                  <option>Strategy</option>
+                  <option>Operations</option>
+                  <option>Technology</option>
+                  <option>Human Capital</option>
+                  <option>Software</option>
+                  <option>Teaching and Training</option>
+                  <option>Business and Development</option>
+                  <option>Marketing and Sales</option>
+                </select>
+                <div *ngIf="f.submitted && !group.valid" class="help-block">Group is required</div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="control-label col-sm-4">Resource (1-5)</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="number" name="attribute.resource" min="1" max="5"
+                       [(ngModel)]="model.attribute.resource" #resource="ngModel" required>
+                <div *ngIf="f.submitted && !resource.valid" class="help-block">Resource is required</div>
+                <div *ngIf="f.submitted && resourceRangeError && resource.valid" class="help-block">Please enter a value
+                  between 1 and 5
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label class="control-label col-sm-4">Availability (days per week free)</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="number" name="attribute.availability" min="1" max="5"
+                       [(ngModel)]="model.attribute.availability" #availability="ngModel" required>
+                <div *ngIf="f.submitted && !availability.valid" class="help-block">Availability is required</div>
+                <div *ngIf="f.submitted && availabilityRangeError && availability.valid"
+                     class="help-block">Please enter a value between 1 and 5
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="control-label col-sm-4">People Required</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="number" name="peopleRequired" min="1"
+                       [(ngModel)]="model.peopleRequired" #peopleRequired="ngModel" required>
+                <div *ngIf="f.submitted && !peopleRequired.valid" class="help-block">Number of people is required</div>
+                <div *ngIf="f.submitted && peopleRangeError && peopleRequired.valid" class="help-block">Please enter a
+                  value greater than 1
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="form-group">
+          <div class="modal-footer">
+            <button class="btn btn-secondary button_cancel" (click)="c('Close click')">Cancel</button>
+            <button type="submit" class="btn btn-primary button_add">Add</button>
+          </div>
+        </div>
+      </form>
     </div>
-  </div>
+  </ng-template>
+  <ng-template #recommendTeam let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title">Recommended Team Members</h5>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body pre-scrollable scroll-style">
+      <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 1000}">
+        <tr class="bg-primary text-white">
+          <th>Ranking</th>
+          <th></th>
+          <th>Name</th>
+          <th>Availability</th>
+          <th>Experience</th>
+          <th>Interest</th>
+        </tr>
+        <tr *ngFor="let teamMember of rankService.teamMembers; let i = index;" [attr.data-index]="i"
+            (click)="addThisEmployeeToArray(teamMember, $event)"
+            [class.active]="isEmployeeSelected(teamMember)">
+          <td>{{i+1}}</td>
+          <td><i class="fa fa-user" aria-hidden="true"></i>{{teamMember.icon}}</td>
+          <td>{{teamMember.name}}</td>
+          <td>{{teamMember.weightings[droppedTaskGroup].availability}}</td>
+          <td>{{teamMember.weightings[droppedTaskGroup].experience}}</td>
+          <td>{{teamMember.weightings[droppedTaskGroup].interest}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="c('Cancel')">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="c('Send')">Send Invitation</button>
+    </div>
+  </ng-template>
+  <ng-template #invitationSend let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title">Successfully send</h5>
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <pre>{{selectedEmployeeArray|json }}</pre>
+    </div>
+  </ng-template>
 </div>
-<ng-template #newTaskModal let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask(); c('Close click')" #f="ngForm" novalidate>
-      <div class="form-group row">
-        <label class="control-label col-sm-2">Task Name</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
-          <div *ngIf="f.submitted && !name.valid" class="help-block">Task name is required</div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="control-label col-sm-2">Description</label>
-        <div class="col-sm-10">
-          <textarea class="form-control" rows="3" id="description" required [(ngModel)]="model.description" name="description" #description="ngModel"></textarea>
-          <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label class="control-label col-sm-4">Deadline</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="date" name="deadline" [(ngModel)]="model.deadline">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="control-label col-sm-4">Group</label>
-            <div class="col-sm-8">
-              <select class="form-control" id="group" name="group" [(ngModel)]="model.group">
-                <option>Financial Analysis</option>
-                <option>Project Management</option>
-                <option>Strategy</option>
-                <option>Operations</option>
-                <option>Technology</option>
-                <option>Human Capital</option>
-                <option>Software</option>
-                <option>Teaching and Training</option>
-                <option>Business and Development</option>
-                <option>Marketing and Sales</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="control-label col-sm-4">Resource</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text" name="attribute.resource" [(ngModel)]="model.attribute.resource">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label class="control-label col-sm-4">Availability</label>
-            <div class="col-sm-8">
-              <input class="form-control" name="attribute.availability" [(ngModel)]="model.attribute.availability">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="control-label col-sm-4">#People Required</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="number" name="peopleRequired" [(ngModel)]="model.peopleRequired">
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="modal-footer">
-          <button class="btn btn-secondary button_cancel" (click)="c('Close click')">Cancel</button>
-          <button class="btn btn-primary button_add">Add</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</ng-template>
-<ng-template #recommendTeam let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h5 class="modal-title">Recommended Team Members</h5>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body pre-scrollable scroll-style">
-    <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 1000}">
-      <tr class="bg-primary text-white">
-        <th>Ranking</th>
-        <th></th>
-        <th>Name</th>
-        <th>Availability</th>
-        <th>Experience</th>
-        <th>Interest</th>
-      </tr>
-      <tr *ngFor="let teamMember of rankService.teamMembers; let i = index;" [attr.data-index]="i"
-          (click)="addThisEmployeeToArray(teamMember, $event)"
-          [class.active]="isEmployeeSelected(teamMember)">
-        <td>{{i+1}}</td>
-        <td><i class="fa fa-user" aria-hidden="true"></i>{{teamMember.icon}}</td>
-        <td>{{teamMember.name}}</td>
-        <td>{{teamMember.weightings[droppedTaskGroup].availability}}</td>
-        <td>{{teamMember.weightings[droppedTaskGroup].experience}}</td>
-        <td>{{teamMember.weightings[droppedTaskGroup].interest}}</td>
-      </tr>
-    </table>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="c('Send')">Send Invitation</button>
-  </div>
-</ng-template>
-<ng-template #invitationSend let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h5 class="modal-title">Successfully send</h5>
-    <button type="button" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <pre>{{selectedEmployeeArray|json }}</pre>
-  </div>
-</ng-template>

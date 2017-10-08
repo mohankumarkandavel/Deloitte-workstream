@@ -1,12 +1,10 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Task} from "./task.model";
+import {Task} from './task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from "../services/task.service";
 import {RankService} from "../services/rank.service";
 import {FormControl} from "@angular/forms";
-import 'rxjs/Rx';
-// import { FilterPipe } from '../pipe/filter.pipe';
 
 @Component({
   selector: 'app-tasks',
@@ -22,12 +20,14 @@ export class ManagerComponent implements OnInit {
   private droppedTaskGroup: string;
 
   public  keyword: string; // key word for searching
-
   public  titleFilter: FormControl = new FormControl();
-
-  selectedEmployeeArray = [];
+  selectedEmployeeArray:Task[] = [];
 
   loading: Subscription;
+
+  private availabilityRangeError: boolean = false;
+  private peopleRangeError: boolean = false;
+  private resourceRangeError: boolean = false;
 
   constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
     this.titleFilter.valueChanges
@@ -52,9 +52,15 @@ export class ManagerComponent implements OnInit {
   }
 
   addTask() {
-    this.model.status = "Draft";
-    this.model.owner = localStorage.getItem("userId");
-    this.taskService.addTask(this.model);
+    this.resourceRangeError = Number(this.model.attribute.resource) < 1 || Number(this.model.attribute.resource) > 6;
+    this.availabilityRangeError = Number(this.model.attribute.availability) < 1 || Number(this.model.attribute.resource) > 6;
+    this.peopleRangeError = Number(this.model.peopleRequired) < 1;
+
+    if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError ) {
+      this.model.status = "Draft";
+      this.model.owner = localStorage.getItem("userId");
+      this.taskService.addTask(this.model);
+    }
   }
 
   onTaskDrop(e: any, id: string) {
@@ -62,10 +68,8 @@ export class ManagerComponent implements OnInit {
       if (result === 'Cancel') {
         this.emptySelectedEmployeeArray();
       } else if (result === 'Send') {
-
         this.updateTaskStatus(e.dragData);
-        // this.modalService.open('invitationSend', { windowClass: 'alert-modal' });
-        // todo send invitation here
+        this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
         this.emptySelectedEmployeeArray();
         this.getAllTasks();
       }
@@ -79,16 +83,11 @@ export class ManagerComponent implements OnInit {
   }
 
   updateTaskStatus(task: Task) {
-    this.taskService.updateTaskStatus(task, "Pending");
+    this.taskService.updateTaskStatus(task, "Pending", "");
   }
 
   emptySelectedEmployeeArray() {
     this.selectedEmployeeArray.splice(0, this.selectedEmployeeArray.length); // clear array here
-  }
-
-  toggleItemInArr(arr, item) {
-    const index = arr.indexOf(item);
-    index === -1 ? arr.push(item) : arr.splice(index, 1);
   }
 
   addThisEmployeeToArray(employee: any, event) {
@@ -96,6 +95,11 @@ export class ManagerComponent implements OnInit {
       this.selectedEmployeeArray = [];
     }
     this.toggleItemInArr(this.selectedEmployeeArray, employee);
+  }
+
+  toggleItemInArr(arr, item) {
+    const index = arr.indexOf(item);
+    index === -1 ? arr.push(item) : arr.splice(index, 1);
   }
 
   newTask(id: string) {
