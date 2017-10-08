@@ -40,10 +40,15 @@ public class TaskService {
         task.addAssignee(teamMember);
         tasks.add(task);
 
-        task = new Task(tasks.size() + 1, "Task tree", "Description of a tree", new Attribute(2, 5, 3, 1), new Date()
+        task = new Task(tasks.size() + 1, "Task Tree", "Description of a tree", new Attribute(2, 5, 3, 1), new Date()
                 , Group.HUMAN_CAPITAL, Status.PENDING, 1, manager);
         task.addRequestedAssignee(teamMember);
         task.addRequestedAssignee((TeamMember) userService.getUser(3));
+        tasks.add(task);
+
+        task = new Task(tasks.size() + 1, "Task Four", "An assigned task", new Attribute(1, 4, 2, 5), new Date(),
+                Group.SOFTWARE, Status.ASSIGNED, 2, manager);
+        task.addAssignee(teamMember);
         tasks.add(task);
     }
 

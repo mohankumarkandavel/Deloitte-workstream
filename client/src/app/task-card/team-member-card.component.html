@@ -30,4 +30,9 @@
       <button md-button>Send</button>
     </md-card-actions>
   </div>
+  <div *ngIf="task.status == 'Assigned'">
+    <md-card-actions layout="row" layout-align="center">
+      <button md-button (click)="onTaskDone()">Done</button>
+    </md-card-actions>
+  </div>
 </md-card>

@@ -19,4 +19,8 @@ export class TeamMemberCardComponent {
   onTaskAccept() {
     this.taskService.acceptPendingTask(this.task);
   }
+
+  onTaskDone() {
+    this.taskService.updateTaskStatus(this.task, 'Done');
+  }
 }

@@ -7,9 +7,9 @@ export class TaskService {
 
   private taskURL: string = 'http://localhost:8080/task';
 
-  private tasks: any[];
-  draftTasks: any[];
-  assignedTasks: any[];
+  private tasks: any[] = [];
+  draftTasks: any[] = [];
+  assignedTasks: any[] = [];
   pendingTasks: any[] = [];
 
   constructor(private http: Http) {
