@@ -22,8 +22,7 @@ import java.util.List;
 public class TaskService {
 
     private List<Task> tasks;
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
     public TaskService() {
     }

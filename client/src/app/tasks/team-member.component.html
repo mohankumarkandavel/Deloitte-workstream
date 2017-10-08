@@ -1,15 +1,16 @@
-<div class="column-container">
-  <div class="column" id="column-pending">
-    <div class="column-heading">Pending ({{taskService.pendingTasks.length}})</div>
-    <div class="column-body" *ngFor="let pendingTask of taskService.pendingTasks">
-      <app-team-member-card [task]="pendingTask"></app-team-member-card>
+<div class="background">
+  <div class="column-container">
+    <div class="column" id="column-pending">
+      <div class="column-heading">Pending ({{taskService.pendingTasks.length}})</div>
+      <div class="column-body" *ngFor="let pendingTask of taskService.pendingTasks">
+        <app-team-member-card [task]="pendingTask"></app-team-member-card>
+      </div>
     </div>
-  </div>
-
-  <div class="column" id="column-assigned">
-    <div class="column-heading">Assigned</div>
-    <div class="column-body" *ngFor="let assignedTask of taskService.assignedTasks">
-      <app-team-member-card [task]="assignedTask"></app-team-member-card>
+    <div class="column" id="column-assigned">
+      <div class="column-heading">Assigned</div>
+      <div class="column-body" *ngFor="let assignedTask of taskService.assignedTasks">
+        <app-team-member-card [task]="assignedTask"></app-team-member-card>
+      </div>
     </div>
   </div>
 </div>

@@ -1,11 +1,10 @@
-<div class="login">
-  <div class="block-line"></div>
-  <div class="container">
+<div class="background">
+  <div class="login-container">
     <img src="../../assets/deloitte_logo.png"/>
     <form id="loginform" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
       <div class="form-group">
         <input name="username" type="text" [(ngModel)]="model.username" placeholder="Username"
-               #username="ngModel"required>
+               #username="ngModel" required>
         <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
       </div>
       <div class="form-group">

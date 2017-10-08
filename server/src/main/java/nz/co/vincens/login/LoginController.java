@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
     /**
      * Endpoint: <code>GET /login</code>
@@ -45,7 +44,8 @@ public class LoginController {
                 }
             }
             if (actualUser != null) {
-                return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId() + "}");
+                return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
+						() + ", \"name\": \"" + actualUser.getName() + "\"}");
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }

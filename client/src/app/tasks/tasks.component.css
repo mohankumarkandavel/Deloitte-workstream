@@ -1,3 +1,11 @@
+.background {
+  overflow: hidden;
+  background: url('../../assets/eclipse.png') center;
+  background-size: cover;
+  min-height: 90vh;
+  width: 100%;
+}
+
 .column-container {
   padding: 2% 0 0 2%;
   align-content: center;
@@ -25,7 +33,7 @@
 .column-body {
   padding: 4%;
   background-color: #E8EAE9;
-  max-height: 57vh;
+  max-height: 67vh;
   overflow-y: auto;
 }
 
