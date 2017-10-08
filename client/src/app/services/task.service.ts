@@ -42,10 +42,12 @@ export class TaskService {
         });
   }
 
-  updateTaskStatus(task: Task, status: string) {
+  updateTaskStatus(task: Task, status: string, reasonForDeclining: string, requestMoreInformation: boolean) {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     task.status = status;
+    task.reasonForDeclining = reasonForDeclining;
+    
     this.http.put(this.taskURL, JSON.stringify(task), options)
       .subscribe(
         (response) => {
@@ -69,12 +71,25 @@ export class TaskService {
 
   acceptPendingTask(task: Task) {
     // set the tasks status to Assigned and update the task's assignees
-    this.updateTaskStatus(task, "Assigned");
+    this.updateTaskStatus(task, "Assigned", "", false);
     this.http.put(this.taskURL + '/add-assignee/' + task.id, localStorage.getItem("userId")).subscribe((response) => {
       if (response.ok) {
         console.log("Task was accepted")
       }
     },
       (error => console.log(error.toString)))
+  }
+
+  requestMoreInformation(task: Task) {
+    this.http.put(`${this.taskURL}/${task.id}/requestsById`, localStorage.getItem("userId")).subscribe(
+      (response) => {
+        if (response.ok) {
+          console.log("ok")
+        } else if (response.status === 303) {
+          console.log("303 " + response.headers.get("location"));
+        }
+      },
+      (error) => console.error(error.toString())
+    )
   }
 }

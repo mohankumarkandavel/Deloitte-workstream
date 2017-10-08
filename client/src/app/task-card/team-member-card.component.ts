@@ -12,11 +12,26 @@ export class TeamMemberCardComponent {
   @Input()
   task: Task;
   shown: string = 'NONE';
+  showRequestMoreInfo: boolean = false;
 
   constructor(private taskService:TaskService) {
   }
 
   onTaskAccept() {
     this.taskService.acceptPendingTask(this.task);
+  }
+
+  onRequestMoreInformation() {
+    this.taskService.requestMoreInformation(this.task);
+  }
+
+  onTaskDecline(){
+    this.taskService.updateTaskStatus(this.task, "Draft", this.task.reasonForDeclining, false);
+  }
+
+  private hasUserRequestedInfo():boolean {
+    const userId: number = parseInt(localStorage.getItem("userId"));
+    let hasRequested:boolean = this.task.requestsById.indexOf(userId) !== -1
+    return hasRequested;
   }
 }
