@@ -1,7 +1,8 @@
 <div class="container-fluid fill">
-  <div class="col-md-4">
+  <div class="col-md-4"> // search-bar
     <div class="form-group">
-      <input class="form-control" placeholder="Please enter task name">
+      <input class="form-control" placeholder="Please enter task name"
+             [formControl]="titleFilter">
     </div>
   </div>
   <div class="new-task">

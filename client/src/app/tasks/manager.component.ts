@@ -4,6 +4,8 @@ import {Task} from "./task.model";
 import {Subscription} from 'rxjs';
 import {TaskService} from "../services/task.service";
 import {RankService} from "../services/rank.service";
+import {FormControl} from "@angular/forms";
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-tasks',
@@ -20,11 +22,18 @@ export class ManagerComponent implements OnInit {
 
   private  keyword: string; // key word for searching
 
+  private  titleFilter: FormControl = new FormControl();
+
   selectedEmployeeArray = [];
 
   loading: Subscription;
 
   constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
+    this.titleFilter.valueChanges
+      .debounceTime(500)
+      .subscribe(
+        value => this.keyword = value
+      );
   }
 
   ngOnInit() {
