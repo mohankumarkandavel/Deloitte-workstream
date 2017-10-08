@@ -6,6 +6,7 @@ import {TaskService} from "../services/task.service";
 import {RankService} from "../services/rank.service";
 import {FormControl} from "@angular/forms";
 import 'rxjs/Rx';
+// import { FilterPipe } from '../pipe/filter.pipe';
 
 @Component({
   selector: 'app-tasks',
@@ -20,9 +21,9 @@ export class ManagerComponent implements OnInit {
 
   private droppedTaskGroup: string;
 
-  private  keyword: string; // key word for searching
+  public  keyword: string; // key word for searching
 
-  private  titleFilter: FormControl = new FormControl();
+  public  titleFilter: FormControl = new FormControl();
 
   selectedEmployeeArray = [];
 

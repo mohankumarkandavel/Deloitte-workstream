@@ -1,8 +1,7 @@
 <div class="container-fluid fill">
   <div class="col-md-4">
     <div class="form-group">
-      <input class="form-control" placeholder="Please enter task name"
-             [formControl]="titleFilter">
+      <input class="form-control" placeholder="Please enter task name" [formControl] = "titleFilter" >
     </div>
   </div>
   <div class="new-task">
@@ -13,7 +12,7 @@
       <div class="panel panel-default">
         <div class="panel-heading bg-primary text-white text-uppercase">Draft</div>
         <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" draggable="true" *ngFor="let draftTask of taskService.draftTasks"
+          <div class="card task-card text-white" draggable="true" *ngFor="let draftTask of taskService.draftTasks | filter :'name' : keyword"
                [dragData]="draftTask">
             <app-task-card [task]="draftTask"></app-task-card>
           </div>
@@ -24,7 +23,7 @@
       <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
         <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
         <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" *ngFor="let pendingTask of taskService.pendingTasks | filter:'name':keyword">
+          <div class="card task-card text-white" *ngFor="let pendingTask of taskService.pendingTasks | filter :'name' : keyword">
             <app-task-card [task]="pendingTask"></app-task-card>
           </div>
         </div>
@@ -37,7 +36,7 @@
           <div class="row">
             <!--add  current card list here-->
             <div class="card  col-sm-5 task-card current-card text-white"
-                 *ngFor="let assignedTask of taskService.assignedTasks">
+                 *ngFor="let assignedTask of taskService.assignedTasks | filter :'name' : keyword">
               <app-task-card [task]="assignedTask"></app-task-card>
             </div>
           </div>
