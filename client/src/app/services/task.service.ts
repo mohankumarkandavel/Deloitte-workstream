@@ -47,7 +47,7 @@ export class TaskService {
     let options = new RequestOptions({headers: headers});
     task.status = status;
     task.reasonForDeclining = reasonForDeclining;
-    task.requestMoreInformation= requestMoreInformation;
+    
     this.http.put(this.taskURL, JSON.stringify(task), options)
       .subscribe(
         (response) => {
