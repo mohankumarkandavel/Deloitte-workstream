@@ -21,7 +21,7 @@
     <div id="column-assigned">
       <div class="column-heading">Assigned</div>
       <div class="column-body">
-        <div *ngIf="taskService.pendingTasks.length === 0"> You currently have no assigned tasks.</div>
+        <div *ngIf="taskService.assignedTasks.length === 0"> You currently have no assigned tasks.</div>
         <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks"
                           [task]="assignedTask"></app-manager-card>
       </div>
