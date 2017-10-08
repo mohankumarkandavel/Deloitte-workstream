@@ -114,10 +114,6 @@ public class TaskController {
 				taskService.getTask(task.getId()).removeRequestedAssignee(task.getRequestedAssignees().get(0));
 			}
 		}
-
-		// if (task.isRequestMoreInformation()) {
-        	// taskService.getTask(task.getId()).setRequestMoreInformation(true);
-		// }
         return ResponseEntity.ok().build();
     }
 
