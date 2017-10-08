@@ -99,7 +99,6 @@ public class UserHelper {
         return actualUser;
     }
 
-
     public static Manager getManagerById(int id) {
         Manager actualManager = null;
         String username = null;
@@ -132,7 +131,9 @@ public class UserHelper {
             }
         }
         new Manager(String.valueOf(id), username, name, email, password);
-        System.out.println(String.valueOf(id)+username);
+        System.out.println(String.valueOf(id) + username);
         return actualManager;
     }
+    
+
 }

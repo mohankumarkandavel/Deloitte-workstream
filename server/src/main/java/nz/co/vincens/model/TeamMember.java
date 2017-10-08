@@ -9,24 +9,26 @@ import java.util.Map;
  */
 public class TeamMember extends User {
 
-	private Map<Group, Attribute> weightings;
-	private List<Task> tasks = new ArrayList<>();
+    private Map<Group, Attribute> weightings;
+    private List<Task> tasks = new ArrayList<>();
 
-	public TeamMember() {
-		super();
-	}
+    public TeamMember() {
+        super();
+    }
 
-	public TeamMember(String name, String username, String email, String id, Map<Group, Attribute> weightings, String
-					  password) {
-		super(id, username, name, email, "team-member", password);
-		this.weightings = weightings;
-	}
+    public TeamMember(String name, String username, String email, String id, Map<Group, Attribute> weightings, String
+            password) {
+        super(id, username, name, email, "team-member", password);
+        this.weightings = weightings;
+    }
 
-	public Map<Group, Attribute> getWeightings() {
-		return weightings;
-	}
+    public Map<Group, Attribute> getWeightings() {
+        return weightings;
+    }
 
-	public List<Task> getTasks() {
-		return tasks;
-	}
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+
 }

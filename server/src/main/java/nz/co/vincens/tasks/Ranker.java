@@ -4,6 +4,7 @@ import nz.co.vincens.model.Attribute;
 import nz.co.vincens.model.Group;
 import nz.co.vincens.model.Task;
 import nz.co.vincens.model.TeamMember;
+import nz.co.vincens.service.UserHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class Ranker {
 		List<TeamMember> rankedTeamMembers =  new ArrayList<>();
 
 		Group taskGroup = task.getGroup();
+		//UserHelper.findTeamMembers(String.valueOf(task.getGroup()));
 		// get the availability, experience, interest and resource values for each team member
 		for (TeamMember member : teamMembers) {
 			Attribute attribute = member.getWeightings().get(taskGroup);
@@ -34,7 +36,6 @@ public class Ranker {
 				insert(member, rankedTeamMembers, taskGroup);
 			}
 		}
-
 		return rankedTeamMembers;
 	}
 
