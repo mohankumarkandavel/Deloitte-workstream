@@ -104,16 +104,7 @@ public class TaskController {
         System.out.printf("3333333333");
         task.setId(taskService.getTasks().size() + 1);
         task.setStatus(Status.DRAFT);
-        System.out.println(task.getName());
-        System.out.println(task.getDescription());
-        System.out.println(task.getDeadline());
-        System.out.println(task.getGroup());
-        System.out.println(task.getResources());
-        System.out.println(task.getAvailability());
-        System.out.println(task.getNumAssigneesRequired());
-        System.out.println(task.getStatus());
-        TaskHelper.addTask(task,1);
-//        taskService.addTask(task);
+        TaskHelper.addTask(task, 1);
         try {
             return ResponseEntity.created(new URI("/task/" + task.getId())).build();
         } catch (URISyntaxException e) {
@@ -136,6 +127,7 @@ public class TaskController {
     ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
         System.out.printf("44444444444");
         taskService.getTask(task.getId()).setStatus(task.getStatus());
+        TaskHelper.updateToPendingOrAssigned(1, task.getStatus().toString(), task.getId());
         return ResponseEntity.ok().build();
     }
 

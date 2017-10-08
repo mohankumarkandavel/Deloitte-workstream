@@ -76,15 +76,19 @@ public class TaskHelper {
         return tasks;
     }
 
-    public static void getTask() {
+    public static void updateToPendingOrAssigned(int assigneesListId, String status, int taskId) {
+        // Generate database query sentence
+        String sql = "CALL Task_updateToPendingOrAssigned(" + "'" + assigneesListId + "'" + "," + "'" + status + "'" + "," + "'" + taskId + "')";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            // Clean-up environment
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void updateTaskStatus() {
-    }
-
-    public static void sendInviteToSelectTeamMembers() {
-    }
-
-    public static void updateTaskAssignees() {
-    }
 }
