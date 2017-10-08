@@ -1,7 +1,7 @@
 <md-card>
   <md-card-header>
     <md-card-title>{{task.name}} <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after">
-      <i class="fa fa-info-circle"></i></span></md-card-title>
+      <i class="material-icons">info</i></span></md-card-title>
     <md-card-subtitle>Deadline: {{task.deadline}}</md-card-subtitle>
   </md-card-header>
   <md-card-content>
@@ -12,7 +12,7 @@
     </div>
     <div *ngIf="shown === 'DECLINE'">
       <md-card-content
-        class="card-description"><textarea class="text-area"
+        class="card-description"><textarea class="text-area" name="reasonForDeclining" [(ngModel)]="task.reasonForDeclining"
                                            placeholder="Please state your reason for declining"></textarea>
       </md-card-content>
     </div>
@@ -20,14 +20,18 @@
   <div *ngIf="shown === 'NONE' && task.status ==='Pending'">
     <md-card-actions layout="row" layout-align="center">
       <button md-button (click)="onTaskAccept()">Accept</button>
-      <button md-button (click)="shown = 'REQUEST'">Request More Information</button>
+      <button md-button *ngIf="!hasUserRequestedInfo() && !showRequestMoreInfo"
+              (click)="shown = 'NONE'; onRequestMoreInformation(); showRequestMoreInfo = true">Request
+        More Information</button>
+      <button md-button *ngIf="hasUserRequestedInfo() || showRequestMoreInfo" disabled> You requested more information
+      </button>
       <button md-button (click)="shown = 'DECLINE'">Decline</button>
     </md-card-actions>
   </div>
   <div *ngIf="shown != 'NONE'">
     <md-card-actions layout="row" layout-align="center">
       <button md-button (click)="shown= 'NONE'">Cancel</button>
-      <button md-button>Send</button>
+      <button md-button (click)="onTaskDecline()">Send</button>
     </md-card-actions>
   </div>
   <div *ngIf="task.status == 'Assigned'">

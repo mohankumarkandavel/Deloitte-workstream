@@ -12,6 +12,7 @@ export class TeamMemberCardComponent {
   @Input()
   task: Task;
   shown: string = 'NONE';
+  showRequestMoreInfo: boolean = false;
 
   constructor(private taskService:TaskService) {
   }
@@ -21,6 +22,20 @@ export class TeamMemberCardComponent {
   }
 
   onTaskDone() {
-    this.taskService.updateTaskStatus(this.task, 'Done');
+    this.taskService.updateTaskStatus(this.task, 'Done', "");
+  }
+
+  onRequestMoreInformation() {
+    this.taskService.requestMoreInformation(this.task);
+  }
+
+  onTaskDecline(){
+    this.taskService.updateTaskStatus(this.task, "Draft", this.task.reasonForDeclining);
+  }
+
+  private hasUserRequestedInfo():boolean {
+    const userId: number = parseInt(localStorage.getItem("userId"));
+    let hasRequested:boolean = this.task.requestsById.indexOf(userId) !== -1
+    return hasRequested;
   }
 }

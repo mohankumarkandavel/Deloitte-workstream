@@ -1,5 +1,5 @@
 .mat-card {
-  padding-bottom: 5%;
+  padding: 8% 7% 5% 7%;
   margin-bottom: 5%;
 }
 
@@ -29,6 +29,11 @@
   padding: 0 6% 0 6%;
   font-size: smaller;
   margin-bottom: 0;
+}
+
+.mat-button {
+  background: papayawhip;
+  margin: 1%;
 }
 
 .info-icon {

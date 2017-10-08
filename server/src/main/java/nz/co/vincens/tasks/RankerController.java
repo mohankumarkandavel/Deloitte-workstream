@@ -30,7 +30,6 @@ public class RankerController {
     @Autowired private TaskService taskService;
     @Autowired private UserService userService;
 
-
     public RankerController() {
     }
 
