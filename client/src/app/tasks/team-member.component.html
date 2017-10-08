@@ -3,12 +3,14 @@
     <div class="column" id="column-pending">
       <div class="column-heading">Pending ({{taskService.pendingTasks.length}})</div>
       <div class="column-body">
+        <div *ngIf="taskService.pendingTasks.length === 0"> You currently have no pending tasks. </div>
         <app-team-member-card *ngFor="let pendingTask of taskService.pendingTasks" [task]="pendingTask"></app-team-member-card>
       </div>
     </div>
     <div class="column" id="column-assigned">
       <div class="column-heading">Assigned</div>
       <div class="column-body">
+        <div *ngIf="taskService.assignedTasks.length === 0"> You currently have no assigned tasks. </div>
         <app-team-member-card *ngFor="let assignedTask of taskService.assignedTasks" [task]="assignedTask"></app-team-member-card>
       </div>
     </div>

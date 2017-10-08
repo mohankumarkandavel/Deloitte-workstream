@@ -6,6 +6,7 @@
     <div id="column-drafts">
       <div class="column-heading">Drafts</div>
       <div class="column-body">
+        <div *ngIf="taskService.draftTasks.length === 0"> You currently have no draft tasks.</div>
         <app-manager-card *ngFor="let draftTask of taskService.draftTasks" draggable="true" [dragData]="draftTask"
                           [task]="draftTask"></app-manager-card>
       </div>
@@ -13,12 +14,14 @@
     <div id="column-pending" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
       <div class="column-heading">Pending</div>
       <div class="column-body">
+        <div *ngIf="taskService.pendingTasks.length === 0"> You currently have no pending tasks.</div>
         <app-manager-card *ngFor="let pendingTask of taskService.pendingTasks" [task]="pendingTask"></app-manager-card>
       </div>
     </div>
     <div id="column-assigned">
       <div class="column-heading">Assigned</div>
       <div class="column-body">
+        <div *ngIf="taskService.pendingTasks.length === 0"> You currently have no assigned tasks.</div>
         <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks"
                           [task]="assignedTask"></app-manager-card>
       </div>
