@@ -12,6 +12,6 @@ public enum Status {
     PENDING,
     @JsonProperty("Assigned")
     ASSIGNED,
-    @JsonProperty("Completed")
+    @JsonProperty("Done")
     COMPLETED
 }
