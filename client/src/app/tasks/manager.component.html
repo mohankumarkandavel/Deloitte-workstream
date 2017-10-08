@@ -1,5 +1,5 @@
 <div class="container-fluid fill">
-  <div class="col-md-4"> // search-bar
+  <div class="col-md-4">
     <div class="form-group">
       <input class="form-control" placeholder="Please enter task name"
              [formControl]="titleFilter">
@@ -24,7 +24,7 @@
       <div class="panel panel-default" droppable (onDrop)="onTaskDrop($event,recommendTeam)">
         <div class="panel-heading  bg-primary text-white text-uppercase">Pending Tasks</div>
         <div class="panel-body pre-scrollable scroll-style">
-          <div class="card task-card text-white" *ngFor="let pendingTask of taskService.pendingTasks">
+          <div class="card task-card text-white" *ngFor="let pendingTask of taskService.pendingTasks | filter:'name':keyword">
             <app-task-card [task]="pendingTask"></app-task-card>
           </div>
         </div>
