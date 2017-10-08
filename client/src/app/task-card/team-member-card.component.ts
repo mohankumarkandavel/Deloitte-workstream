@@ -22,10 +22,16 @@ export class TeamMemberCardComponent {
   }
 
   onRequestMoreInformation() {
-    this.taskService.updateTaskStatus(this.task, "Pending", this.task.reasonForDeclining, true);
+    this.taskService.requestMoreInformation(this.task);
   }
 
   onTaskDecline(){
     this.taskService.updateTaskStatus(this.task, "Draft", this.task.reasonForDeclining, false);
+  }
+
+  private hasUserRequestedInfo():boolean {
+    const userId: number = parseInt(localStorage.getItem("userId"));
+    let hasRequested:boolean = this.task.requestsById.indexOf(userId) !== -1
+    return hasRequested;
   }
 }
