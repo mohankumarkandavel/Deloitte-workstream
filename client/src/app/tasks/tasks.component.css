@@ -39,6 +39,10 @@
   padding: 10px 0px;
 }
 
+.search-bar {
+  padding-left: 300px;
+}
+
 .task-layout {
   margin-bottom: 20px;
 }

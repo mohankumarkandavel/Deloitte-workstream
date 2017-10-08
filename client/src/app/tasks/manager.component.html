@@ -1,11 +1,11 @@
 <div class="container-fluid fill">
-  <div class="col-md-4">
-    <div class="form-group">
-      <input class="form-control" placeholder="Please enter task name" [formControl] = "titleFilter" >
+  <div class="new-task row">
+    <button class=" btn btn-primary" (click)="onNewTask(newTaskModal);">Add New Task</button>
+    <div class="col-md-4 search-bar">
+      <div class="form-group">
+        <input class="form-control" placeholder="Please enter task name" [formControl] = "titleFilter" >
+      </div>
     </div>
-  </div>
-  <div class="new-task">
-    <button class=" btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
   </div>
   <div class="row task-layout">
     <div class="col-sm-3 draft" >
