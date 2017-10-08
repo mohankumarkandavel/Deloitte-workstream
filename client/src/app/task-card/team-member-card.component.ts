@@ -21,12 +21,16 @@ export class TeamMemberCardComponent {
     this.taskService.acceptPendingTask(this.task);
   }
 
+  onTaskDone() {
+    this.taskService.updateTaskStatus(this.task, 'Done', "");
+  }
+
   onRequestMoreInformation() {
     this.taskService.requestMoreInformation(this.task);
   }
 
   onTaskDecline(){
-    this.taskService.updateTaskStatus(this.task, "Draft", this.task.reasonForDeclining, false);
+    this.taskService.updateTaskStatus(this.task, "Draft", this.task.reasonForDeclining);
   }
 
   private hasUserRequestedInfo():boolean {
