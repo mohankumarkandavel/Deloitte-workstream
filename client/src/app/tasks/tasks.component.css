@@ -30,17 +30,20 @@
   background-color: rgba(26, 26, 26, 0.8);
   padding: 4%;
 }
-
+.task-row {
+  padding-left:15px;
+  padding-right:15px;
+}
 .task-card-employee {
   /*background: rgba(26, 26, 26, 0.8);*/
 }
 
 .new-task {
-  padding: 10px 0px;
+  padding: 15px 0 0 0;
 }
 
 .search-bar {
-  padding-left: 300px;
+  padding: 15px 0 0 0;
 }
 
 .task-layout {
