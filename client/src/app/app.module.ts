@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import {MdCardModule} from '@angular/material';
@@ -17,15 +17,15 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { ManagerComponent } from './tasks/manager.component';
-import { TeamMemberComponent} from "./tasks/team-member.component";
-import {TeamMemberCardComponent} from "./tasks/team-member-card.component";
+import { TeamMemberComponent} from './tasks/team-member.component';
+import {TeamMemberCardComponent} from './tasks/team-member-card.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
-import {AuthenticationGuardService} from "./services/authentication-guard.service";
-import {AuthenticationService} from "./services/authentication.service";
-import {TaskService} from "./services/task.service";
-import {RankService} from "./services/rank.service";
+import {AuthenticationGuardService} from './services/authentication-guard.service';
+import {AuthenticationService} from './services/authentication.service';
+import {TaskService} from './services/task.service';
+import {RankService} from './services/rank.service';
 
 const appRoutes: Routes = [
   {
@@ -75,6 +75,7 @@ const appRoutes: Routes = [
       {enableTracing: true}
     ),
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AlertModule.forRoot(),
     Ng2DragDropModule.forRoot(),

@@ -18,6 +18,8 @@ export class ManagerComponent implements OnInit {
 
   private droppedTaskGroup: string;
 
+  private  keyword: string; // key word for searching
+
   selectedEmployeeArray = [];
 
   loading: Subscription;
