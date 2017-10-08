@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A task which team members get assigned to.
@@ -31,9 +33,9 @@ public class Task {
 	private List<TeamMember> assignees = new ArrayList<>();
 	private List<TeamMember> declinedAssignees = new ArrayList<>();
 
-	private String reasonForDeclining;
+	private Set<Integer> requestsById = new HashSet<>();
 
-	private boolean requestMoreInformation;
+	private String reasonForDeclining;
 
 	public Task() {
 
@@ -170,11 +172,15 @@ public class Task {
 		declinedAssignees.add(declinedAssignee);
 	}
 
-	public boolean isRequestMoreInformation() {
-		return requestMoreInformation;
+	public Set<Integer> getRequestsById() {
+		return requestsById;
 	}
 
-	public void setRequestMoreInformation(boolean requestMoreInformation) {
-		this.requestMoreInformation = requestMoreInformation;
+	public void setRequestsById(Set<Integer> requestsById) {
+		this.requestsById = requestsById;
+	}
+
+	public void requestMoreInfo(int id) {
+		requestsById.add(id);
 	}
 }

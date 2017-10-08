@@ -79,4 +79,17 @@ export class TaskService {
     },
       (error => console.log(error.toString)))
   }
+
+  requestMoreInformation(task: Task) {
+    this.http.put(`${this.taskURL}/${task.id}/requestsById`, localStorage.getItem("userId")).subscribe(
+      (response) => {
+        if (response.ok) {
+          console.log("ok")
+        } else if (response.status === 303) {
+          console.log("303 " + response.headers.get("location"));
+        }
+      },
+      (error) => console.error(error.toString())
+    )
+  }
 }

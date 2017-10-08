@@ -115,9 +115,9 @@ public class TaskController {
 			}
 		}
 
-		if (task.isRequestMoreInformation()) {
-        	taskService.getTask(task.getId()).setRequestMoreInformation(true);
-		}
+		// if (task.isRequestMoreInformation()) {
+        	// taskService.getTask(task.getId()).setRequestMoreInformation(true);
+		// }
         return ResponseEntity.ok().build();
     }
 
@@ -144,9 +144,25 @@ public class TaskController {
     @CrossOrigin
 	@RequestMapping(value = "/task/add-assignee/{taskId}", method = RequestMethod.PUT)
 	ResponseEntity<?> updateTaskAssignees(@PathVariable int taskId, @RequestBody String userId) {
-		TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
+		TeamMember teamMember = (TeamMember) userService.getUser(Integer.parseInt(userId));
 		taskService.getTask(taskId).addAssignee(teamMember);
 		return ResponseEntity.ok().build();
 	}
+
+    /**
+     * Endpoint: <code>PUT /task/{taskId}/requestsById</code>
+     * Specifies that the given user has requested more information for the given task
+     * @param taskId the id of the task
+     * @param userId the id of the user
+     * @return 303 See Other, URI location is the task that has been modified
+     * @throws URISyntaxException if the URI location is invalid
+     */
+	@CrossOrigin
+    @RequestMapping(value = "/task/{taskId}/requestsById", method = RequestMethod.PUT)
+    ResponseEntity<?> requestMoreInformation(@PathVariable int taskId, @RequestBody String userId) throws
+            URISyntaxException {
+        taskService.getTask(taskId).requestMoreInfo(Integer.parseInt(userId));
+        return ResponseEntity.status(HttpStatus.SEE_OTHER).location(new URI("/task/" + taskId)).build();
+    }
 
 }
