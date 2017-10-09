@@ -57,19 +57,21 @@ export class ManagerComponent implements OnInit {
 
   onTaskDrop(e: any, id: string) {
     this.droppedTaskLimit = +e.dragData.numAssigneesRequired;
-    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
-      if (result === 'Cancel') {
-        this.emptySelectedEmployeeArray();
-      } else if (result === 'Send') {
-        this.updateTaskStatus(e.dragData);
-        this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
-        this.emptySelectedEmployeeArray();
-        this.getAllTasks();
-      }
-      this.rankService.teamMembers.length = 0;
-    }, any => {
-      this.emptySelectedEmployeeArray();
-    });
+    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then(
+      (result) => {
+        if (result === 'Cancel') {
+          this.emptySelectedEmployeeArray();
+        } else if (result === 'Send') {
+          this.updateTaskStatus(e.dragData);
+          this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
+          this.emptySelectedEmployeeArray();
+          this.getAllTasks();
+        }
+      }, 
+      (any) => this.emptySelectedEmployeeArray()
+    ).catch(
+      (reason) => this.emptySelectedEmployeeArray()
+    );
 
     this.loading = this.rankService.getBestTeamMembers(e.dragData);
     this.droppedTaskGroup = e.dragData.group;
