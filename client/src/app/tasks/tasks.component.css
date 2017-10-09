@@ -1,13 +1,12 @@
-.background {
+.home-container {
   overflow: hidden;
   background: url('../../assets/eclipse.png') center;
   background-size: cover;
   min-height: 90vh;
-  width: 100%;
 }
 
 .column-container {
-  padding: 2% 0 0 2%;
+  padding: 1% 0 0 2%;
   align-content: center;
 }
 
@@ -15,12 +14,15 @@
   width: 24%;
   display: inline-block;
   vertical-align: top;
+  font-size: small;
+  color: gray;
 }
 
 #column-pending {
   width: 24%;
   margin-left: 2%;
   display: inline-block;
+  font-size: small;
 }
 
 #column-assigned {
@@ -28,6 +30,8 @@
   display: inline-block;
   vertical-align: top;
   margin-left: 2%;
+  font-size: small;
+  color: gray;
 }
 
 .column-body {
@@ -35,6 +39,8 @@
   background-color: #E8EAE9;
   max-height: 67vh;
   overflow-y: auto;
+  font-size: small;
+  color: gray;
 }
 
 .column-heading {
@@ -44,8 +50,21 @@
   padding: 4%;
 }
 
-.add-new-task {
-  padding: 1% 0 0 2%;
+.add-new-task-btn {
+  margin: 1% 0 0 2%;
+  background: rgba(26, 26, 26, 0.8);
+  color: white;
+  border: none;
+}
+
+.add-new-task-btn:hover {
+  background: rgb(134, 188, 37);
+  border: none;
+}
+
+th {
+  background-color: black;
+  color: white;
 }
 
 .help-block {
@@ -68,12 +87,11 @@
 }
 
 .task-card {
-  margin:4%;
+  margin: 4%;
 }
 
 .current-card {
-margin:4.15%;
-
+  margin: 4.15%;
 }
 
 .recommend-modal > table > th {
@@ -82,15 +100,11 @@ margin:4.15%;
 }
 
 .draft, .pending, .current {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .recommend-modal > .modal-dialog, .task-modal > .modal-dialog {
-  max-width: 800px;
-}
-
-.task-modal > .modal-dialog {
-  margin: 124px 29px;
+  max-width: 60%;
 }
 
 .table tr:nth-child(odd) {
@@ -103,8 +117,20 @@ margin:4.15%;
 }
 
 .task-modal > .modal-dialog > .modal-content > .modal-header > .close {
-  width: 100%;
   text-align: right;
+}
+
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  margin: 0;
+}
+
+.modal-body {
+  font-size: small;
+  padding-bottom: 0;
 }
 
 .scroll-style::-webkit-scrollbar-track {
@@ -120,3 +146,4 @@ margin:4.15%;
 .scroll-style::-webkit-scrollbar-thumb {
   background-color: rgba(26, 26, 26, 0.8);
 }
+

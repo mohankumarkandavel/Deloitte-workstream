@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Task } from '../tasks/task.model';
 
-
 @Component({
   selector: 'app-manager-card',
   templateUrl: './manager-card.component.html',
@@ -23,7 +22,7 @@ export class ManagerCardComponent implements OnInit {
     let requestees: any[] = this.task.requestedAssignees.filter(
       (requestedAssignee) => this.task.requestsById.indexOf(+requestedAssignee.id) !== -1
     );
-    
+
     let onlyOne: boolean = true;
 
     for (let i = 0; i < requestees.length - 1; i++) {
