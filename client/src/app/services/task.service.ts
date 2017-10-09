@@ -59,8 +59,10 @@ export class TaskService {
       )
   }
 
-  sendInvite(task: Task, selectedTeamMembersId: Task[]) {
-    this.http.put(this.taskURL + '/request-assignee/' + task.id, selectedTeamMembersId[0].id).subscribe((response) => {
+  sendInvite(task: Task, selectedTeamMembers: any[]) {
+    let teamMemberIds = selectedTeamMembers.map(teamMember => teamMember.id);
+    this.http.put(`${this.taskURL}/${task.id}/request-assignee`, teamMemberIds).subscribe(
+      (response) => {
         if (response.ok) {
           console.log("Invite was sent");
         }
