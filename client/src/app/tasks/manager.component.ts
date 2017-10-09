@@ -15,10 +15,10 @@ import {RankService} from '../services/rank.service';
 export class ManagerComponent implements OnInit {
 
   private model: Task = new Task();
-
   private droppedTaskGroup: string;
+  private droppedTaskLimit: number;
 
-  selectedEmployeeArray:Task[] = [];
+  private selectedEmployeeArray:Task[] = [];
 
   loading: Subscription;
 
@@ -56,6 +56,7 @@ export class ManagerComponent implements OnInit {
   }
 
   onTaskDrop(e: any, id: string) {
+    this.droppedTaskLimit = +e.dragData.numAssigneesRequired;
     this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
       if (result === 'Cancel') {
         this.emptySelectedEmployeeArray();
@@ -83,20 +84,23 @@ export class ManagerComponent implements OnInit {
   }
 
   addThisEmployeeToArray(employee: any, event) {
-    if (!event.ctrlKey) {
-      this.selectedEmployeeArray = [];
-    }
-    this.toggleItemInArr(this.selectedEmployeeArray, employee);
+    this.toggleEmployee(employee);
   }
 
-  toggleItemInArr(arr, item) {
-    const index = arr.indexOf(item);
-    index === -1 ? arr.push(item) : arr.splice(index, 1);
+  toggleEmployee(employee) {
+    const index = this.selectedEmployeeArray.indexOf(employee);
+    if (index === -1 ) {
+      if (this.selectedEmployeeArray.length < this.droppedTaskLimit) {
+        this.selectedEmployeeArray.push(employee);
+      }
+    } else {
+      this.selectedEmployeeArray.splice(index, 1);
+    }
+    // index === -1 ? this.selectedEmployeeArray.push(employee) : this.selectedEmployeeArray.splice(index, 1);
   }
 
   newTask(id: string) {
     this.modalService.open(id);
-    console.log('found');
   }
 
   isEmployeeSelected(employee: any) {
