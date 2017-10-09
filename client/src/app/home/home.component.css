@@ -4,10 +4,13 @@
   height: 100vh;
 }
 
-.deloitte-image {
-  height: 70%;
-  box-shadow: 0 0 8px 8px black inset;
-  background: url("../../assets/workload_image.png") no-repeat center;
+#deloitte-circle {
+  width: 25%;
+}
+
+.app-logo {
+  padding: 2%;
+  background: url("../../assets/logo-doughnut.png") no-repeat center;
 }
 
 .login-btn {

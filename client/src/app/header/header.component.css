@@ -9,6 +9,10 @@
   display: inline-block;
 }
 
+.title img {
+  max-width: 28%;
+}
+
 .logout-menu {
   float: right;
   display: flex;
