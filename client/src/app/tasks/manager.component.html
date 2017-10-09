@@ -127,7 +127,7 @@
   </ng-template>
   <ng-template #recommendTeam let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h5 class="modal-title">Recommended Team Members (Require {{droppedTaskLimit - selectedEmployeeArray.length}})</h5>
+      <h5 class="modal-title">Recommended Team Members ({{selectedEmployeeArray.length}}/{{droppedTaskLimit}})</h5>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
