@@ -119,6 +119,13 @@ th {
   text-align: right;
 }
 
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+}
+
 .modal-body {
   font-size: small;
   padding-bottom: 0;
