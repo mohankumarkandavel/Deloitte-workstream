@@ -15,6 +15,13 @@ export class TaskService {
   constructor(private http: Http) {
   }
 
+  clearTasks() : void {
+    this.tasks.length = 0;
+    this.draftTasks.length = 0;
+    this.assignedTasks.length = 0;
+    this.pendingTasks.length = 0;
+  }
+
   getUsersTasks(userId: string) {
     this.http.get(this.taskURL + '/' + userId).subscribe(
       (response) => {
