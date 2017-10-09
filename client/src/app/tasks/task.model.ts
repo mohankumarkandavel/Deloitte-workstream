@@ -13,7 +13,7 @@ export class Task {
     availability: "",
     resource: ""
   };
-  public peopleRequired: string;
+  public numAssigneesRequred: string;
   public owner: string;
   public assignees: any[];
   public requestedAssignees: any[];

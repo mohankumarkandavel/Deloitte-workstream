@@ -106,10 +106,10 @@
             <div class="form-group row">
               <label class="control-label col-sm-4">People Required</label>
               <div class="col-sm-8">
-                <input class="form-control" type="number" name="peopleRequired" min="1"
-                       [(ngModel)]="model.peopleRequired" #peopleRequired="ngModel" required>
-                <div *ngIf="f.submitted && !peopleRequired.valid" class="help-block">Number of people is required</div>
-                <div *ngIf="f.submitted && peopleRangeError && peopleRequired.valid" class="help-block">Please enter a
+                <input class="form-control" type="number" name="numAssigneesRequired" min="1"
+                       [(ngModel)]="model.numAssigneesRequired" #numAssigneesRequired="ngModel" required>
+                <div *ngIf="f.submitted && !numAssigneesRequired.valid" class="help-block">Number of people is required</div>
+                <div *ngIf="f.submitted && peopleRangeError && numAssigneesRequired.valid" class="help-block">Please enter a
                   value greater than 1
                 </div>
               </div>
