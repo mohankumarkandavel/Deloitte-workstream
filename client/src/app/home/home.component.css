@@ -1,12 +1,17 @@
-.container-fluid {
+.home-container {
   background-color: black;
-  height:100vh;
+  text-align: center;
+  height: 100vh;
 }
-h1{
-  font-size: 50px;
-}
-.login-btn{
-  padding-top: 50px;
-  padding-bottom: 50px;
 
+.deloitte-image {
+  height: 70%;
+  box-shadow: 0 0 8px 8px black inset;
+  background: url("../../assets/workload_image.png") no-repeat center;
+}
+
+.login-btn {
+  color: white;
+  margin: 1%;
+  background: rgb(134, 188, 37);;
 }
