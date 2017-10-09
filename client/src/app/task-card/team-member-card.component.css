@@ -34,7 +34,12 @@
 .mat-button {
   background: rgb(134,188,37);
   color: white;
-  margin: 1%;
+}
+.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button {
+  margin: 1% 1% 1% 1%;
+}
+.mat-card-actions {
+  padding: 1%;
 }
 
 .info-icon {
