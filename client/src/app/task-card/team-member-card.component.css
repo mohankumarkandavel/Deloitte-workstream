@@ -32,7 +32,8 @@
 }
 
 .mat-button {
-  background: papayawhip;
+  background: rgb(134,188,37);
+  color: white;
   margin: 1%;
 }
 
