@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {Task} from './task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../services/task.service';
@@ -26,6 +26,8 @@ export class ManagerComponent implements OnInit {
   private peopleRangeError: boolean = false;
   private resourceRangeError: boolean = false;
 
+  private addTaskModal: NgbModalRef;
+
   constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
   }
 
@@ -39,8 +41,7 @@ export class ManagerComponent implements OnInit {
   }
 
   onNewTask(id: string) {
-    this.modalService.open(id, {windowClass: 'task-modal'});
-    console.log('found');
+    this.addTaskModal = this.modalService.open(id, {windowClass: 'task-modal'});
   }
 
   addTask() {
@@ -52,6 +53,7 @@ export class ManagerComponent implements OnInit {
       this.model.status = "Draft";
       this.model.owner = localStorage.getItem("userId");
       this.taskService.addTask(this.model);
+      this.addTaskModal.close();
     }
   }
 
