@@ -9,6 +9,7 @@ import { TaskService } from '../services/task.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
   private passwordError: boolean = false;

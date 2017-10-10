@@ -15,7 +15,7 @@ export class TaskService {
   constructor(private http: Http) {
   }
 
-  clearTasks() : void {
+  clearTasks(): void {
     this.tasks.length = 0;
     this.draftTasks.length = 0;
     this.assignedTasks.length = 0;
@@ -82,10 +82,10 @@ export class TaskService {
     // set the tasks status to Assigned and update the task's assignees
     this.updateTaskStatus(task, "Assigned", "");
     this.http.put(this.taskURL + '/add-assignee/' + task.id, localStorage.getItem("userId")).subscribe((response) => {
-      if (response.ok) {
-        console.log("Task was accepted")
-      }
-    },
+        if (response.ok) {
+          console.log("Task was accepted")
+        }
+      },
       (error => console.log(error.toString)))
   }
 

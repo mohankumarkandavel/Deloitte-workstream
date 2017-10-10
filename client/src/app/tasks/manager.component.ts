@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Task} from './task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../services/task.service';
@@ -8,7 +8,6 @@ import {RankService} from '../services/rank.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './manager.component.html',
-  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./tasks.component.css']
 })
 
@@ -18,7 +17,7 @@ export class ManagerComponent implements OnInit {
   private droppedTaskGroup: string;
   private droppedTaskLimit: number;
 
-  private selectedEmployeeArray:Task[] = [];
+  private selectedEmployeeArray: Task[] = [];
 
   loading: Subscription;
 
@@ -49,7 +48,7 @@ export class ManagerComponent implements OnInit {
     this.availabilityRangeError = Number(this.model.attribute.availability) < 1 || Number(this.model.attribute.resource) > 6;
     this.peopleRangeError = Number(this.model.numAssigneesRequred) < 1;
 
-    if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError ) {
+    if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError) {
       this.model.status = "Draft";
       this.model.owner = localStorage.getItem("userId");
       this.taskService.addTask(this.model);
@@ -69,7 +68,7 @@ export class ManagerComponent implements OnInit {
           this.emptySelectedEmployeeArray();
           this.getAllTasks();
         }
-      }, 
+      },
       (any) => this.emptySelectedEmployeeArray()
     ).catch(
       (reason) => this.emptySelectedEmployeeArray()
@@ -93,7 +92,7 @@ export class ManagerComponent implements OnInit {
 
   toggleEmployee(employee) {
     const index = this.selectedEmployeeArray.indexOf(employee);
-    if (index === -1 ) {
+    if (index === -1) {
       if (this.selectedEmployeeArray.length < this.droppedTaskLimit) {
         this.selectedEmployeeArray.push(employee);
       }
