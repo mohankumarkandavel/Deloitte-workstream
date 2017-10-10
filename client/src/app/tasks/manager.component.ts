@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Task} from './task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../services/task.service';
@@ -8,23 +8,24 @@ import {RankService} from '../services/rank.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './manager.component.html',
-  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./tasks.component.css']
 })
 
 export class ManagerComponent implements OnInit {
 
   private model: Task = new Task();
-
   private droppedTaskGroup: string;
+  private droppedTaskLimit: number;
 
-  selectedEmployeeArray:Task[] = [];
+  private selectedEmployeeArray: Task[] = [];
 
   loading: Subscription;
 
   private availabilityRangeError: boolean = false;
   private peopleRangeError: boolean = false;
   private resourceRangeError: boolean = false;
+
+  private addTaskModal: NgbModalRef;
 
   constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
   }
@@ -39,36 +40,39 @@ export class ManagerComponent implements OnInit {
   }
 
   onNewTask(id: string) {
-    this.modalService.open(id, {windowClass: 'task-modal'});
-    console.log('found');
+    this.addTaskModal = this.modalService.open(id, {windowClass: 'task-modal'});
   }
 
   addTask() {
     this.resourceRangeError = Number(this.model.attribute.resource) < 1 || Number(this.model.attribute.resource) > 6;
     this.availabilityRangeError = Number(this.model.attribute.availability) < 1 || Number(this.model.attribute.resource) > 6;
-    this.peopleRangeError = Number(this.model.peopleRequired) < 1;
+    this.peopleRangeError = Number(this.model.numAssigneesRequred) < 1;
 
-    if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError ) {
+    if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError) {
       this.model.status = "Draft";
       this.model.owner = localStorage.getItem("userId");
       this.taskService.addTask(this.model);
+      this.addTaskModal.close();
     }
   }
 
   onTaskDrop(e: any, id: string) {
-    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then((result) => {
-      if (result === 'Cancel') {
-        this.emptySelectedEmployeeArray();
-      } else if (result === 'Send') {
-        this.updateTaskStatus(e.dragData);
-        this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
-        this.emptySelectedEmployeeArray();
-        this.getAllTasks();
-      }
-      this.rankService.teamMembers.length = 0;
-    }, any => {
-      this.emptySelectedEmployeeArray();
-    });
+    this.droppedTaskLimit = +e.dragData.numAssigneesRequired;
+    this.modalService.open(id, {windowClass: 'recommend-modal'}).result.then(
+      (result) => {
+        if (result === 'Cancel') {
+          this.emptySelectedEmployeeArray();
+        } else if (result === 'Send') {
+          this.updateTaskStatus(e.dragData);
+          this.taskService.sendInvite(e.dragData, this.selectedEmployeeArray);
+          this.emptySelectedEmployeeArray();
+          this.getAllTasks();
+        }
+      },
+      (any) => this.emptySelectedEmployeeArray()
+    ).catch(
+      (reason) => this.emptySelectedEmployeeArray()
+    );
 
     this.loading = this.rankService.getBestTeamMembers(e.dragData);
     this.droppedTaskGroup = e.dragData.group;
@@ -83,20 +87,23 @@ export class ManagerComponent implements OnInit {
   }
 
   addThisEmployeeToArray(employee: any, event) {
-    if (!event.ctrlKey) {
-      this.selectedEmployeeArray = [];
-    }
-    this.toggleItemInArr(this.selectedEmployeeArray, employee);
+    this.toggleEmployee(employee);
   }
 
-  toggleItemInArr(arr, item) {
-    const index = arr.indexOf(item);
-    index === -1 ? arr.push(item) : arr.splice(index, 1);
+  toggleEmployee(employee) {
+    const index = this.selectedEmployeeArray.indexOf(employee);
+    if (index === -1) {
+      if (this.selectedEmployeeArray.length < this.droppedTaskLimit) {
+        this.selectedEmployeeArray.push(employee);
+      }
+    } else {
+      this.selectedEmployeeArray.splice(index, 1);
+    }
+    // index === -1 ? this.selectedEmployeeArray.push(employee) : this.selectedEmployeeArray.splice(index, 1);
   }
 
   newTask(id: string) {
     this.modalService.open(id);
-    console.log('found');
   }
 
   isEmployeeSelected(employee: any) {

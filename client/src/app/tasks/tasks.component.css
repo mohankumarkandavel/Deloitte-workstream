@@ -6,7 +6,7 @@
 }
 
 .column-container {
-  padding: 1% 0 0 2%;
+  padding: 2% 0 0 2%;
   align-content: center;
 }
 
@@ -35,9 +35,18 @@
 }
 
 .column-body {
-  padding: 4%;
+  padding: 5%;
   background-color: #E8EAE9;
-  max-height: 67vh;
+  max-height: 65vh;
+  overflow-y: auto;
+  font-size: small;
+  color: gray;
+}
+
+.column-body-team-member {
+  padding: 5%;
+  background-color: #E8EAE9;
+  max-height: 71vh;
   overflow-y: auto;
   font-size: small;
   color: gray;
@@ -51,7 +60,7 @@
 }
 
 .add-new-task-btn {
-  margin: 1% 0 0 2%;
+  margin: 1% 0 -2% 2%;
   background: rgba(26, 26, 26, 0.8);
   color: white;
   border: none;

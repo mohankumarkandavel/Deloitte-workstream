@@ -15,6 +15,13 @@ export class TaskService {
   constructor(private http: Http) {
   }
 
+  clearTasks(): void {
+    this.tasks.length = 0;
+    this.draftTasks.length = 0;
+    this.assignedTasks.length = 0;
+    this.pendingTasks.length = 0;
+  }
+
   getUsersTasks(userId: string) {
     this.http.get(this.taskURL + '/' + userId).subscribe(
       (response) => {
@@ -59,8 +66,10 @@ export class TaskService {
       )
   }
 
-  sendInvite(task: Task, selectedTeamMembersId: Task[]) {
-    this.http.put(this.taskURL + '/request-assignee/' + task.id, selectedTeamMembersId[0].id).subscribe((response) => {
+  sendInvite(task: Task, selectedTeamMembers: any[]) {
+    let teamMemberIds = selectedTeamMembers.map(teamMember => teamMember.id);
+    this.http.put(`${this.taskURL}/${task.id}/request-assignee`, teamMemberIds).subscribe(
+      (response) => {
         if (response.ok) {
           console.log("Invite was sent");
         }
@@ -73,10 +82,10 @@ export class TaskService {
     // set the tasks status to Assigned and update the task's assignees
     this.updateTaskStatus(task, "Assigned", "");
     this.http.put(this.taskURL + '/add-assignee/' + task.id, localStorage.getItem("userId")).subscribe((response) => {
-      if (response.ok) {
-        console.log("Task was accepted")
-      }
-    },
+        if (response.ok) {
+          console.log("Task was accepted")
+        }
+      },
       (error => console.log(error.toString)))
   }
 
