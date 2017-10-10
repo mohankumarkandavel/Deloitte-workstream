@@ -38,26 +38,18 @@ public class TaskController {
      * Endpoint: <code>GET /task</code>
      * <br/>
      * Gets all tasks, including completed
-     * 加载所有的任务，包含已经完成的
      *
      * @return all tasks as JSON
      */
     @CrossOrigin
     @RequestMapping("/task/{userId}")
     List<Task> getTasks(@PathVariable(name = "userId") int userId) {
-        System.out.printf("111111111");
-        // 通过当前登录用户的ID，查找所有task
-        // 通过ID，获取Manager所建立的task
-        // 通过ID，获取Assignees所被分配的task
-        // task包含所有状态(status)的
         // for manager, find tasks that they own, for assignees, find tasks that are either requested or assigned
         List<Task> tasks = new ArrayList<>();
         for (Task task : taskService.getTasks()) {
-            // 在【虚假数据】中，通过ID找到Manager的task
             if (task.getOwner().getId().equals(String.valueOf(userId))) {
                 tasks.add(task);
-            } else if (!task.getStatus().equals(Status.DRAFT)) { // 获取非Draft任务
-                // 在【虚假数据】中，通过ID找到Assignees的task
+            } else if (!task.getStatus().equals(Status.DRAFT)) {
                 for (int i = 0; i < task.getAssignees().size(); i++) {
                     if (task.getAssignees().get(i).getId().equals(String.valueOf(userId))) {
                         tasks.add(task);
@@ -77,14 +69,12 @@ public class TaskController {
      * Endpoint: <code>GET /task/{id}</code>
      * <br/>
      * Gets a task by the specified id
-     * 加载指定ID的任务
      *
      * @return task with the specified id as JSON
      */
     @CrossOrigin
     @RequestMapping("/task/{userId}/{id}")
     Task getTask(@PathVariable int userId, @PathVariable int id) {
-        System.out.printf("222222222");
         return taskService.getTask(id);
     }
 
@@ -92,16 +82,12 @@ public class TaskController {
      * Endpoint: <code>POST /task</code>
      * <br/>
      * Adds a tasks specified by the request body, JSON format of a task
-     * 仅限于manager
-     * 增加一个任务
-     * 添加后，重新加载全部任务（执行11111111）
      *
      * @return 201 created response if successful, with Location header, otherwise server error
      */
     @CrossOrigin
     @RequestMapping(value = "/task", method = RequestMethod.POST)
     ResponseEntity<?> addTask(@RequestBody Task task) {
-        System.out.printf("3333333333");
         task.setId(taskService.getTasks().size() + 1);
         task.setStatus(Status.DRAFT);
         TaskHelper.addTask(task, 1);
@@ -115,9 +101,7 @@ public class TaskController {
     /**
      * Endpoint: <code>PUT /task</code>
      * Updates or creates the task specified with the JSON body
-     * 修改任务，把draft移动到pending
-     * 刷新任务（执行11111）
-     * 为任务分配员工（执行555555555）
+     * Team member accept task: Move pending to assigned
      *
      * @param task {@link Task} in JSON format
      * @return 200 ok if the task is added or updated
@@ -125,30 +109,31 @@ public class TaskController {
     @CrossOrigin(methods = RequestMethod.PUT)
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
     ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
-        System.out.printf("44444444444");
         taskService.getTask(task.getId()).setStatus(task.getStatus());
-        TaskHelper.updateToPendingOrAssigned(1, task.getStatus().toString(), task.getId());
+        TaskHelper.updateToAssigned(task.getId());
         return ResponseEntity.ok().build();
     }
 
-    // 为任务分配员工
+    /**
+     * Move draft to pending
+     */
     @CrossOrigin
     @RequestMapping(value = "/task/request-assignee/{taskId}", method = RequestMethod.PUT)
     ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody String userId) {
-        System.out.printf("55555555555555");
         TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
         taskService.getTask(taskId).addRequestedAssignee(teamMember);
+        int lastAssigneesListId = TaskHelper.getLastAssigneesListId();
+        int newAssigneesListId = lastAssigneesListId + 1;
+        TaskHelper.createNewAssigneesList(newAssigneesListId, Integer.parseInt(userId));
+        TaskHelper.updateToPending(newAssigneesListId, "Pending", Integer.parseInt(userId));
         return ResponseEntity.ok().build();
     }
 
-    // 更新任务分配的员工
     @CrossOrigin
     @RequestMapping(value = "/task/add-assignee/{taskId}", method = RequestMethod.PUT)
     ResponseEntity<?> updateTaskAssignees(@PathVariable int taskId, @RequestBody String userId) {
-        System.out.printf("666666666666");
         TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
         taskService.getTask(taskId).addAssignee(teamMember);
         return ResponseEntity.ok().build();
     }
-
 }

@@ -23,7 +23,12 @@ public class UserService {
     int managerQuantity = 0;
     int managerId = 0;
 
-    public void loadAllTeamMembers(int userId) {
+    /**
+     * Get all team members and their personal details for showing task details and ranking team members.
+     *
+     * @param userId The related team member's id
+     **/
+    public void getAllTeamMembers(int userId) {
         String userName = null;
         String name = null;
         String password = null;
@@ -38,7 +43,7 @@ public class UserService {
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
-            int i = 1;
+            // int i = 1;
             weightings = new HashMap<>();
             // Extract data from result set
             while (rs.next()) {
@@ -46,44 +51,44 @@ public class UserService {
                 name = rs.getString("name");
                 password = rs.getString("password");
                 email = rs.getString("email");
-                //groupName = rs.getString("groupName");
+                groupName = rs.getString("groupName");
                 experience = Integer.parseInt(rs.getString("experience"));
                 interest = Integer.parseInt(rs.getString("interest"));
                 availability = Integer.parseInt(rs.getString("availability"));
                 resource = Integer.parseInt(rs.getString("resource"));
-                switch (i) {
-                    case 1:
+                switch (groupName) {
+                    case "FINANCIAL_ANALYSIS":
                         weightings.put(Group.FINANCIAL_ANALYSIS, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 2:
+                    case "PROJECT_MANAGEMENT":
                         weightings.put(Group.PROJECT_MANAGEMENT, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 3:
+                    case "STRATEGY":
                         weightings.put(Group.STRATEGY, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 4:
+                    case "OPERATIONS":
                         weightings.put(Group.OPERATIONS, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 5:
+                    case "TECHNOLOGY":
                         weightings.put(Group.TECHNOLOGY, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 6:
+                    case "HUMAN_CAPITAL":
                         weightings.put(Group.HUMAN_CAPITAL, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 7:
+                    case "SOFTWARE":
                         weightings.put(Group.SOFTWARE, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 8:
+                    case "TEACHING_AND_TRAINING":
                         weightings.put(Group.TEACHING_AND_TRAINING, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 9:
+                    case "BUSINESS_AND_DEVELOPMENT":
                         weightings.put(Group.BUSINESS_AND_DEVELOPMENT, new Attribute(experience, interest, availability, resource));
                         break;
-                    case 10:
+                    case "MARKETING_AND_SALES":
                         weightings.put(Group.MARKETING_AND_SALES, new Attribute(experience, interest, availability, resource));
                         break;
                 }
-                i++;
+                // i++;
             }
             users.add(new TeamMember(name, userName, email, String.valueOf(userId), weightings, password));
         } catch (SQLException e) {
@@ -101,6 +106,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Get the quantity of all the team members for the need of getting all team members
+     *
+     * @return The quantity of all the team members
+     */
     public static int getTeamMemberQuantity() {
         int count = 0;
         // Generate database query sentence
@@ -129,6 +139,11 @@ public class UserService {
         return count;
     }
 
+    /**
+     * Get the first team member's id fot the need of getting the quantity of team member
+     *
+     * @return The first team member's id
+     */
     public static int getFirstTeamMemberId() {
         int userId = 0;
         // Generate database query sentence
@@ -157,7 +172,12 @@ public class UserService {
         return userId;
     }
 
-    public void loadAllManagers(int userId) {
+    /**
+     * Get all managers and their personal details for showing task details
+     *
+     * @param userId The id of each manager
+     */
+    public void getAllManagers(int userId) {
         String userName = null;
         String name = null;
         String password = null;
@@ -192,6 +212,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Get the quantity of managers for getting all managers
+     *
+     * @return The quantity of managers
+     */
     public static int getManagerQuantity() {
         int count = 0;
         // Generate database query sentence
@@ -201,7 +226,6 @@ public class UserService {
         try {
             // Extract data from result set
             while (rs.next()) {
-                // Login query should only have one row of result
                 count = Integer.parseInt(rs.getString("count(*)"));
             }
         } catch (SQLException e) {
@@ -220,6 +244,11 @@ public class UserService {
         return count;
     }
 
+    /**
+     * Get the first manager's id for getting quantity of managers
+     *
+     * @return
+     */
     public static int getFirstManagerId() {
         int userId = 0;
         // Generate database query sentence
@@ -252,7 +281,7 @@ public class UserService {
         managerQuantity = getManagerQuantity();
         managerId = getFirstManagerId();
         for (int i = 1; i <= managerQuantity; i++) {
-            loadAllManagers(managerId);
+            getAllManagers(managerId);
             managerId++;
         }
 
@@ -260,7 +289,7 @@ public class UserService {
         teamMemberQuantity = getTeamMemberQuantity();
         teamMemberId = getFirstTeamMemberId();
         for (int i = 1; i <= teamMemberQuantity; i++) {
-            loadAllTeamMembers(teamMemberId);
+            getAllTeamMembers(teamMemberId);
             teamMemberId++;
         }
     }

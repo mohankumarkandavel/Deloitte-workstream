@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 public class TaskHelper {
+    /**
+     * @param task
+     * @param ownId
+     */
     public static void addTask(Task task, int ownId) {
         String name = task.getName();
         String description = task.getDescription();
@@ -34,34 +38,26 @@ public class TaskHelper {
         }
     }
 
-    public static List<Task> getTasks() {
-        List<Task> tasks = new ArrayList<>();
-        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "CALL Task_getTasks()";
+    /**
+     * Get the last list id of assignee details list
+     * Call before creating new list record
+     *
+     * @return List id
+     */
+    public static int getLastAssigneesListId() {
+        int listId = 0;
+        // Generate database query sentence
+        String sql = "CALL Task_getLastAssigneesListId()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
             // Extract data from result set
             while (rs.next()) {
-                int id = Integer.parseInt(rs.getString("id"));
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                Date deadline = format1.parse(rs.getString("deadline"));
-                String group = rs.getString("group");
-                int experience = Integer.parseInt(rs.getString("experience"));
-                int interest = Integer.parseInt(rs.getString("interest"));
-                int availability = Integer.parseInt(rs.getString("availability"));
-                int resource = Integer.parseInt(rs.getString("resource"));
-                int numAssigneesRequired = Integer.parseInt(rs.getString("numAssigneesRequired"));
-                String status = rs.getString("status");
-                int owner = Integer.parseInt(rs.getString("owner"));
-                Manager manager = UserHelper.getManagerById(owner);
-                tasks.add(new Task(id, name, description, new Attribute(experience, interest, availability, resource), deadline, Group.valueOf(group), Status.valueOf(status), numAssigneesRequired, manager));
+                // Login query should only have one row of result
+                listId = rs.getInt("MAX(listId)");
             }
         } catch (SQLException e) {
             // Handle errors for JDBC
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -73,12 +69,16 @@ public class TaskHelper {
                 e.printStackTrace();
             }
         }
-        return tasks;
+        return listId;
     }
 
-    public static void updateToPendingOrAssigned(int assigneesListId, String status, int taskId) {
+    /**
+     * @param listId
+     * @param teamMemberId
+     */
+    public static void createNewAssigneesList(int listId, int teamMemberId) {
         // Generate database query sentence
-        String sql = "CALL Task_updateToPendingOrAssigned(" + "'" + assigneesListId + "'" + "," + "'" + status + "'" + "," + "'" + taskId + "')";
+        String sql = "CALL Task_createNewAssigneesList(" + (listId + 1) + "," + teamMemberId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
@@ -91,4 +91,43 @@ public class TaskHelper {
         }
     }
 
+    /**
+     * @param assigneesListId
+     * @param status
+     * @param taskId
+     */
+    public static void updateToPending(int assigneesListId, String status, int taskId) {
+        // Generate database query sentence
+        String sql = "CALL Task_updateToPending(" + "'" + assigneesListId + "'" + "," + "'" + status + "'" + "," + "'" + taskId + "')";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            // Clean-up environment
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * After team member accepting a task, change the status to ASSIGNED
+     *
+     * @param taskId The id of the selected task
+     */
+    public static void updateToAssigned(int taskId) {
+        // Generate database query sentence
+        String sql = "CALL Task_updateToAssigned(" + taskId + ")";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            // Clean-up environment
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

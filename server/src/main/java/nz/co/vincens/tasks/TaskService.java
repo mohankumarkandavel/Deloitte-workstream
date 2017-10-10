@@ -240,7 +240,6 @@ public class TaskService {
         try {
             // Extract data from result set
             while (rs.next()) {
-                // Login query should only have one row of result
                 id = Integer.parseInt(rs.getString("id"));
                 name = rs.getString("name");
                 description = rs.getString("description");
@@ -254,6 +253,7 @@ public class TaskService {
                 ownerId = Integer.parseInt(rs.getString("owner"));
                 assigneesId = Integer.parseInt(rs.getString("teammemberId"));
                 manager = (Manager) userService.getUsers().get(0);
+//                manager = (Manager) userService.getUsers().get(ownerId);
                 switch (group) {
                     case "FINANCIAL_ANALYSIS":
                         task = new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date()
