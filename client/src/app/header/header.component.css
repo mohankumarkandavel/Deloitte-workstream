@@ -7,17 +7,18 @@
   color: white;
   font-size: large;
   display: inline-block;
+  max-width: 25%;
 }
 
 .title img {
-  max-width: 28%;
+  max-width: 100%;
 }
 
 .logout-menu {
   float: right;
   display: flex;
   align-items: center;
-  width: 17%;
+  vertical-align: top;
 }
 
 .welcome {
@@ -28,7 +29,8 @@
 }
 
 .mat-button {
-  line-height: 190%;
+  line-height: 200%;
+  margin-right: 15%;
   background: white;
   color: black;
 }
