@@ -13,8 +13,11 @@ export class Task {
     availability: "",
     resource: ""
   };
-  public peopleRequired: string;
+  public numAssigneesRequred: string;
   public owner: string;
   public assignees: any[];
   public requestedAssignees: any[];
+  public declinedAssignees: any[];
+  public reasonForDeclining: string;
+  public requestsById: number[];
 }
