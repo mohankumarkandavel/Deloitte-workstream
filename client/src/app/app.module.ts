@@ -5,7 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
-import {MatCardModule, MatTooltipModule, MatButtonModule} from '@angular/material';
+import {MatCardModule, MatTooltipModule, MatButtonModule, NoConflictStyleCompatibilityMode} from '@angular/material';
 
 import {AlertModule} from 'ngx-bootstrap';
 import {Ng2DragDropModule} from 'ng2-drag-drop';
@@ -80,7 +80,8 @@ const appRoutes: Routes = [
     Ng2DragDropModule.forRoot(),
     MatCardModule,
     MatTooltipModule,
-    MatButtonModule
+    MatButtonModule,
+    NoConflictStyleCompatibilityMode
   ],
   providers: [
     AuthenticationGuardService,
