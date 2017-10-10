@@ -13,7 +13,7 @@
 
       <div class="form-group">
         <md-form-field>
-          <input mdInput placeholder="Password" [type]="password" name="password" [(ngModel)]="model.password"
+          <input mdInput placeholder="Password" type="password" name="password" [(ngModel)]="model.password"
                  #password="ngModel" required>
           <md-error *ngIf="f.submitted && !password.valid">Password is required</md-error>
         </md-form-field>

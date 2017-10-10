@@ -33,6 +33,10 @@
   color: white;
 }
 
+:host /deep/ #md-input-1 {
+  color: white;
+}
+
 :host /deep/ .mat-placeholder-required {
   display: none
 }
