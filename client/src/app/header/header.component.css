@@ -1,4 +1,5 @@
-header {
+.background {
+  background: black;
   padding: 1%;
 }
 
@@ -6,6 +7,10 @@ header {
   color: white;
   font-size: large;
   display: inline-block;
+}
+
+.title img {
+  max-width: 28%;
 }
 
 .logout-menu {

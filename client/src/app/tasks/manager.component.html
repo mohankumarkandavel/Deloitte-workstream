@@ -1,7 +1,5 @@
-<div class="background">
-  <div class="add-new-task">
-    <button class="btn btn-primary " (click)="onNewTask(newTaskModal);">Add New Task</button>
-  </div>
+<div class="home-container">
+    <button md-button class="add-new-task-btn" (click)="onNewTask(newTaskModal);">Add New Task</button>
   <div class="column-container">
     <div id="column-drafts">
       <div class="column-heading">Drafts</div>
@@ -28,7 +26,7 @@
     </div>
   </div>
   <ng-template #newTaskModal let-c="close" let-d="dismiss">
-    <div class="modal-header">
+    <div class="modal-header"> Add a New Task
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -118,8 +116,8 @@
         </div>
         <div class="form-group">
           <div class="modal-footer">
-            <button class="btn btn-secondary button_cancel" (click)="c('Close click')">Cancel</button>
-            <button type="submit" class="btn btn-primary button_add">Add</button>
+            <button md-button class="add-new-task-btn" (click)="c('Close click')">Cancel</button>
+            <button md-button type="submit" class="add-new-task-btn">Add</button>
           </div>
         </div>
       </form>
@@ -134,9 +132,8 @@
     </div>
     <div class="modal-body pre-scrollable scroll-style">
       <table class="table" [ngBusy]="{busy: loading, message: 'Loading...', minDuration: 1000}">
-        <tr class="bg-primary text-white">
+        <tr>
           <th>Ranking</th>
-          <th></th>
           <th>Name</th>
           <th>Availability</th>
           <th>Experience</th>
@@ -146,7 +143,6 @@
             (click)="addThisEmployeeToArray(teamMember, $event)"
             [class.active]="isEmployeeSelected(teamMember)">
           <td>{{i+1}}</td>
-          <td><i class="fa fa-user" aria-hidden="true"></i>{{teamMember.icon}}</td>
           <td>{{teamMember.name}}</td>
           <td>{{teamMember.weightings[droppedTaskGroup].availability}}</td>
           <td>{{teamMember.weightings[droppedTaskGroup].experience}}</td>
@@ -155,8 +151,8 @@
       </table>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="c('Cancel')">Cancel</button>
-      <button type="button" class="btn btn-primary" (click)="c('Send')">Send Invitation</button>
+      <button md-button class="add-new-task-btn" (click)="c('Cancel')">Cancel</button>
+      <button md-button class="add-new-task-btn" (click)="c('Send')">Send Invitation</button>
     </div>
   </ng-template>
   <ng-template #invitationSend let-c="close" let-d="dismiss">
