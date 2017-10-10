@@ -5,7 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
-import {MdCardModule, MdTooltipModule, MatButtonModule} from '@angular/material';
+import {MatCardModule, MatTooltipModule, MatButtonModule} from '@angular/material';
 
 import {AlertModule} from 'ngx-bootstrap';
 import {Ng2DragDropModule} from 'ng2-drag-drop';
@@ -78,8 +78,8 @@ const appRoutes: Routes = [
     HttpModule,
     AlertModule.forRoot(),
     Ng2DragDropModule.forRoot(),
-    MdCardModule,
-    MdTooltipModule,
+    MatCardModule,
+    MatTooltipModule,
     MatButtonModule
   ],
   providers: [

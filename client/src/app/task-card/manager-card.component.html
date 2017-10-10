@@ -1,18 +1,18 @@
-<md-card>
+<mat-card>
   <div class="more-info-section">
-    <i class="material-icons" md-tooltip="{{task.declinedAssignees[0].name}} has declined this task for the following reason: {{task.reasonForDeclining}}. This task has been added back to your drafts" *ngIf="task.status ==='Draft' && task.reasonForDeclining !== null">error</i>
+    <i class="material-icons" matTooltip="{{task.declinedAssignees[0].name}} has declined this task for the following reason: {{task.reasonForDeclining}}. This task has been added back to your drafts" *ngIf="task.status ==='Draft' && task.reasonForDeclining !== null">error</i>
     <i class="material-icons"
-       md-tooltip="{{getTooltipRequestMoreInfo()}}" *ngIf="taskHasRequests() && task.status == 'Pending'">error</i>
-    <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after">
+    matTooltip="{{getTooltipRequestMoreInfo()}}" *ngIf="taskHasRequests() && task.status == 'Pending'">error</i>
+    <span class="info-icon" matTooltip="Group: {{task.group}}" matTooltipPosition="after">
     <i class="material-icons">info</i></span>
   </div>
-  <md-card-header>
-    <md-card-title>{{task.name}}
-    </md-card-title>
-    <md-card-subtitle>Deadline: {{task.deadline}}</md-card-subtitle>
-  </md-card-header>
-  <md-card-content> {{task.description}}</md-card-content>
-  <md-card-footer class="card-description cd-footer">
+  <mat-card-header>
+    <mat-card-title>{{task.name}}
+    </mat-card-title>
+    <mat-card-subtitle>Deadline: {{task.deadline}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content> {{task.description}}</mat-card-content>
+  <mat-card-footer class="card-description cd-footer">
     <div *ngIf="task.status === 'Pending'">Requested to: <span
       *ngFor="let assignee of task.requestedAssignees ">
       {{assignee.name}}</span>
@@ -21,5 +21,5 @@
       *ngFor="let assignee of task.assignees ">
       {{assignee.name}}</span>
     </div>
-  </md-card-footer>
-</md-card>
+  </mat-card-footer>
+</mat-card>
