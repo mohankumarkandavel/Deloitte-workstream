@@ -88,7 +88,6 @@ public class UserService {
                         weightings.put(Group.MARKETING_AND_SALES, new Attribute(experience, interest, availability, resource));
                         break;
                 }
-                // i++;
             }
             users.add(new TeamMember(name, userName, email, String.valueOf(userId), weightings, password));
         } catch (SQLException e) {

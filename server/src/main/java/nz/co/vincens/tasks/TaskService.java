@@ -100,6 +100,10 @@ public class TaskService {
                         tasks.add(new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date(),
                                 Group.BUSINESS_AND_DEVELOPMENT, Status.DRAFT, numAssigneesRequired, manager));
                         break;
+                    case "MARKETING_AND_SALES":
+                        tasks.add(new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date(),
+                                Group.MARKETING_AND_SALES, Status.DRAFT, numAssigneesRequired, manager));
+                        break;
                 }
             }
         } catch (SQLException e) {
@@ -190,6 +194,10 @@ public class TaskService {
                     case "BUSINESS_AND_DEVELOPMENT":
                         task = new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date()
                                 , Group.BUSINESS_AND_DEVELOPMENT, Status.PENDING, numAssigneesRequired, manager);
+                        break;
+                    case "MARKETING_AND_SALES":
+                        task = new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date()
+                                , Group.MARKETING_AND_SALES, Status.PENDING, numAssigneesRequired, manager);
                         break;
                 }
                 task.addRequestedAssignee((TeamMember) userService.getUser(assigneesId));
@@ -283,6 +291,10 @@ public class TaskService {
                     case "BUSINESS_AND_DEVELOPMENT":
                         task = new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date()
                                 , Group.BUSINESS_AND_DEVELOPMENT, Status.ASSIGNED, numAssigneesRequired, manager);
+                        break;
+                    case "MARKETING_AND_SALES":
+                        task = new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date()
+                                , Group.MARKETING_AND_SALES, Status.ASSIGNED, numAssigneesRequired, manager);
                         break;
                 }
                 task.addAssignee((TeamMember) userService.getUser(assigneesId));
