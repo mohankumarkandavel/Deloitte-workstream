@@ -1,6 +1,15 @@
  Workload Management App
  ===
+# Login accounts
+## Manager
+username: Manager
+password: 123
 
+## Employee
+username: Shenghong
+password: 123
+ 
+ 
 # Client
 
 _Under the client directory:_
