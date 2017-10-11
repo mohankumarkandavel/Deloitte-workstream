@@ -1,0 +1,3 @@
+@import "../node_modules/ng2-drag-drop/style.css";
+@import "../node_modules/angular2-busy/build/style/busy.css";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';

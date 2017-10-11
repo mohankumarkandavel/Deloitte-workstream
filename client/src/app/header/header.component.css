@@ -1,0 +1,36 @@
+.background {
+  background: black;
+  padding: 1%;
+}
+
+.title {
+  color: white;
+  font-size: large;
+  display: inline-block;
+  max-width: 25%;
+}
+
+.title img {
+  max-width: 100%;
+}
+
+.logout-menu {
+  float: right;
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+}
+
+.welcome {
+  font-size: small;
+  color: white;
+  white-space: nowrap;
+  padding-right: 8%;
+}
+
+.mat-button {
+  line-height: 200%;
+  margin-right: 15%;
+  background: white;
+  color: black;
+}

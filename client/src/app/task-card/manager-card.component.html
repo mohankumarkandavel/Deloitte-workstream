@@ -1,0 +1,25 @@
+<md-card>
+  <div class="more-info-section">
+    <i class="material-icons" md-tooltip="{{getTooltipDeclined()}}" *ngIf="task.status === 'Draft' && task.reasonForDeclining !== null">error</i>
+    <i class="material-icons"
+       md-tooltip="{{getTooltipRequestMoreInfo()}}" *ngIf="taskHasRequests() && task.status == 'Pending'">error</i>
+    <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after">
+    <i class="material-icons">info</i></span>
+  </div>
+  <md-card-header>
+    <md-card-title>{{task.name}}
+    </md-card-title>
+    <md-card-subtitle>Deadline: {{task.deadline}}</md-card-subtitle>
+  </md-card-header>
+  <md-card-content> {{task.description}}</md-card-content>
+  <md-card-footer class="card-description cd-footer">
+    <div *ngIf="task.status === 'Pending'">Requested to: <span
+      *ngFor="let assignee of task.requestedAssignees ">
+      {{assignee.name}}</span>
+    </div>
+    <div *ngIf="task.assignees.length > 0 && task.status === 'Assigned'">Assigned to:<span
+      *ngFor="let assignee of task.assignees ">
+      {{assignee.name}}</span>
+    </div>
+  </md-card-footer>
+</md-card>
