@@ -1,5 +1,17 @@
- Workload Management App
- ===
+**WorkStream (by Deloitte)**
+=== 
+A workload management app
+
+# What does it do?
+The aim of WorkStream is to improve the way it manages
+the workload between various teams in the organisation.
+
+Current manual processes make it difficult to divide work
+amongst a team. 
+Often managers are unable to clearly identify whom to pass work to based on factors such as availability, planned tasks, employee strengths/weaknesses and performance. 
+WorkStream changes this by introducing a brand new software that empowers managers to raise a task by flagging that they need help. 
+The software will then take into account the availability and performance of nearby employees and route the work to the best possible employee. 
+The employee then receives the notification and can respond to the task request.
 
 # Client
 
@@ -22,8 +34,12 @@ To execute unit tests, run
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/` on your browser. The app will automatically reload if you change any of the source files.
 
-Log in with these credentials
-> username: James\
+Log in to the manager side with:
+> username: Manager\
+> password: 123
+
+Log in to the employee side with:
+> username (any): klau158, xlin504, bowen, fralewsmi, shenghong, mohan, rick\
 > password: 123
 
 ## Code scaffolding

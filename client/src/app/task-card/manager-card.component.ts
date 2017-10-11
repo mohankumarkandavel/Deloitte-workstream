@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Task } from '../tasks/task.model';
 
 @Component({
@@ -41,6 +42,28 @@ export class ManagerCardComponent implements OnInit {
 
   private taskHasRequests(): boolean {
     return this.task.requestsById.length > 0;
+  }
+
+  private getTooltipDeclined() : string {
+    let tooltip:string = "";
+    let declinees: any[] = this.task.declinedAssignees;
+
+    let onlyOne: boolean = true;
+
+    for (let i = 0; i < declinees.length - 1; i++) {
+      onlyOne = false;
+      tooltip += declinees[i].name;
+      tooltip += ", ";
+    }
+
+    tooltip += declinees[declinees.length - 1].name;
+    tooltip += " ";
+    tooltip += onlyOne ? "has" : "have";
+    tooltip += " declined. Reason is: ";
+    tooltip += this.task.reasonForDeclining;
+    tooltip += ". This task has been added back to your drafts.";
+
+    return tooltip;
   }
 
 }

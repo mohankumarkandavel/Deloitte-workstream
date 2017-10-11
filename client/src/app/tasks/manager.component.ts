@@ -27,6 +27,8 @@ export class ManagerComponent implements OnInit {
 
   private addTaskModal: NgbModalRef;
 
+  private isFirefox: boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
   constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
   }
 

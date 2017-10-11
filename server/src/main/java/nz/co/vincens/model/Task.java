@@ -21,7 +21,7 @@ public class Task {
 
 	@JsonProperty("attribute")
 	private Attribute attribute;
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm")
 	private Date deadline;
 	private Group group;
 	private Status status;
