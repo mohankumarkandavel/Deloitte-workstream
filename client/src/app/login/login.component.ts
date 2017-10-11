@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {Login} from './login.model';
 import {AuthenticationService} from '../services/authentication.service';
 import { TaskService } from '../services/task.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { TaskService } from '../services/task.service';
 export class LoginComponent implements OnInit {
 
   private passwordError: boolean = false;
+  private loginRequest: Subscription;
 
   constructor(
     private router: Router,
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
+    this.loginRequest = this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
           if (result !== 'unauthorised') {
             this.passwordError = false;
             this.router.navigateByUrl(`/${result}`);
