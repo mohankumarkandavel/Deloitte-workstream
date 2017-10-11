@@ -4,6 +4,8 @@ import {Task} from './task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../services/task.service';
 import {RankService} from '../services/rank.service';
+import {FormControl} from '@angular/forms';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-tasks',
@@ -16,20 +18,28 @@ export class ManagerComponent implements OnInit {
   private model: Task = new Task();
   private droppedTaskGroup: string;
   private droppedTaskLimit: number;
+  public  keyword: string; // key word for searching
+
+  public  titleFilter: FormControl = new FormControl();
 
   private selectedEmployeeArray: Task[] = [];
 
   loading: Subscription;
 
-  private availabilityRangeError: boolean = false;
-  private peopleRangeError: boolean = false;
-  private resourceRangeError: boolean = false;
+  private availabilityRangeError = false;
+  private peopleRangeError = false;
+  private resourceRangeError = false;
 
   private addTaskModal: NgbModalRef;
 
   private isFirefox: boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   constructor(private modalService: NgbModal, private taskService: TaskService, private rankService: RankService) {
+    this.titleFilter.valueChanges
+      .debounceTime(500)
+      .subscribe(
+        value => this.keyword = value
+      );
   }
 
   ngOnInit() {
@@ -37,7 +47,7 @@ export class ManagerComponent implements OnInit {
   }
 
   getAllTasks() {
-    let userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem('userId');
     this.taskService.getUsersTasks(userId);
   }
 
@@ -48,11 +58,11 @@ export class ManagerComponent implements OnInit {
   addTask() {
     this.resourceRangeError = Number(this.model.attribute.resource) < 1 || Number(this.model.attribute.resource) > 6;
     this.availabilityRangeError = Number(this.model.attribute.availability) < 1 || Number(this.model.attribute.resource) > 6;
-    this.peopleRangeError = Number(this.model.numAssigneesRequred) < 1;
+    this.peopleRangeError = Number(this.model.numAssigneesRequired) < 1;
 
     if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError) {
-      this.model.status = "Draft";
-      this.model.owner = localStorage.getItem("userId");
+      this.model.status = 'Draft';
+      this.model.owner = localStorage.getItem('userId');
       this.taskService.addTask(this.model);
       this.addTaskModal.close();
     }
@@ -81,7 +91,7 @@ export class ManagerComponent implements OnInit {
   }
 
   updateTaskStatus(task: Task) {
-    this.taskService.updateTaskStatus(task, "Pending", "");
+    this.taskService.updateTaskStatus(task, 'Pending', '');
   }
 
   emptySelectedEmployeeArray() {

@@ -1,11 +1,21 @@
 <div class="home-container">
-    <button md-button class="add-new-task-btn" (click)="onNewTask(newTaskModal);">Add New Task</button>
+  <div class="row task-row">
+    <div class="col-md-8">
+      <button md-button class="add-new-task-btn" (click)="onNewTask(newTaskModal);">Add New Task</button>
+    </div>
+    <div class="col-md-4">
+      <form action="" autocomplete="on">
+        <input id="search" name="search" type="text" placeholder="Please enter task name" [formControl]="titleFilter">
+        <input id="search_submit" value="Rechercher" type="submit">
+      </form>
+    </div>
+  </div>
   <div class="column-container">
     <div id="column-drafts">
       <div class="column-heading">Drafts</div>
       <div class="column-body">
         <div *ngIf="taskService.draftTasks.length === 0"> You currently have no draft tasks.</div>
-        <app-manager-card *ngFor="let draftTask of taskService.draftTasks" draggable="true" [dragData]="draftTask"
+        <app-manager-card *ngFor="let draftTask of taskService.draftTasks | filter:'name' : keyword" draggable="true" [dragData]="draftTask"
                           [task]="draftTask"></app-manager-card>
       </div>
     </div>
@@ -13,14 +23,14 @@
       <div class="column-heading">Pending</div>
       <div class="column-body">
         <div *ngIf="taskService.pendingTasks.length === 0"> You currently have no pending tasks.</div>
-        <app-manager-card *ngFor="let pendingTask of taskService.pendingTasks" [task]="pendingTask"></app-manager-card>
+        <app-manager-card *ngFor="let pendingTask of taskService.pendingTasks | filter:'name' : keyword" [task]="pendingTask"></app-manager-card>
       </div>
     </div>
     <div id="column-assigned">
       <div class="column-heading">Assigned</div>
       <div class="column-body">
         <div *ngIf="taskService.assignedTasks.length === 0"> You currently have no assigned tasks.</div>
-        <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks"
+        <app-manager-card *ngFor="let assignedTask of taskService.assignedTasks| filter:'name' : keyword"
                           [task]="assignedTask"></app-manager-card>
       </div>
     </div>

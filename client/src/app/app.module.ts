@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {MdCardModule, MdTooltipModule, MatButtonModule, MdFormFieldModule, MdInputModule} from '@angular/material';
@@ -26,6 +26,7 @@ import {AuthenticationGuardService} from "./services/authentication-guard.servic
 import {AuthenticationService} from "./services/authentication.service";
 import {TaskService} from "./services/task.service";
 import {RankService} from "./services/rank.service";
+import { FilterPipe } from './pipe/filter.pipe';
 
 const appRoutes: Routes = [
   {
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
     ManagerCardComponent,
     ManagerComponent,
     TeamMemberComponent,
-    TeamMemberCardComponent
+    TeamMemberCardComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -75,6 +77,7 @@ const appRoutes: Routes = [
       {enableTracing: true}
     ),
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AlertModule.forRoot(),
     Ng2DragDropModule.forRoot(),
