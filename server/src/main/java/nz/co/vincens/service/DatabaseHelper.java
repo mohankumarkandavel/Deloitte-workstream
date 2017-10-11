@@ -18,7 +18,6 @@ import java.sql.Statement;
  * Database queries use call procedure functions.
  * <p>
  * Created on 06/09/2017 by Shenghong Huang.
- * Last modified on 18/09/2017 by Shenghong Huang.
  */
 public class DatabaseHelper {
     // JDBC driver name and database URL
@@ -99,6 +98,11 @@ public class DatabaseHelper {
         }
     }
 
+    /**
+     * Just for check the database connecting test
+     *
+     * @return The flag(1: success, 0: driver error, -1: Internet error)
+     */
     public static int databaseConnection() {
         loadDatabaseParameters();
         // Create the connection statement
