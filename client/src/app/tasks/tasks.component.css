@@ -102,6 +102,18 @@ th {
 .current-card {
   margin: 4.15%;
 }
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  margin: 0;
+}
+
+.modal-body {
+  font-size: small;
+  padding-bottom: 0;
+}
 
 .recommend-modal > table > th {
   background-color: #1a1a1a;
@@ -129,18 +141,6 @@ th {
   text-align: right;
 }
 
-.modal-dialog {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) !important;
-  margin: 0;
-}
-
-.modal-body {
-  font-size: small;
-  padding-bottom: 0;
-}
 
 .scroll-style::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);

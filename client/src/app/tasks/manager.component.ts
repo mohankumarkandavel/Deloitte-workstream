@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Task} from './task.model';
 import {Subscription} from 'rxjs';
@@ -8,6 +8,7 @@ import {RankService} from '../services/rank.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './manager.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./tasks.component.css']
 })
 
