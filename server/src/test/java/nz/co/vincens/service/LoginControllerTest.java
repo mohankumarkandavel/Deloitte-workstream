@@ -34,19 +34,10 @@ public class LoginControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-//    @Before
-//    public void setUp() {
-//        List<User> users = new ArrayList<>();
-//        users.add(new Manager("1", "Manager", "James Too", "James@hotmail.com", "123"));
-//        users.add(new TeamMember("Bob Ross", "Team Member", "Bob@ross.com", String.valueOf(users.size() + 1),
-//                null, "123"));
-//        given(this.userService.getUsers()).willReturn(users);
-//    }
-
     @Test
     public void loginSuccessTeamMember() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/login").param("username",
-                "bob").param("password", "123")
+                "Bob").param("password", "123")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();

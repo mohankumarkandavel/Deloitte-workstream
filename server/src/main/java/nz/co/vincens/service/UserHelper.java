@@ -1,14 +1,19 @@
 package nz.co.vincens.service;
 
-import nz.co.vincens.login.UserService;
 import nz.co.vincens.model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
+/**
+ * This class is to implement the essential function for database query of managing user.
+ * The function includes flowing:
+ * 1. User login
+ * 2. Get team member details
+ * 3. Get manager details
+ * <p>
+ * Created by Shenghong Huang
+ */
 public class UserHelper {
 
     /**
@@ -57,6 +62,12 @@ public class UserHelper {
         }
     }
 
+    /**
+     * Get team member details
+     *
+     * @param id the id of a user
+     * @return The model of user object
+     */
     public static User getUserDetails(int id) {
         User actualUser = new User();
         String username = null;
@@ -99,6 +110,12 @@ public class UserHelper {
         return actualUser;
     }
 
+    /**
+     * Get manager details
+     *
+     * @param id the id of a manager
+     * @return The model of manager object
+     */
     public static Manager getManagerById(int id) {
         Manager actualManager = null;
         String username = null;
@@ -134,6 +151,4 @@ public class UserHelper {
         System.out.println(String.valueOf(id) + username);
         return actualManager;
     }
-
-
 }
