@@ -22,8 +22,7 @@ import java.util.List;
 public class TaskService {
 
     private List<Task> tasks;
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
     public TaskService() {
     }
@@ -32,7 +31,7 @@ public class TaskService {
     private void init() {
         this.tasks = new ArrayList<>();
         Manager manager = (Manager) userService.getUsers().get(0);
-        TeamMember teamMember = (TeamMember) userService.getUsers().get(1);
+        TeamMember teamMember = (TeamMember) userService.getUser(2);
         tasks.add(new Task(tasks.size() + 1, "Task One", "Description One", new Attribute(3, 3, 3, 3), new Date(),
                 Group.HUMAN_CAPITAL, Status.DRAFT, 1, manager));
 
@@ -41,8 +40,14 @@ public class TaskService {
         task.addAssignee(teamMember);
         tasks.add(task);
 
-        task = new Task(tasks.size() + 1, "Task tree", "Description of a tree", new Attribute(2, 5, 3, 1), new Date()
+        task = new Task(tasks.size() + 1, "Task Tree", "Description of a tree", new Attribute(2, 5, 3, 1), new Date()
                 , Group.HUMAN_CAPITAL, Status.PENDING, 1, manager);
+        task.addRequestedAssignee(teamMember);
+        task.addRequestedAssignee((TeamMember) userService.getUser(3));
+        tasks.add(task);
+
+        task = new Task(tasks.size() + 1, "Task Four", "An assigned task", new Attribute(1, 4, 2, 5), new Date(),
+                Group.SOFTWARE, Status.ASSIGNED, 2, manager);
         task.addAssignee(teamMember);
         tasks.add(task);
     }
@@ -59,7 +64,10 @@ public class TaskService {
      * @return task with specified id
      */
     public Task getTask(int id) {
-        return tasks.get(id);
+        for( Task task: tasks) {
+            if (task.getId() == id) return task;
+        }
+        return null;
     }
 
     /**

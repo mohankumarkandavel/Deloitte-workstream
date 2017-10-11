@@ -1,0 +1,56 @@
+.mat-card {
+  padding: 8% 7% 5% 7%;
+  margin-bottom: 5%;
+}
+
+.mat-card-title {
+  margin-top: -5%;
+  margin-left: -5%;
+  margin-bottom: 0;
+  padding-bottom: 3%;
+  color: black;
+  font-size: medium;
+}
+
+.mat-card-subtitle {
+  margin-top: -5%;
+  margin-left: -4%;
+  margin-bottom: 5%;
+  color: black;
+  font-size: x-small;
+}
+
+.mat-card-content {
+  font-size: small;
+  line-height: 98%;
+}
+
+.mat-card-actions {
+  padding: 0;
+  font-size: smaller;
+  margin: -3% 0 0 -1%;
+}
+
+.mat-button {
+  background: rgb(134,188,37);
+  color: white;
+  min-width: 0;
+  line-height: 200%;
+}
+
+.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button {
+  margin: 1% 1% 1% 1%;
+}
+
+.info-icon {
+  right: 0;
+  position: absolute;
+  margin-right: 3%;
+  margin-top: -2%;
+}
+
+.text-area {
+  width: 100%;
+  resize: none;
+  padding: 2%;
+}

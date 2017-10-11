@@ -1,30 +1,39 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Login} from './login.model';
-import {AuthenticationService} from "../services/authentication.service";
+import {AuthenticationService} from '../services/authentication.service';
+import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
-  }
+  private passwordError: boolean = false;
 
-  private model = new Login("","","");
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private taskService: TaskService
+  ) {}
+
+  private model = new Login('', '', '');
 
   ngOnInit() {
     this.authenticationService.logout();
+    this.taskService.clearTasks();
   }
 
   login() {
     this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
-          if (result !== "unauthorised") {
-              this.router.navigateByUrl(`/${result}`);
+          if (result !== 'unauthorised') {
+            this.passwordError = false;
+            this.router.navigateByUrl(`/${result}`);
           } else {
-            //todo handle error logging
+            this.passwordError = true;
           }
     },
       (error => console.log(error.toString())));

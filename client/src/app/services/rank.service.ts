@@ -14,6 +14,7 @@ export class RankService {
   }
 
   getBestTeamMembers(task: Task) : Subscription {
+    this.teamMembers.length = 0;
     return this.http.get(this.rankURL + task.id)
       .subscribe(
         (response) => {

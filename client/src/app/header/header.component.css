@@ -1,10 +1,36 @@
-header{
-  height:70px;
-  vertical-align:middle;
-  line-height:70px;
-  padding-left:16px;
+.background {
+  background: black;
+  padding: 1%;
 }
-h3,h6 {
-  vertical-align:middle;
-  line-height:70px;
+
+.title {
+  color: white;
+  font-size: large;
+  display: inline-block;
+  max-width: 25%;
+}
+
+.title img {
+  max-width: 100%;
+}
+
+.logout-menu {
+  float: right;
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+}
+
+.welcome {
+  font-size: small;
+  color: white;
+  white-space: nowrap;
+  padding-right: 8%;
+}
+
+.mat-button {
+  line-height: 200%;
+  margin-right: 15%;
+  background: white;
+  color: black;
 }

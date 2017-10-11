@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -8,8 +8,16 @@ import * as $ from 'jquery';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
-    ngOnInit() {
-    }
+  user: string;
 
+  constructor() {
+  }
+
+  ngOnInit() {
+    this.getCurrentlyLoggedInUser();
+  }
+
+  getCurrentlyLoggedInUser() {
+    this.user = localStorage.getItem("name");
+  }
 }

@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
-import {Task} from "./task.model";
 import {TaskService} from "../services/task.service";
 
 @Component({
@@ -11,10 +9,7 @@ import {TaskService} from "../services/task.service";
 
 export class TeamMemberComponent implements OnInit {
 
-  private pendingTasks: Task[] = [];
-  private assignedTasks: Task[] = [];
-
-  constructor(private http: Http, private taskService: TaskService) {
+  constructor(private taskService: TaskService) {
   }
 
   ngOnInit(): void {

@@ -22,12 +22,20 @@ export class AuthenticationService {
           localStorage.setItem("role", role);
           let userId = JSON.parse(response.text()).id;
           localStorage.setItem("userId", userId);
+          let name = JSON.parse(response.text()).name;
+          localStorage.setItem("name", name);
           return role;
-        } else {
-          return "unauthorised";
         }
       },
-    ).catch((error:any) => Observable.throw('Server error'));
+    ).catch((error:any) => {
+      if (error.status === 401) {
+        return Observable.of('unauthorised');
+      } else if(error.status === 400) {
+        return Observable.of('Bad request');
+      } else {
+        return Observable.throw(error);
+      }
+    });
   }
 
   logout() {
