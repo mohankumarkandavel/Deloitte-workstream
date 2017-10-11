@@ -5,8 +5,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-    return null;
+    transform(list: any[], filterField: string, keyword: string): any {
+      if (!keyword || !filterField) {
+              console.log('no');
+              // console.log('no');
+        return list;
+      }
+      return list.filter( item => {
+             console.log('cool');
+        // console.log('cool');
+          let fieldValue = item[filterField];
+        return fieldValue.indexOf(keyword) >= 0;
+      });
   }
-
 }

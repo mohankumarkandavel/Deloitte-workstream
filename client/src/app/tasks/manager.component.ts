@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs';
 import {TaskService} from '../services/task.service';
 import {RankService} from '../services/rank.service';
 import {FormControl} from '@angular/forms';
-import 'rxjs/Rx'
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-tasks',
@@ -18,8 +18,9 @@ export class ManagerComponent implements OnInit {
   private model: Task = new Task();
   private droppedTaskGroup: string;
   private droppedTaskLimit: number;
-  private keyword: string;
-  public titleFilter: FormControl = new FormControl();
+  public  keyword: string; // key word for searching
+
+  public  titleFilter: FormControl = new FormControl();
 
   private selectedEmployeeArray: Task[] = [];
 
