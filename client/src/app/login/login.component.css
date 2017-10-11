@@ -42,15 +42,19 @@
 }
 
 :host /deep/ .mat-form-field-ripple {
-  color: white;
-}
-
-:host /deep/ .mat-form-field-invalid {
-  color: white;
+  background-color: rgb(163, 207, 81);
 }
 
 :host /deep/ .mat-input-underline {
-  color: white;
+  background-color: white;
+}
+
+:host /deep/ .mat-form-field-invalid .mat-form-field-ripple {
+  background-color: red;
+}
+
+:host /deep/ .mat-form-field-invalid .mat-form-field-underline {
+  background-color: red;
 }
 
 .mat-error {
