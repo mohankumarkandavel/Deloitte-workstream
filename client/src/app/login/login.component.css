@@ -4,11 +4,11 @@
 }
 
 .login-container {
-  width: 30%;
+  width: 350px;
   padding: 10px;
   text-align: center;
   box-shadow: 0 0 5px black;
-  background-color: rgba(0, 0, 0, 0.7) !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
   margin: 0;
   position: absolute;
   top: 50%;
@@ -25,30 +25,64 @@
   box-shadow: 0 1px 3px black;
 }
 
+:host /deep/ .mat-input-placeholder {
+  color: white;
+}
+
+:host /deep/ #md-input-0 {
+  color: white;
+}
+
+:host /deep/ #md-input-1 {
+  color: white;
+}
+
+:host /deep/ .mat-placeholder-required {
+  display: none
+}
+
+:host /deep/ .mat-form-field-ripple {
+  background-color: rgb(163, 207, 81);
+}
+
+:host /deep/ .mat-input-underline {
+  background-color: white;
+}
+
+:host /deep/ .mat-form-field-invalid .mat-form-field-ripple {
+  background-color: red;
+}
+
+:host /deep/ .mat-form-field-invalid .mat-form-field-underline {
+  background-color: red;
+}
+
+.mat-form-field {
+  width: 100%;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.mat-error {
+  color: white;
+}
+
 .form {
   background-color: white;
   width: 60%;
 }
 
-input[type="text"], input[type="password"] {
-  height: 100%;
-  width: 60%;
-  padding: 5px;
-  font-size: 15px;
-  margin-bottom: 3%;
-  margin-top: 3%;
-  background-color: white;
-}
-
 .login-btn {
   width: 30%;
-  margin: auto;
+  margin: 5% auto 5% auto;
   display: block;
-  padding-bottom: 15px;
+  padding: 0 0 2% 0;
 }
 
 .help-block {
   font-size: 12px;
   color: white;
+  padding-bottom: 20px;
+  margin-top: -10px;
 }
 

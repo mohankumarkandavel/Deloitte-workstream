@@ -1,6 +1,6 @@
 <md-card>
   <div class="more-info-section">
-    <i class="material-icons" md-tooltip="{{task.declinedAssignees[0].name}} has declined this task for the following reason: {{task.reasonForDeclining}}. This task has been added back to your drafts" *ngIf="task.status ==='Draft' && task.reasonForDeclining !== null">error</i>
+    <i class="material-icons" md-tooltip="{{getTooltipDeclined()}}" *ngIf="task.status === 'Draft' && task.reasonForDeclining !== null">error</i>
     <i class="material-icons"
        md-tooltip="{{getTooltipRequestMoreInfo()}}" *ngIf="taskHasRequests() && task.status == 'Pending'">error</i>
     <span class="info-icon" md-tooltip="Group: {{task.group}}" mdTooltipPosition="after">
@@ -9,7 +9,7 @@
   <md-card-header>
     <md-card-title>{{task.name}}
     </md-card-title>
-    <md-card-subtitle>Deadline: {{task.deadline}}</md-card-subtitle>
+    <md-card-subtitle>Deadline: {{task.deadline | date:'h:m a EEE d MMM y'}}</md-card-subtitle>
   </md-card-header>
   <md-card-content> {{task.description}}</md-card-content>
   <md-card-footer class="card-description cd-footer">
