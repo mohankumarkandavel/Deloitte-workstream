@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TaskService} from '../services/task.service';
+import 'rxjs/Rx';
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-team-member',
@@ -8,8 +10,14 @@ import {TaskService} from '../services/task.service';
 })
 
 export class TeamMemberComponent implements OnInit {
-
+  public  keyword: string; // key word for searching
+  public  titleFilter: FormControl = new FormControl();
   constructor(private taskService: TaskService) {
+    this.titleFilter.valueChanges
+      .debounceTime(500)
+      .subscribe(
+        value => this.keyword = value
+      );
   }
 
   ngOnInit(): void {
