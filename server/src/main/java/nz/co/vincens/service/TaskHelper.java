@@ -7,13 +7,21 @@ import java.sql.SQLException;
 
 /**
  * Database functions for tasks
+ * This class is to implement the essential function for database query of managing tasks.
+ * The function includes flowing:
+ * 1. The manager create a new task
+ * 2. The manager assigns a task to some team members and update the status into pending
+ * 3. The team member accept a task and update the status into assigned.
+ * 4. The team member decline a task and update the status back into draft.
+ * 5. The team member mark a task as done and update the status into completed.
  */
 public class TaskHelper {
 
     /**
-	 * Add a new task
-     * @param task The task to add
-     * @param ownerId The id of the owner of the task
+     * Insert a new task into the database
+     *
+     * @param task  The whole object of one task
+     * @param ownerId the manager's id of the task
      */
     public static void addTask(Task task, int ownerId) {
         String name = task.getName();
@@ -41,7 +49,7 @@ public class TaskHelper {
      * Get the last list id of assignee details list
      * Call before creating new list record
      *
-     * @return List id
+     * @return list id
      */
     public static int getLastAssigneesListId() {
         int listId = 0;
@@ -72,8 +80,10 @@ public class TaskHelper {
     }
 
     /**
-     * @param listId
-     * @param teamMemberId
+     * Create a new assignees' list to store the assign details of a task
+     *
+     * @param listId       The id of the new list
+     * @param teamMemberId Ids of selected team members
      */
     public static void createNewAssigneesList(int listId, int teamMemberId) {
         // Generate database query sentence
@@ -112,11 +122,12 @@ public class TaskHelper {
     }
 
     /**
-     * After team member accepts a task, change the status to ASSIGNED
-     *
+     * After team member accepting a task, change the status to ASSIGNED
+     * Update in the database
      * @param taskId The id of the selected task
+     * @return The new status of this task for status checking
      */
-    public static void updateToAssigned(int taskId) {
+    public static String updateToAssigned(int taskId) {
         // Generate database query sentence
         String sql = "CALL Task_updateToAssigned(" + taskId + ")";
         // Call the function of database query operation
@@ -129,5 +140,81 @@ public class TaskHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return checkStatus(taskId);
     }
+
+    /**
+     * Update the status into completed after the team member mart the task as done
+     * Update in the database
+     *
+     * @param taskId The id of the selected task
+     * @return The new status of this task for status checking
+     */
+    public static String updateToCompleted(int taskId) {
+        // Generate database query sentence
+        String sql = "CALL Task_updateToCompleted(" + taskId + ")";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            // Clean-up environment
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return checkStatus(taskId);
+    }
+
+    /**
+     * @param taskId The id of the selected task
+     * @return The new status of this task for status checking
+     */
+    public static String updateToDeclined(int taskId) {
+        // Generate database query sentence
+        String sql = "CALL Task_updateToDeclined(" + taskId + ")";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            // Clean-up environment
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return checkStatus(taskId);
+    }
+
+    /**
+     * To check the newest status of one specific task in database
+     *
+     * @param taskId The id of the selected task
+     * @return The status of the task
+     */
+    public static String checkStatus(int taskId) {
+        // Generate database query sentence
+        String status = null;
+        // Call the function of database query operation
+        String sql = "Call Task_checkStatus(" + taskId + ")";
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            while (rs.next()) {
+                status = rs.getString("status");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Clean-up environment
+                if (!rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return status;
+    }
+
 }

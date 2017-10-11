@@ -96,6 +96,11 @@ public class DatabaseHelper {
         }
     }
 
+    /**
+     * Just for check the database connecting test
+     *
+     * @return The flag(1: success, 0: driver error, -1: Internet error)
+     */
     public static int databaseConnection() {
         loadDatabaseParameters();
         // Create the connection statement

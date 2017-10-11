@@ -18,10 +18,10 @@ import java.util.List;
 public class UserService {
     private List<User> users = new ArrayList<>();
     HashMap<Group, Attribute> weightings;
-    int teamMemberQuantity = 0;
-    int teamMemberId = 0;
-    int managerQuantity = 0;
-    int managerId = 0;
+    int teamMemberQuantity = 0; // The quantity of the team member
+    int teamMemberId = 0; // The select team member's id
+    int managerQuantity = 0; // The quantity of the manager
+    int managerId = 0; // The select manager's id
 
     /**
      * Get all team members and their personal details for showing task details and ranking team members.
@@ -247,7 +247,7 @@ public class UserService {
     /**
      * Get the first manager's id for getting quantity of managers
      *
-     * @return
+     * @return The id of the first manager
      */
     public static int getFirstManagerId() {
         int userId = 0;

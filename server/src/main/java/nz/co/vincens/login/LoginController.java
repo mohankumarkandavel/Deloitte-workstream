@@ -47,12 +47,6 @@ public class LoginController {
             result = UserHelper.login(login.getUsername(), login.getPassword());
             if (result != 0) {
                 actualUser = UserHelper.getUserDetails(result);
-                System.out.println("Id: " + actualUser.getId());
-                System.out.println("Username: " + actualUser.getUsername());
-                System.out.println("Name: " + actualUser.getName());
-                System.out.println("Password: " + actualUser.getPassword());
-                System.out.println("Role: " + actualUser.getRole());
-                System.out.println("Email: " + actualUser.getEmail());
                 return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
                         () + ", \"name\": \"" + actualUser.getName() + "\"}");
             } else {
