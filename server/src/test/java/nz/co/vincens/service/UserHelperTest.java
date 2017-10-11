@@ -8,12 +8,12 @@ public class UserHelperTest {
 
     @Test
     public void loginSucceedManager() throws Exception {
-        assertEquals(1, UserHelper.login("james", "123"));
+        assertEquals(1, UserHelper.login("Manager", "123"));
     }
 
     @Test
     public void loginSucceedTeamMember() throws Exception {
-        assertEquals(12, UserHelper.login("bob", "123"));
+        assertEquals(5, UserHelper.login("Shenghong", "123"));
     }
 
     @Test

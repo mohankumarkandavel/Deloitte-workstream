@@ -37,12 +37,12 @@ public class TaskService {
         int resource;
         Date deadline;
         String group;
-        //String status;
         int numAssigneesRequired;
         int ownerId;
         String ownerName;
         int assigneesId;
         String assigneesName;
+        String declineReason;
         // Generate database query sentence
         String sql = "CALL Task_getTasksDraft()";
         // Call the function of database query operation
@@ -58,10 +58,9 @@ public class TaskService {
                 interest = Integer.parseInt(rs.getString("interest"));
                 availability = Integer.parseInt(rs.getString("resource"));
                 resource = Integer.parseInt(rs.getString("resource"));
-                //deadline = formatter.parse(rs.getString("deadline"));
                 group = rs.getString("group");
                 numAssigneesRequired = Integer.parseInt(rs.getString("numAssigneesRequired"));
-                ownerId = Integer.parseInt(rs.getString("owner"));
+                declineReason = rs.getString("declineReason");
                 manager = (Manager) userService.getUsers().get(0);
                 switch (group) {
                     case "FINANCIAL_ANALYSIS":
@@ -105,6 +104,11 @@ public class TaskService {
                                 Group.MARKETING_AND_SALES, Status.DRAFT, numAssigneesRequired, manager));
                         break;
                 }
+                if (declineReason != null) {
+                    this.getTask(id).setReasonForDeclining(declineReason);
+                   // this.getTask(id).addDeclinedAssignee(task.getRequestedAssignees().get(0));
+//                    this.getTask(task.getId()).removeRequestedAssignee(task.getRequestedAssignees().get(0));
+                }
             }
         } catch (SQLException e) {
             // Handle errors for JDBC
@@ -129,14 +133,9 @@ public class TaskService {
         int interest;
         int availability;
         int resource;
-        Date deadline;
         String group;
-        //String status;
         int numAssigneesRequired;
-        int ownerId;
-        String ownerName;
         int assigneesId;
-        String assigneesName;
         // Generate database query sentence
         String sql = "CALL Task_getTasksPending()";
         // Call the function of database query operation
@@ -152,10 +151,8 @@ public class TaskService {
                 interest = Integer.parseInt(rs.getString("interest"));
                 availability = Integer.parseInt(rs.getString("resource"));
                 resource = Integer.parseInt(rs.getString("resource"));
-                //deadline = formatter.parse(rs.getString("deadline"));
                 group = rs.getString("group");
                 numAssigneesRequired = Integer.parseInt(rs.getString("numAssigneesRequired"));
-                ownerId = Integer.parseInt(rs.getString("owner"));
                 assigneesId = Integer.parseInt(rs.getString("teammemberId"));
                 manager = (Manager) userService.getUsers().get(0);
                 switch (group) {
@@ -255,6 +252,15 @@ public class TaskService {
                 assigneesId = Integer.parseInt(rs.getString("teammemberId"));
                 manager = (Manager) userService.getUsers().get(0);
 //                manager = (Manager) userService.getUsers().get(ownerId);
+                // if task already has been seen
+                boolean anyMatch = false;
+                for (Task task : tasks) {
+                    anyMatch = task.getId() == id;
+                    if (anyMatch) {
+                        task.addAssignee((TeamMember) userService.getUser(assigneesId));
+                    }
+                }
+                if (anyMatch) continue;
                 switch (group) {
                     case "FINANCIAL_ANALYSIS":
                         task = new Task(id, name, description, new Attribute(experience, interest, availability, resource), new Date()

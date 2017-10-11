@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class UserService {
     private List<User> users = new ArrayList<>();
-    HashMap<Group, Attribute> weightings;
+    HashMap<Group, Attribute> weightings = new HashMap<>();
     int teamMemberQuantity = 0; // The quantity of the team member
     int teamMemberId = 0; // The select team member's id
     int managerQuantity = 0; // The quantity of the manager
@@ -29,6 +29,7 @@ public class UserService {
      * @param userId The related team member's id
      **/
     public void getAllTeamMembers(int userId) {
+        weightings = new HashMap<>();
         String userName = null;
         String name = null;
         String password = null;
@@ -43,8 +44,6 @@ public class UserService {
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
-            // int i = 1;
-            weightings = new HashMap<>();
             // Extract data from result set
             while (rs.next()) {
                 userName = rs.getString("userName");
@@ -284,7 +283,6 @@ public class UserService {
             managerId++;
         }
 
-        HashMap<Group, Attribute> weightings;
         teamMemberQuantity = getTeamMemberQuantity();
         teamMemberId = getFirstTeamMemberId();
         for (int i = 1; i <= teamMemberQuantity; i++) {

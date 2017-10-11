@@ -102,13 +102,11 @@ public class TaskHelper {
     /**
      * Update the task status to pending
      *
-     * @param assigneesListId The list of requested assignees
-     * @param status          The new status of the task
-     * @param taskId          The id of the task to update
+     * @param taskId The id of the task to update
      */
-    public static void updateToPending(int assigneesListId, String status, int taskId) {
+    public static void updateToPending(int taskId) {
         // Generate database query sentence
-        String sql = "CALL Task_updateToPending(" + "'" + assigneesListId + "'" + "," + "'" + status + "'" + "," + "'" + taskId + "')";
+        String sql = "CALL Task_updateToPending(" + taskId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
@@ -217,6 +215,53 @@ public class TaskHelper {
             }
         }
         return status;
+    }
+
+    /**
+     * Link assigned list id to the task table
+     *
+     * @param taskId task id
+     * @param listId assigneeslist id
+     */
+    public static void updateAssignedDetails(int taskId, int listId) {
+        // Generate database query sentence
+        String sql = "CALL Task_updateRequestDetails(" + taskId + "," + listId + ")";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            // Clean-up environment
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Get the id of the recode after insert a new task
+     *
+     * @return
+     */
+    public static int getIdAfterInsert() {
+        int id = 0;
+        // Generate database query sentence
+        String sql = "CALL Task_getIdAfterInsert()";
+        // Call the function of database query operation
+        ResultSet rs = DatabaseHelper.databaseExecution(sql);
+        try {
+            while (rs.next()) {
+                id = rs.getInt("MAX(id)");
+            }
+            // Clean-up environment
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 
 }

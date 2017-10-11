@@ -15,6 +15,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nz.co.vincens.model.Status.ASSIGNED;
+import static nz.co.vincens.model.Status.COMPLETED;
+import static nz.co.vincens.model.Status.PENDING;
+
 /**
  * API endpoints for accessing and managing nz.co.vincens.tasks
  * <code>
@@ -88,9 +92,10 @@ public class TaskController {
     @CrossOrigin
     @RequestMapping(value = "/task", method = RequestMethod.POST)
     ResponseEntity<?> addTask(@RequestBody Task task) {
-        task.setId(taskService.getTasks().size() + 1);
         task.setStatus(Status.DRAFT);
         TaskHelper.addTask(task);
+        taskService.addTask(task);
+        task.setId(TaskHelper.getIdAfterInsert());
         try {
             return ResponseEntity.created(new URI("/task/" + task.getId())).build();
         } catch (URISyntaxException e) {
@@ -110,24 +115,32 @@ public class TaskController {
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
     ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
         taskService.getTask(task.getId()).setStatus(task.getStatus());
-        switch (task.getStatus().toString()) {
+        System.out.println(task.getStatus());
+        switch (task.getStatus()) {
             // Team member accept the task
-            case "Assigned":
+            case PENDING:
+                TaskHelper.updateToPending(task.getId());
+                break;
+            case ASSIGNED:
                 TaskHelper.updateToAssigned(task.getId());
-                System.out.println("Assigned");
                 break;
             // Team member mark as done
-            case "Done":
+            case COMPLETED:
                 TaskHelper.updateToCompleted(task.getId());
-                System.out.println("done");
                 break;
             // Team member decline the task
-            case "Draft":
+            case DRAFT:
+                if (task.getReasonForDeclining() != null) {
+                    if (task.getReasonForDeclining().length() != 0) {
+                        taskService.getTask(task.getId()).setReasonForDeclining(task.getReasonForDeclining());
+                        taskService.getTask(task.getId()).addDeclinedAssignee(task.getRequestedAssignees().get(0));
+                        taskService.getTask(task.getId()).removeRequestedAssignee(task.getRequestedAssignees().get(0));
+                    }
+                }
                 TaskHelper.updateToDeclined(task.getId(), task.getReasonForDeclining());
-                System.out.println("Decline");
                 break;
         }
-        TaskHelper.updateToAssigned(task.getId());
+        // TaskHelper.updateToAssigned(task.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -136,15 +149,23 @@ public class TaskController {
      */
     @CrossOrigin
     @RequestMapping(value = "/task/{taskId}/request-assignee", method = RequestMethod.PUT)
-    ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId,  @RequestBody List<Integer>
+    ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody List<Integer>
             requesteeIds) {
+
+        int lastAssigneesListId = TaskHelper.getLastAssigneesListId();
+       // System.out.println("lastAssigneesListId::::::::::::::" + lastAssigneesListId);
+       // int newAssigneesListId = lastAssigneesListId + 1;
 
         Task task = taskService.getTask(taskId);
 
-        for (int id: requesteeIds) {
-            TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(id));
+       // System.out.println("newAssigneesListId::::::::::::" + newAssigneesListId);
+        for (int teamMemberId : requesteeIds) {
+            TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(teamMemberId));
             task.addRequestedAssignee(teamMember);
+            TaskHelper.createNewAssigneesList(lastAssigneesListId++, teamMemberId);
+            TaskHelper.updateAssignedDetails(taskId, lastAssigneesListId++);
         }
+
 
         // TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
         // taskService.getTask(taskId).addRequestedAssignee(teamMember);
@@ -153,9 +174,6 @@ public class TaskController {
         // int lastAssigneesListId = TaskHelper.getLastAssigneesListId();
         // int newAssigneesListId = lastAssigneesListId + 1;
         // TaskHelper.createNewAssigneesList(newAssigneesListId, Integer.parseInt(userId));
-        // TaskHelper.updateToPending(newAssigneesListId, "Pending", Integer.parseInt(userId));
-        // System.out.println("Pending");
-
         return ResponseEntity.ok().build();
     }
 

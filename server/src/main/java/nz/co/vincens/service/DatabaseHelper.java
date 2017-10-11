@@ -79,7 +79,7 @@ public class DatabaseHelper {
             con = DriverManager.getConnection(url, user, password);
             // Check connection status
             if (!con.isClosed()) {
-                System.out.println("Succeeded connecting to the Database!");
+              //  System.out.println("Succeeded connecting to the Database!");
             }
             // State a MySQL connection object
             statement = con.createStatement();
