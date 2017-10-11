@@ -46,7 +46,7 @@ export class ManagerComponent implements OnInit {
   addTask() {
     this.resourceRangeError = Number(this.model.attribute.resource) < 1 || Number(this.model.attribute.resource) > 6;
     this.availabilityRangeError = Number(this.model.attribute.availability) < 1 || Number(this.model.attribute.resource) > 6;
-    this.peopleRangeError = Number(this.model.numAssigneesRequred) < 1;
+    this.peopleRangeError = Number(this.model.numAssigneesRequired) < 1;
 
     if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError) {
       this.model.status = "Draft";

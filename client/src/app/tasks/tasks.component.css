@@ -129,7 +129,7 @@ th {
   text-align: right;
 }
 
-.modal-dialog {
+.task-modal > .modal-dialog {
   position: absolute;
   top: 50%;
   left: 50%;
