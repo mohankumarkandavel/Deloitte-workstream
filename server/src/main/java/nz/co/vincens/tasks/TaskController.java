@@ -90,7 +90,7 @@ public class TaskController {
     ResponseEntity<?> addTask(@RequestBody Task task) {
         task.setId(taskService.getTasks().size() + 1);
         task.setStatus(Status.DRAFT);
-        TaskHelper.addTask(task, 1);
+        TaskHelper.addTask(task);
         try {
             return ResponseEntity.created(new URI("/task/" + task.getId())).build();
         } catch (URISyntaxException e) {

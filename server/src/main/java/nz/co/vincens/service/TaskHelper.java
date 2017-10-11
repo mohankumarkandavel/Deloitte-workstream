@@ -21,9 +21,8 @@ public class TaskHelper {
      * Insert a new task into the database
      *
      * @param task  The whole object of one task
-     * @param ownerId the manager's id of the task
      */
-    public static void addTask(Task task, int ownerId) {
+    public static void addTask(Task task) {
         String name = task.getName();
         String description = task.getDescription();
         String deadline = String.valueOf(task.getDeadline());
@@ -32,7 +31,9 @@ public class TaskHelper {
         String availability = String.valueOf(task.getAvailability());
         String numAssigneesRequired = String.valueOf(task.getNumAssigneesRequired());
         String status = String.valueOf(task.getStatus());
-        String sql = "CALL Task_addTask(" + "'" + name + "'" + "," + "'" + description + "'" + "," + availability + "," + resource + "," + "'" + deadline + "'" + "," + "'" + group + "'" + "," + "'" + status + "'" + "," + "'" + numAssigneesRequired + "'" + "," + ownerId + ")";
+        String sql = "CALL Task_addTask(" + "'" + name + "'" + "," + "'" + description + "'" + "," + availability +
+				"," + resource + "," + "'" + deadline + "'" + "," + "'" + group + "'" + "," + "'" + status + "'" + "," +
+				"" + "'" + numAssigneesRequired + "'" + "," + task.getOwner().getId() + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
