@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {TaskService} from "../services/task.service";
+import {TaskService} from '../services/task.service';
 
 @Component({
   selector: 'app-team-member',
   templateUrl: './team-member.component.html',
-  styleUrls: ['./tasks.component.css']
+  styleUrls: ['./team-member.component.css']
 })
 
 export class TeamMemberComponent implements OnInit {
@@ -17,7 +17,7 @@ export class TeamMemberComponent implements OnInit {
   }
 
   getAllTasks() {
-    let userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem('userId');
     this.taskService.getUsersTasks(userId);
   }
 }

@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {Http, URLSearchParams} from "@angular/http";
-import {Observable} from "rxjs/Observable";
+import {Injectable} from '@angular/core';
+import {Http, URLSearchParams} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class AuthenticationService {
@@ -10,27 +10,27 @@ export class AuthenticationService {
   constructor(private http: Http) {
   }
 
-  login(username: string, password: string) : Observable<string> {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set("username", username);
-    params.set("password", password);
+  login(username: string, password: string): Observable<string> {
+    const params: URLSearchParams = new URLSearchParams();
+    params.set('username', username);
+    params.set('password', password);
 
     return this.http.get(this.authUrl, {search: params})
       .map((response) => {
         if (response.ok) {
-          let role = response.headers.get("role");
-          localStorage.setItem("role", role);
-          let userId = JSON.parse(response.text()).id;
-          localStorage.setItem("userId", userId);
-          let name = JSON.parse(response.text()).name;
-          localStorage.setItem("name", name);
+          const role = response.headers.get('role');
+          localStorage.setItem('role', role);
+          const userId = JSON.parse(response.text()).id;
+          localStorage.setItem('userId', userId);
+          const name = JSON.parse(response.text()).name;
+          localStorage.setItem('name', name);
           return role;
         }
       },
-    ).catch((error:any) => {
+    ).catch((error: any) => {
       if (error.status === 401) {
         return Observable.of('unauthorised');
-      } else if(error.status === 400) {
+      } else if (error.status === 400) {
         return Observable.of('Bad request');
       } else {
         return Observable.throw(error);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Task } from '../tasks/task.model';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-manager-card',
@@ -17,24 +17,24 @@ export class ManagerCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  private getTooltipRequestMoreInfo() : string {
-    let tooltip:string = "";
-    let requestees: any[] = this.task.requestedAssignees.filter(
+  private getTooltipRequestMoreInfo(): string {
+    let tooltip = '';
+    const requestees: any[] = this.task.requestedAssignees.filter(
       (requestedAssignee) => this.task.requestsById.indexOf(+requestedAssignee.id) !== -1
     );
 
-    let onlyOne: boolean = true;
+    let onlyOne = true;
 
     for (let i = 0; i < requestees.length - 1; i++) {
       onlyOne = false;
       tooltip += requestees[i].name;
-      tooltip += ", ";
+      tooltip += ', ';
     }
 
     tooltip += requestees[requestees.length - 1].name;
-    tooltip += " ";
-    tooltip += onlyOne ? "has" : "have";
-    tooltip += " requested more information";
+    tooltip += ' ';
+    tooltip += onlyOne ? 'has' : 'have';
+    tooltip += ' requested more information';
 
     return tooltip;
   }
@@ -43,24 +43,24 @@ export class ManagerCardComponent implements OnInit {
     return this.task.requestsById.length > 0;
   }
 
-  private getTooltipDeclined() : string {
-    let tooltip:string = "";
-    let declinees: any[] = this.task.declinedAssignees;
+  private getTooltipDeclined(): string {
+    let tooltip = '';
+    const declinees: any[] = this.task.declinedAssignees;
 
-    let onlyOne: boolean = true;
+    let onlyOne = true;
 
     for (let i = 0; i < declinees.length - 1; i++) {
       onlyOne = false;
       tooltip += declinees[i].name;
-      tooltip += ", ";
+      tooltip += ', ';
     }
 
     tooltip += declinees[declinees.length - 1].name;
-    tooltip += " ";
-    tooltip += onlyOne ? "has" : "have";
-    tooltip += " declined. Reason is: ";
+    tooltip += ' ';
+    tooltip += onlyOne ? 'has' : 'have';
+    tooltip += ' declined. Reason is: ';
     tooltip += this.task.reasonForDeclining;
-    tooltip += ". This task has been added back to your drafts.";
+    tooltip += '. This task has been added back to your drafts.';
 
     return tooltip;
   }

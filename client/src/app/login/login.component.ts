@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Login} from './login.model';
+import {Login} from '../models/login.model';
 import {AuthenticationService} from '../services/authentication.service';
 import { TaskService } from '../services/task.service';
 
@@ -12,7 +12,7 @@ import { TaskService } from '../services/task.service';
 
 export class LoginComponent implements OnInit {
 
-  private passwordError: boolean = false;
+  private passwordError = false;
 
   constructor(
     private router: Router,

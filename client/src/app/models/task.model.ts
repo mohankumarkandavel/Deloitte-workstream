@@ -8,10 +8,10 @@ export class Task {
   public deadline: string;
   public group: string;
   public attribute = {
-    experience: "",
-    interest: "",
-    availability: "",
-    resource: ""
+    experience: '',
+    interest: '',
+    availability: '',
+    resource: ''
   };
   public numAssigneesRequred: string;
   public owner: string;

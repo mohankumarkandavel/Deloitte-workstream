@@ -18,6 +18,6 @@ export class HeaderComponent implements OnInit {
   }
 
   getCurrentlyLoggedInUser() {
-    this.user = localStorage.getItem("name");
+    this.user = localStorage.getItem('name');
   }
 }

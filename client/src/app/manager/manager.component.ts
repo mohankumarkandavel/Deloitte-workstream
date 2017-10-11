@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Task} from './task.model';
+import {Task} from '../models/task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../services/task.service';
 import {RankService} from '../services/rank.service';
@@ -8,7 +8,7 @@ import {RankService} from '../services/rank.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './manager.component.html',
-  styleUrls: ['./tasks.component.css']
+  styleUrls: ['./manager.component.css']
 })
 
 export class ManagerComponent implements OnInit {
@@ -21,9 +21,9 @@ export class ManagerComponent implements OnInit {
 
   loading: Subscription;
 
-  private availabilityRangeError: boolean = false;
-  private peopleRangeError: boolean = false;
-  private resourceRangeError: boolean = false;
+  private availabilityRangeError = false;
+  private peopleRangeError = false;
+  private resourceRangeError = false;
 
   private addTaskModal: NgbModalRef;
 
@@ -35,7 +35,7 @@ export class ManagerComponent implements OnInit {
   }
 
   getAllTasks() {
-    let userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem('userId');
     this.taskService.getUsersTasks(userId);
   }
 
@@ -49,8 +49,8 @@ export class ManagerComponent implements OnInit {
     this.peopleRangeError = Number(this.model.numAssigneesRequred) < 1;
 
     if (!this.resourceRangeError && !this.peopleRangeError && !this.availabilityRangeError) {
-      this.model.status = "Draft";
-      this.model.owner = localStorage.getItem("userId");
+      this.model.status = 'Draft';
+      this.model.owner = localStorage.getItem('userId');
       this.taskService.addTask(this.model);
       this.addTaskModal.close();
     }
@@ -79,7 +79,7 @@ export class ManagerComponent implements OnInit {
   }
 
   updateTaskStatus(task: Task) {
-    this.taskService.updateTaskStatus(task, "Pending", "");
+    this.taskService.updateTaskStatus(task, 'Pending', '');
   }
 
   emptySelectedEmployeeArray() {

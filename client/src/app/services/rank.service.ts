@@ -1,19 +1,19 @@
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Subscription, Observable} from "rxjs";
-import {Task} from "../tasks/task.model";
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import {Subscription, Observable} from 'rxjs';
+import {Task} from '../models/task.model';
 
 @Injectable()
 export class RankService {
 
   teamMembers: any[] = [];
 
-  private rankURL : string = "http://localhost:8080/rank/";
+  private rankURL = 'http://localhost:8080/rank/';
 
   constructor(private http: Http) {
   }
 
-  getBestTeamMembers(task: Task) : Subscription {
+  getBestTeamMembers(task: Task): Subscription {
     this.teamMembers.length = 0;
     return this.http.get(this.rankURL + task.id)
       .subscribe(
@@ -23,7 +23,7 @@ export class RankService {
           }
         },
         (error) => console.log(`Error:${error.toString()}`),
-        () => console.log("Complete")
+        () => console.log('Complete')
       );
   }
 
@@ -36,6 +36,6 @@ export class RankService {
         this.teamMembers.push(res[0]);
       },
       err => console.log(err.toString())
-    )
+    );
   }
 }

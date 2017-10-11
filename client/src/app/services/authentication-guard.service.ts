@@ -10,9 +10,9 @@ export class AuthenticationGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.authService.isManager()) {
-      return route.url[route.url.length- 1].toString() === "manager";
+      return route.url[route.url.length - 1].toString() === 'manager';
     } else {
-      return route.url[route.url.length- 1].toString() === "team-member";
+      return route.url[route.url.length - 1].toString() === 'team-member';
     }
   }
 }
