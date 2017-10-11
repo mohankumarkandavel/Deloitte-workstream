@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {MdCardModule, MdTooltipModule, MatButtonModule} from '@angular/material';
@@ -75,6 +75,7 @@ const appRoutes: Routes = [
       {enableTracing: true}
     ),
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AlertModule.forRoot(),
     Ng2DragDropModule.forRoot(),
