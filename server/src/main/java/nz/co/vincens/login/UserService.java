@@ -39,7 +39,7 @@ public class UserService {
         int interest;
         int availability;
         int resource;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL User_getAllTeamMembers(" + userId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -111,7 +111,7 @@ public class UserService {
      */
     public static int getTeamMemberQuantity() {
         int count = 0;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL User_countNumberOfTeamMember()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -144,7 +144,7 @@ public class UserService {
      */
     public static int getFirstTeamMemberId() {
         int userId = 0;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL User_getFirstTeamMemberId()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -180,7 +180,7 @@ public class UserService {
         String name = null;
         String password = null;
         String email = null;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL User_getAllManagers(" + userId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -217,7 +217,7 @@ public class UserService {
      */
     public static int getManagerQuantity() {
         int count = 0;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL User_countNumberOfManagers()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -249,7 +249,7 @@ public class UserService {
      */
     public static int getFirstManagerId() {
         int userId = 0;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL User_getFirstManagerId()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);

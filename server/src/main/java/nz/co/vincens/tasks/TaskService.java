@@ -35,15 +35,10 @@ public class TaskService {
         int interest;
         int availability;
         int resource;
-        Date deadline;
         String group;
         int numAssigneesRequired;
-        int ownerId;
-        String ownerName;
-        int assigneesId;
-        String assigneesName;
         String declineReason;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_getTasksDraft()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -136,7 +131,7 @@ public class TaskService {
         String group;
         int numAssigneesRequired;
         int assigneesId;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_getTasksPending()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -231,7 +226,7 @@ public class TaskService {
         String ownerName;
         int assigneesId;
         String assigneesName;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_getTasksAssigned()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);

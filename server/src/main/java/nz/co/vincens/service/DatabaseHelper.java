@@ -58,7 +58,7 @@ public class DatabaseHelper {
      * The function of database execution.
      * Database queries use call procedure functions.
      *
-     * @param sql The database execution sentence
+     * @param sql The database execution command
      * @return The result set of database execution
      * @throws SQLException Handle errors for JDBC
      * @throws Exception    Handle errors for Class.forName
@@ -79,7 +79,7 @@ public class DatabaseHelper {
             con = DriverManager.getConnection(url, user, password);
             // Check connection status
             if (!con.isClosed()) {
-              //  System.out.println("Succeeded connecting to the Database!");
+                System.out.println("Succeeded connecting to the Database!");
             }
             // State a MySQL connection object
             statement = con.createStatement();

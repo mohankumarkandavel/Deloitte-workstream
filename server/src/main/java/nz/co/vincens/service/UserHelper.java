@@ -27,7 +27,7 @@ public class UserHelper {
     public static int login(String username, String password) {
         int count = 0;
         int id = 0;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL User_login(" + "'" + username + "'" + "," + "'" + password + "'" + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);

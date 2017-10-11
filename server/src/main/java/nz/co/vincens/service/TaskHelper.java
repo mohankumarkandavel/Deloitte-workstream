@@ -21,8 +21,9 @@ public class TaskHelper {
      * Insert a new task into the database
      *
      * @param task The whole object of one task
+     * @return If execute succeed, return 1
      */
-    public static void addTask(Task task) {
+    public static int addTask(Task task) {
         String name = task.getName();
         String description = task.getDescription();
         String deadline = String.valueOf(task.getDeadline());
@@ -42,6 +43,7 @@ public class TaskHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 1;
     }
 
     /**
@@ -52,7 +54,7 @@ public class TaskHelper {
      */
     public static int getLastAssigneesListId() {
         int listId = 0;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_getLastAssigneesListId()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -83,9 +85,10 @@ public class TaskHelper {
      *
      * @param listId       The id of the new list
      * @param teamMemberId Ids of selected team members
+     * @return If execute succeed, return 1
      */
-    public static void createNewAssigneesList(int listId, int teamMemberId) {
-        // Generate database query sentence
+    public static int createNewAssigneesList(int listId, int teamMemberId) {
+        // Generate database query command
         String sql = "CALL Task_createNewAssigneesList(" + (listId + 1) + "," + teamMemberId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -97,15 +100,17 @@ public class TaskHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 1;
     }
 
     /**
      * Update the task status to pending
      *
      * @param taskId The id of the task to update
+     * @return If execute succeed, return 1
      */
-    public static void updateToPending(int taskId) {
-        // Generate database query sentence
+    public static int updateToPending(int taskId) {
+        // Generate database query command
         String sql = "CALL Task_updateToPending(" + taskId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -117,6 +122,7 @@ public class TaskHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 1;
     }
 
     /**
@@ -127,7 +133,7 @@ public class TaskHelper {
      * @return The new status of this task for status checking
      */
     public static String updateToAssigned(int taskId) {
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_updateToAssigned(" + taskId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -150,7 +156,7 @@ public class TaskHelper {
      * @return The new status of this task for status checking
      */
     public static String updateToCompleted(int taskId) {
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_updateToCompleted(" + taskId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -171,7 +177,7 @@ public class TaskHelper {
      * @return The new status of this task for status checking
      */
     public static String updateToDeclined(int taskId, String reason) {
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_updateToDeclined(" + taskId + "," + "'" + reason + "'" + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -193,7 +199,7 @@ public class TaskHelper {
      * @return The status of the task
      */
     public static String checkStatus(int taskId) {
-        // Generate database query sentence
+        // Generate database query command
         String status = null;
         // Call the function of database query operation
         String sql = "Call Task_checkStatus(" + taskId + ")";
@@ -222,9 +228,10 @@ public class TaskHelper {
      *
      * @param taskId task id
      * @param listId assigneeslist id
+     * @return If execute succeed, return 1
      */
-    public static void updateAssignedDetails(int taskId, int listId) {
-        // Generate database query sentence
+    public static int updateAssignedDetails(int taskId, int listId) {
+        // Generate database query command
         String sql = "CALL Task_updateRequestDetails(" + taskId + "," + listId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
@@ -236,17 +243,18 @@ public class TaskHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 1;
     }
 
 
     /**
      * Get the id of the recode after insert a new task
      *
-     * @return
+     * @return The id of the new task
      */
     public static int getIdAfterInsert() {
         int id = 0;
-        // Generate database query sentence
+        // Generate database query command
         String sql = "CALL Task_getIdAfterInsert()";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
