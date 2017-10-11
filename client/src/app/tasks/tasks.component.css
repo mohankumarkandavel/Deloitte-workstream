@@ -167,10 +167,9 @@ th {
 }
 
 input[type="text"] {
-  height: 60px;
-  font-size: 20px;
+  margin-top: 13px;
+  font-size: medium;
   display: inline-block;
-  font-family: "fantasy";
   font-weight: 100;
   border: none;
   outline: none;
@@ -180,7 +179,7 @@ input[type="text"] {
   width: 0px;
   position: absolute;
   top: 0;
-  right: 0;
+  right: 3vw;
   background: none;
   z-index: 3;
   transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
@@ -211,7 +210,7 @@ input[type="submit"] {
   border: none;
   position: absolute;
   top: 0;
-  right: 0;
+  right: 3vw;
   z-index: 2;
   cursor: pointer;
   transition: opacity .4s ease;
