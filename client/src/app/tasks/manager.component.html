@@ -2,7 +2,9 @@
   <button md-button class="add-new-task-btn" (click)="onNewTask(newTaskModal);">Add New Task</button>
   <div id="wrap" class="form-group">
     <form action="" autocomplete="on">
-      <input id="search" name="search" type="text" placeholder="Please enter task name" [formControl]="titleFilter"><input id="search_submit" value="Rechercher" type="submit">
+      <!--<i class="fa fa-search fa-3x" aria-hidden="true"></i>-->
+      <input id="search" name="search" type="text" placeholder="Please enter task name" [formControl]="titleFilter">
+      <input id="search_submit" value="Rechercher" type="submit">
     </form>
   </div>
   <div class="column-container">
