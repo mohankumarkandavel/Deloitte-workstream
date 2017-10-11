@@ -1,4 +1,4 @@
-<div class="home-container" [ngBusy]="loginRequest">
+<div class="home-container" [ngBusy]="{busy: loginRequest, message: 'Logging in...'}">
   <div class="login-container">
     <img src="../../assets/deloitte_logo.png"/>
     <form id="loginform" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
