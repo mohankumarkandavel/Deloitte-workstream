@@ -1,12 +1,7 @@
 package nz.co.vincens.tasks;
 
 import nz.co.vincens.login.UserService;
-import nz.co.vincens.model.Attribute;
-import nz.co.vincens.model.Group;
-import nz.co.vincens.model.Manager;
-import nz.co.vincens.model.Status;
-import nz.co.vincens.model.Task;
-import nz.co.vincens.model.TeamMember;
+import nz.co.vincens.model.*;
 import nz.co.vincens.service.DatabaseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

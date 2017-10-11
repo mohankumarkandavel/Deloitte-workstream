@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * API endpoint(s) for logging in.
  * <code>
@@ -64,25 +63,5 @@ public class LoginController {
         else {
             return ResponseEntity.badRequest().build();
         }
-
-//        if (login != null && login.getPassword() != null && login.getUsername() != null && !login.getPassword().isEmpty()
-//                && !login.getUsername().isEmpty()) {
-//            User actualUser = null;
-//            for (User user : userService.getUsers()) {
-//                if (user.getUsername().equals(login.getUsername()) && user.getPassword().equals(login.getPassword())) {
-//                    actualUser = user;
-//                }
-//            }
-//            if (actualUser != null) {
-//                return ResponseEntity.ok().header("role", actualUser.getRole()).body("{\"id\": " + actualUser.getId
-//                        () + ", \"name\": \"" + actualUser.getName() + "\"}");
-//            } else {
-//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//            }
-//        } else {
-//            return ResponseEntity.badRequest().build();
-//        }
-
-
     }
 }

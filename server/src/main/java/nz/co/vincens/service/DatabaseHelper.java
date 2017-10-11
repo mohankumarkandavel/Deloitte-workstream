@@ -16,9 +16,6 @@ import java.sql.Statement;
  * database connection, and the functions required to perform the contents of the database query.
  * The parameters of database connection is stored in the db.xml
  * Database queries use call procedure functions.
- * <p>
- * Created on 06/09/2017 by Shenghong Huang.
- * Last modified on 18/09/2017 by Shenghong Huang.
  */
 public class DatabaseHelper {
     // JDBC driver name and database URL
@@ -102,7 +99,7 @@ public class DatabaseHelper {
     public static int databaseConnection() {
         loadDatabaseParameters();
         // Create the connection statement
-        Connection con = null;
+        Connection con;
         // Create the statement
         Statement statement = null;
         try {

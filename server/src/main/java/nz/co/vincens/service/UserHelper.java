@@ -1,14 +1,13 @@
 package nz.co.vincens.service;
 
-import nz.co.vincens.login.UserService;
-import nz.co.vincens.model.*;
+import nz.co.vincens.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
+/**
+ * Database functions concerned with users
+ */
 public class UserHelper {
 
     /**
@@ -98,42 +97,4 @@ public class UserHelper {
         actualUser.setRole(role);
         return actualUser;
     }
-
-    public static Manager getManagerById(int id) {
-        Manager actualManager = null;
-        String username = null;
-        String name = null;
-        String password = null;
-        String email = null;
-        String sql = "CALL User_getManagerById(" + id + ")";
-        // Call the function of database query operation
-        ResultSet rs = DatabaseHelper.databaseExecution(sql);
-        try {
-            // Extract data from result set
-            while (rs.next()) {
-                // Login query should only have one row of result
-                username = rs.getString("username");
-                name = rs.getString("name");
-                password = rs.getString("password");
-                email = rs.getString("email");
-            }
-        } catch (SQLException e) {
-            // Handle errors for JDBC
-            e.printStackTrace();
-        } finally {
-            try {
-                // Clean-up environment
-                if (!rs.isClosed()) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        new Manager(String.valueOf(id), username, name, email, password);
-        System.out.println(String.valueOf(id) + username);
-        return actualManager;
-    }
-
-
 }

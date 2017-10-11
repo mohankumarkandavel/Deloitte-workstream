@@ -1,22 +1,21 @@
 package nz.co.vincens.service;
 
-import nz.co.vincens.model.*;
+import nz.co.vincens.model.Task;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
+/**
+ * Database functions for tasks
+ */
 public class TaskHelper {
+
     /**
-     * @param task
-     * @param ownId
+	 * Add a new task
+     * @param task The task to add
+     * @param ownerId The id of the owner of the task
      */
-    public static void addTask(Task task, int ownId) {
+    public static void addTask(Task task, int ownerId) {
         String name = task.getName();
         String description = task.getDescription();
         String deadline = String.valueOf(task.getDeadline());
@@ -25,7 +24,7 @@ public class TaskHelper {
         String availability = String.valueOf(task.getAvailability());
         String numAssigneesRequired = String.valueOf(task.getNumAssigneesRequired());
         String status = String.valueOf(task.getStatus());
-        String sql = "CALL Task_addTask(" + "'" + name + "'" + "," + "'" + description + "'" + "," + availability + "," + resource + "," + "'" + deadline + "'" + "," + "'" + group + "'" + "," + "'" + status + "'" + "," + "'" + numAssigneesRequired + "'" + "," + ownId + ")";
+        String sql = "CALL Task_addTask(" + "'" + name + "'" + "," + "'" + description + "'" + "," + availability + "," + resource + "," + "'" + deadline + "'" + "," + "'" + group + "'" + "," + "'" + status + "'" + "," + "'" + numAssigneesRequired + "'" + "," + ownerId + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
@@ -92,9 +91,10 @@ public class TaskHelper {
     }
 
     /**
-     * @param assigneesListId
-     * @param status
-     * @param taskId
+	 * Update the task status to pending
+     * @param assigneesListId The list of requested assignees
+     * @param status The new status of the task
+     * @param taskId The id of the task to update
      */
     public static void updateToPending(int assigneesListId, String status, int taskId) {
         // Generate database query sentence
@@ -112,7 +112,7 @@ public class TaskHelper {
     }
 
     /**
-     * After team member accepting a task, change the status to ASSIGNED
+     * After team member accepts a task, change the status to ASSIGNED
      *
      * @param taskId The id of the selected task
      */
