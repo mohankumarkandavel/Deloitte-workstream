@@ -1,11 +1,11 @@
 <div class="home-container">
-  <div class="row task-row">
+  <div class="row">
     <div class="col-md-8">
       <button md-button class="add-new-task-btn" (click)="onNewTask(newTaskModal);">Add New Task</button>
     </div>
     <div class="col-md-4">
       <form action="" autocomplete="on">
-        <input id="search" name="search" type="text" placeholder="Please enter task name" [formControl]="titleFilter">
+        <input id="search" name="search" type="text" placeholder="Please enter task name" [formControl]="titleFilter" class="search">
         <input id="search_submit" value="Rechercher" type="submit">
       </form>
     </div>

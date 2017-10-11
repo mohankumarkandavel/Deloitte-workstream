@@ -166,7 +166,7 @@ th {
   padding: 0;
 }
 
-input[type="text"] {
+.search {
   margin-top: 13px;
   font-size: medium;
   display: inline-block;
@@ -238,8 +238,4 @@ input[type="submit"]:hover {
 
 :-ms-input-placeholder { /* Microsoft Edge */
   color:    white;
-}
-
-.task-row {
-  height: 100px;
 }
