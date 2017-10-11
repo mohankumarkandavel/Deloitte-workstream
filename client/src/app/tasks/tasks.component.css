@@ -196,9 +196,10 @@ input[type="text"]:focus:hover {
 input[type="text"]:focus {
   width: 300px;
   z-index: 1;
-  border-bottom: 1px solid #BBB;
+  border-bottom: 1px solid rgb(134, 188, 37);
   cursor: text;
 }
+
 input[type="submit"] {
   height: 40px;
   width: 40px;
@@ -213,7 +214,7 @@ input[type="submit"] {
   right: 0;
   z-index: 2;
   cursor: pointer;
-  opacity: 0.4;
+  /*opacity: 0.4;*/
   cursor: pointer;
   transition: opacity .4s ease;
 }
