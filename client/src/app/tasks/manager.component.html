@@ -1,11 +1,15 @@
 <div class="home-container">
-  <button md-button class="add-new-task-btn" (click)="onNewTask(newTaskModal);">Add New Task</button>
-  <div id="wrap" class="form-group">
-    <form action="" autocomplete="on">
-      <!--<i class="fa fa-search fa-3x" aria-hidden="true"></i>-->
-      <input id="search" name="search" type="text" placeholder="Please enter task name" [formControl]="titleFilter">
-      <input id="search_submit" value="Rechercher" type="submit">
-    </form>
+  <div class="row task-row">
+    <div class="new-task col-md-8">
+    <button md-button class="add-new-task-btn" (click)="onNewTask(newTaskModal);">Add New Task</button>
+    </div>
+    <div id="wrap" class="form-group col-md-4">
+      <form action="" autocomplete="on">
+        <!--<i class="fa fa-search fa-3x" aria-hidden="true"></i>-->
+        <input id="search" name="search" type="text" placeholder="Please enter task name" [formControl]="titleFilter">
+        <input id="search_submit" value="Rechercher" type="submit">
+      </form>
+    </div>
   </div>
   <div class="column-container">
     <div id="column-drafts">
