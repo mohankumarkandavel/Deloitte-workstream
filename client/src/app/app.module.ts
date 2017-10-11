@@ -26,6 +26,7 @@ import {AuthenticationGuardService} from "./services/authentication-guard.servic
 import {AuthenticationService} from "./services/authentication.service";
 import {TaskService} from "./services/task.service";
 import {RankService} from "./services/rank.service";
+import { FilterPipe } from './pipe/filter.pipe';
 
 const appRoutes: Routes = [
   {
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
     ManagerCardComponent,
     ManagerComponent,
     TeamMemberComponent,
-    TeamMemberCardComponent
+    TeamMemberCardComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

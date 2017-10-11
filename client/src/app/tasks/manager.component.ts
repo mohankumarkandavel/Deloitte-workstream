@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {TaskService} from '../services/task.service';
 import {RankService} from '../services/rank.service';
 import {FormControl} from '@angular/forms';
+import 'rxjs/Rx'
 
 @Component({
   selector: 'app-tasks',
