@@ -90,7 +90,7 @@ public class TaskController {
     ResponseEntity<?> addTask(@RequestBody Task task) {
         task.setId(taskService.getTasks().size() + 1);
         task.setStatus(Status.DRAFT);
-        TaskHelper.addTask(task, 1);
+        TaskHelper.addTask(task);
         try {
             return ResponseEntity.created(new URI("/task/" + task.getId())).build();
         } catch (URISyntaxException e) {
@@ -110,6 +110,23 @@ public class TaskController {
     @RequestMapping(value = "/task", method = RequestMethod.PUT)
     ResponseEntity<?> updateTaskStatus(@RequestBody Task task) {
         taskService.getTask(task.getId()).setStatus(task.getStatus());
+        switch (task.getStatus().toString()) {
+            // Team member accept the task
+            case "Assigned":
+                TaskHelper.updateToAssigned(task.getId());
+                System.out.println("Assigned");
+                break;
+            // Team member mark as done
+            case "Done":
+                TaskHelper.updateToCompleted(task.getId());
+                System.out.println("done");
+                break;
+            // Team member decline the task
+            case "Draft":
+                TaskHelper.updateToDeclined(task.getId(), task.getReasonForDeclining());
+                System.out.println("Decline");
+                break;
+        }
         TaskHelper.updateToAssigned(task.getId());
         return ResponseEntity.ok().build();
     }
@@ -122,41 +139,46 @@ public class TaskController {
     ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody String userId) {
         TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
         taskService.getTask(taskId).addRequestedAssignee(teamMember);
+
+        // Manager allocates the task to team members
         int lastAssigneesListId = TaskHelper.getLastAssigneesListId();
         int newAssigneesListId = lastAssigneesListId + 1;
         TaskHelper.createNewAssigneesList(newAssigneesListId, Integer.parseInt(userId));
         TaskHelper.updateToPending(newAssigneesListId, "Pending", Integer.parseInt(userId));
+        System.out.println("Pending");
+
         return ResponseEntity.ok().build();
     }
 
     /**
      * Endpoint: <code>PUT /task/add-assignee/{taskId}</code>
+     *
      * @param taskId The id of the {@link Task}
      * @param userId The id of the {@link nz.co.vincens.model.User} assigned to the task
      * @return 200 ok if the task is added or updated
      */
     @CrossOrigin
-	@RequestMapping(value = "/task/add-assignee/{taskId}", method = RequestMethod.PUT)
-	ResponseEntity<?> updateTaskAssignees(@PathVariable int taskId, @RequestBody String userId) {
-		TeamMember teamMember = (TeamMember) userService.getUser(Integer.parseInt(userId));
-		taskService.getTask(taskId).addAssignee(teamMember);
-		return ResponseEntity.ok().build();
-	}
+    @RequestMapping(value = "/task/add-assignee/{taskId}", method = RequestMethod.PUT)
+    ResponseEntity<?> updateTaskAssignees(@PathVariable int taskId, @RequestBody String userId) {
+        TeamMember teamMember = (TeamMember) userService.getUser(Integer.parseInt(userId));
+        taskService.getTask(taskId).addAssignee(teamMember);
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * Endpoint: <code>PUT /task/{taskId}/requestsById</code>
      * Specifies that the given user has requested more information for the given task
+     *
      * @param taskId the id of the task
      * @param userId the id of the user
      * @return 303 See Other, URI location is the task that has been modified
      * @throws URISyntaxException if the URI location is invalid
      */
-	@CrossOrigin
+    @CrossOrigin
     @RequestMapping(value = "/task/{taskId}/requestsById", method = RequestMethod.PUT)
     ResponseEntity<?> requestMoreInformation(@PathVariable int taskId, @RequestBody String userId) throws
             URISyntaxException {
         taskService.getTask(taskId).requestMoreInfo(Integer.parseInt(userId));
         return ResponseEntity.status(HttpStatus.SEE_OTHER).location(new URI("/task/" + taskId)).build();
     }
-
 }

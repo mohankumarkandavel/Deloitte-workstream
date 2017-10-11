@@ -20,10 +20,9 @@ public class TaskHelper {
     /**
      * Insert a new task into the database
      *
-     * @param task  The whole object of one task
-     * @param ownerId the manager's id of the task
+     * @param task The whole object of one task
      */
-    public static void addTask(Task task, int ownerId) {
+    public static void addTask(Task task) {
         String name = task.getName();
         String description = task.getDescription();
         String deadline = String.valueOf(task.getDeadline());
@@ -32,7 +31,7 @@ public class TaskHelper {
         String availability = String.valueOf(task.getAvailability());
         String numAssigneesRequired = String.valueOf(task.getNumAssigneesRequired());
         String status = String.valueOf(task.getStatus());
-        String sql = "CALL Task_addTask(" + "'" + name + "'" + "," + "'" + description + "'" + "," + availability + "," + resource + "," + "'" + deadline + "'" + "," + "'" + group + "'" + "," + "'" + status + "'" + "," + "'" + numAssigneesRequired + "'" + "," + ownerId + ")";
+        String sql = "CALL Task_addTask(" + "'" + name + "'" + "," + "'" + description + "'" + "," + availability + "," + resource + "," + "'" + deadline + "'" + "," + "'" + group + "'" + "," + "'" + status + "'" + "," + "'" + numAssigneesRequired + "'" + "," + task.getOwner().getId() + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
@@ -101,10 +100,11 @@ public class TaskHelper {
     }
 
     /**
-	 * Update the task status to pending
+     * Update the task status to pending
+     *
      * @param assigneesListId The list of requested assignees
-     * @param status The new status of the task
-     * @param taskId The id of the task to update
+     * @param status          The new status of the task
+     * @param taskId          The id of the task to update
      */
     public static void updateToPending(int assigneesListId, String status, int taskId) {
         // Generate database query sentence
@@ -124,6 +124,7 @@ public class TaskHelper {
     /**
      * After team member accepting a task, change the status to ASSIGNED
      * Update in the database
+     *
      * @param taskId The id of the selected task
      * @return The new status of this task for status checking
      */
@@ -168,11 +169,12 @@ public class TaskHelper {
 
     /**
      * @param taskId The id of the selected task
+     * @param reason The decline reason from the team member's respond
      * @return The new status of this task for status checking
      */
-    public static String updateToDeclined(int taskId) {
+    public static String updateToDeclined(int taskId, String reason) {
         // Generate database query sentence
-        String sql = "CALL Task_updateToDeclined(" + taskId + ")";
+        String sql = "CALL Task_updateToDeclined(" + taskId + "," + "'" + reason + "'" + ")";
         // Call the function of database query operation
         ResultSet rs = DatabaseHelper.databaseExecution(sql);
         try {
