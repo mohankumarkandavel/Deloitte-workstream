@@ -159,8 +159,6 @@ th {
 #wrap {
   margin-left: 65%;
   margin-right: 10%;
-  /*margin-top: inherit;*/
-  margin-top: -5%;
   display: inline-block;
   position: relative;
   height: 60px;
@@ -207,7 +205,8 @@ input[type="submit"] {
   width: 40px;
   display: inline-block;
   float: right;
-  background:/*url("../../assets/search-button.png")*/ white center no-repeat;
+  background:url("../../assets/search-button.png") white center no-repeat;
+  border-radius: 5px;
   text-indent: -10000px;
   border: none;
   position: absolute;
