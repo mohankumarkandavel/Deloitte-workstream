@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import { DatePipe } from '@angular/common';
 import {TaskService} from "../services/task.service";
 import {Task} from "../tasks/task.model";
 
