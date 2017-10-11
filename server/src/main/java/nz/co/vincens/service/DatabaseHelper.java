@@ -1,5 +1,6 @@
 package nz.co.vincens.service;
 
+import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -39,14 +40,15 @@ public class DatabaseHelper {
             // Create a DocumentBuilder object
             DocumentBuilder builder = factory.newDocumentBuilder();
             // Load XML object though parse method on Document builder
-            File file = new File("db.xml");
+			ClassPathResource resource = new ClassPathResource("nz/co/vincens/service/db.xml");
+			File file = resource.getFile();
             Document doc = builder.parse(file);
             // Get the value of every variables
             driver = doc.getElementsByTagName("driver-name").item(0).getFirstChild().getNodeValue();
             url = doc.getElementsByTagName("url").item(0).getFirstChild().getNodeValue();
             user = doc.getElementsByTagName("user-name").item(0).getFirstChild().getNodeValue();
             password = doc.getElementsByTagName("password").item(0).getFirstChild().getNodeValue();
-        } catch (Exception e) {
+		} catch (Exception e) {
             // Handle errors for XML loading
             e.printStackTrace();
         }
