@@ -9,7 +9,7 @@
   <md-card-header>
     <md-card-title>{{task.name}}
     </md-card-title>
-    <md-card-subtitle>Deadline: {{task.deadline}}</md-card-subtitle>
+    <md-card-subtitle>Deadline: {{task.deadline | date:'EEE d MMM y h:m a'}}</md-card-subtitle>
   </md-card-header>
   <md-card-content> {{task.description}}</md-card-content>
   <md-card-footer class="card-description cd-footer">
