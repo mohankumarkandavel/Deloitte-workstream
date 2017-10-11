@@ -34,85 +34,79 @@
     <div class="modal-body">
       <form class="form-horizontal" (ngSubmit)="f.form.valid && addTask();" #f="ngForm" novalidate>
         <div class="form-group row">
-          <label class="control-label col-sm-2">Task Name</label>
-          <div class="col-sm-10">
+          <label class="control-label col-sm-4">Task Name</label>
+          <div class="col-sm-8">
             <input class="form-control" type="text" required [(ngModel)]="model.name" name="name" #name="ngModel">
             <div *ngIf="f.submitted && !name.valid" class="help-block">Task name is required</div>
           </div>
         </div>
         <div class="form-group row">
-          <label class="control-label col-sm-2">Description</label>
-          <div class="col-sm-10">
+          <label class="control-label col-sm-4">Description</label>
+          <div class="col-sm-8">
           <textarea class="form-control" rows="3" id="description" required [(ngModel)]="model.description"
                     name="description" #description="ngModel"></textarea>
             <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group row">
-              <label class="control-label col-sm-4">Deadline</label>
-              <div class="col-sm-8">
-                <input class="form-control" type="date" name="deadline" [(ngModel)]="model.deadline" required
-                       #deadline="ngModel">
-                <div *ngIf="f.submitted && !deadline.valid" class="help-block">Deadline is required</div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="control-label col-sm-4">Group</label>
-              <div class="col-sm-8">
-                <select class="form-control" id="group" name="group" [(ngModel)]="model.group" required
-                        #group="ngModel">
-                  <option>Financial Analysis</option>
-                  <option>Project Management</option>
-                  <option>Strategy</option>
-                  <option>Operations</option>
-                  <option>Technology</option>
-                  <option>Human Capital</option>
-                  <option>Software</option>
-                  <option>Teaching and Training</option>
-                  <option>Business and Development</option>
-                  <option>Marketing and Sales</option>
-                </select>
-                <div *ngIf="f.submitted && !group.valid" class="help-block">Group is required</div>
-              </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4">Deadline</label>
+          <div class="col-sm-8">
             <input class="form-control" type="datetime-local" name="deadline" [(ngModel)]="model.deadline" 
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required #deadline="ngModel">
-            </div>
-            <div class="form-group row">
-              <label class="control-label col-sm-4">Resource (1-5)</label>
-              <div class="col-sm-8">
-                <input class="form-control" type="number" name="attribute.resource" min="1" max="5"
-                       [(ngModel)]="model.attribute.resource" #resource="ngModel" required>
-                <div *ngIf="f.submitted && !resource.valid" class="help-block">Resource is required</div>
-                <div *ngIf="f.submitted && resourceRangeError && resource.valid" class="help-block">Please enter a value
-                  between 1 and 5
-                </div>
-              </div>
+            <div *ngIf="f.submitted && !deadline.valid" class="help-block">
+              Deadline is required in the form yyyy-MM-ddThh:mm
             </div>
           </div>
-          <div class="col-sm-6">
-            <div class="form-group row">
-              <label class="control-label col-sm-4">Availability (days per week free)</label>
-              <div class="col-sm-8">
-                <input class="form-control" type="number" name="attribute.availability" min="1" max="5"
-                       [(ngModel)]="model.attribute.availability" #availability="ngModel" required>
-                <div *ngIf="f.submitted && !availability.valid" class="help-block">Availability is required</div>
-                <div *ngIf="f.submitted && availabilityRangeError && availability.valid"
-                     class="help-block">Please enter a value between 1 and 5
-                </div>
-              </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4">Group</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="group" name="group" [(ngModel)]="model.group" required
+                    #group="ngModel">
+              <option>Financial Analysis</option>
+              <option>Project Management</option>
+              <option>Strategy</option>
+              <option>Operations</option>
+              <option>Technology</option>
+              <option>Human Capital</option>
+              <option>Software</option>
+              <option>Teaching and Training</option>
+              <option>Business and Development</option>
+              <option>Marketing and Sales</option>
+            </select>
+            <div *ngIf="f.submitted && !group.valid" class="help-block">Group is required</div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4">Resource (1-5)</label>
+          <div class="col-sm-8">
+            <input class="form-control" type="number" name="attribute.resource" min="1" max="5"
+                    [(ngModel)]="model.attribute.resource" #resource="ngModel" required>
+            <div *ngIf="f.submitted && !resource.valid" class="help-block">Resource is required</div>
+            <div *ngIf="f.submitted && resourceRangeError && resource.valid" class="help-block">Please enter a value
+              between 1 and 5
             </div>
-            <div class="form-group row">
-              <label class="control-label col-sm-4">People Required</label>
-              <div class="col-sm-8">
-                <input class="form-control" type="number" name="numAssigneesRequired" min="1"
-                       [(ngModel)]="model.numAssigneesRequired" #numAssigneesRequired="ngModel" required>
-                <div *ngIf="f.submitted && !numAssigneesRequired.valid" class="help-block">Number of people is required</div>
-                <div *ngIf="f.submitted && peopleRangeError && numAssigneesRequired.valid" class="help-block">Please enter a
-                  value greater than 1
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4">Availability (days per week free)</label>
+          <div class="col-sm-8">
+            <input class="form-control" type="number" name="attribute.availability" min="1" max="5"
+                    [(ngModel)]="model.attribute.availability" #availability="ngModel" required>
+            <div *ngIf="f.submitted && !availability.valid" class="help-block">Availability is required</div>
+            <div *ngIf="f.submitted && availabilityRangeError && availability.valid"
+                  class="help-block">Please enter a value between 1 and 5
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4">People Required</label>
+          <div class="col-sm-8">
+            <input class="form-control" type="number" name="numAssigneesRequired" min="1"
+                    [(ngModel)]="model.numAssigneesRequired" #numAssigneesRequired="ngModel" required>
+            <div *ngIf="f.submitted && !numAssigneesRequired.valid" class="help-block">Number of people is required</div>
+            <div *ngIf="f.submitted && peopleRangeError && numAssigneesRequired.valid" class="help-block">Please enter a
+              value greater than 1
             </div>
           </div>
         </div>
