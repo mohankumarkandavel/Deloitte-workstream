@@ -135,17 +135,26 @@ public class TaskController {
      * Move draft to pending
      */
     @CrossOrigin
-    @RequestMapping(value = "/task/request-assignee/{taskId}", method = RequestMethod.PUT)
-    ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId, @RequestBody String userId) {
-        TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
-        taskService.getTask(taskId).addRequestedAssignee(teamMember);
+    @RequestMapping(value = "/task/{taskId}/request-assignee", method = RequestMethod.PUT)
+    ResponseEntity<?> sendInviteToSelectedTeamMembers(@PathVariable int taskId,  @RequestBody List<Integer>
+            requesteeIds) {
 
-        // Manager allocates the task to team members
-        int lastAssigneesListId = TaskHelper.getLastAssigneesListId();
-        int newAssigneesListId = lastAssigneesListId + 1;
-        TaskHelper.createNewAssigneesList(newAssigneesListId, Integer.parseInt(userId));
-        TaskHelper.updateToPending(newAssigneesListId, "Pending", Integer.parseInt(userId));
-        System.out.println("Pending");
+        Task task = taskService.getTask(taskId);
+
+        for (int id: requesteeIds) {
+            TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(id));
+            task.addRequestedAssignee(teamMember);
+        }
+
+        // TeamMember teamMember = (TeamMember) userService.getUser(Integer.valueOf(userId));
+        // taskService.getTask(taskId).addRequestedAssignee(teamMember);
+        //
+        // // Manager allocates the task to team members
+        // int lastAssigneesListId = TaskHelper.getLastAssigneesListId();
+        // int newAssigneesListId = lastAssigneesListId + 1;
+        // TaskHelper.createNewAssigneesList(newAssigneesListId, Integer.parseInt(userId));
+        // TaskHelper.updateToPending(newAssigneesListId, "Pending", Integer.parseInt(userId));
+        // System.out.println("Pending");
 
         return ResponseEntity.ok().build();
     }
