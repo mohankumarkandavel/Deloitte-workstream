@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title>{{task.name}} <span class="info-icon" matTooltip="Group: {{task.group}}" matTooltipPosition="after">
       <i class="material-icons">info</i></span></mat-card-title>
-    <mat-card-subtitle>Deadline: {{task.deadline}}</mat-card-subtitle>
+    <mat-card-subtitle>Deadline: {{task.deadline | date:'EEE d MMM y h:m a'}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <div *ngIf="shown === 'NONE'">{{task.description}}</div>

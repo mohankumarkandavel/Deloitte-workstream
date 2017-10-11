@@ -9,7 +9,7 @@
   <mat-card-header>
     <mat-card-title>{{task.name}}
     </mat-card-title>
-    <mat-card-subtitle>Deadline: {{task.deadline}}</mat-card-subtitle>
+    <mat-card-subtitle>Deadline: {{task.deadline | date:'EEE d MMM y h:m a'}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content> {{task.description}}</mat-card-content>
   <mat-card-footer class="card-description cd-footer">
