@@ -170,11 +170,11 @@ input[type="text"] {
   height: 60px;
   font-size: 20px;
   display: inline-block;
-  font-family: "Lato";
+  font-family: "fantasy";
   font-weight: 100;
   border: none;
   outline: none;
-  color: #F5F5F5;
+  color: white;
   padding: 3px;
   padding-right: 60px;
   width: 0px;
@@ -188,7 +188,7 @@ input[type="text"] {
 }
 
 input[type="text"]:focus:hover {
-  border-bottom: 1px solid #BBB;
+  border-bottom: 1px solid rgb(134, 188, 37);
   /*background: rgb(134, 188, 37);*/
   /*border: none;*/
 }
