@@ -2,24 +2,29 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Login} from './login.model';
 import {AuthenticationService} from '../services/authentication.service';
+import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
   private passwordError: boolean = false;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
-
-  }
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private taskService: TaskService
+  ) {}
 
   private model = new Login('', '', '');
 
   ngOnInit() {
     this.authenticationService.logout();
+    this.taskService.clearTasks();
   }
 
   login() {

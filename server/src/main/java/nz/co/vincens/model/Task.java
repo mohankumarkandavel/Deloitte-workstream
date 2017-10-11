@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A task which team members get assigned to.
@@ -29,6 +31,11 @@ public class Task {
 	private Manager owner;
 	private List<TeamMember> requestedAssignees = new ArrayList<>();
 	private List<TeamMember> assignees = new ArrayList<>();
+	private List<TeamMember> declinedAssignees = new ArrayList<>();
+
+	private Set<Integer> requestsById = new HashSet<>();
+
+	private String reasonForDeclining;
 
 	public Task() {
 
@@ -127,6 +134,11 @@ public class Task {
 		requestedAssignees.add(teamMember);
 	}
 
+	public void removeRequestedAssignee(TeamMember teamMember) {
+		requestedAssignees.remove(teamMember);
+
+	}
+
 	public void addAssignee(TeamMember teamMember) {
 		requestedAssignees.remove(teamMember);
 		assignees.add(teamMember);
@@ -136,12 +148,39 @@ public class Task {
 		return assignees;
 	}
 
-
 	public Manager getOwner() {
 		return owner;
 	}
 
 	public void setOwner(Manager owner) {
 		this.owner = owner;
+	}
+
+	public String getReasonForDeclining() {
+		return reasonForDeclining;
+	}
+
+	public void setReasonForDeclining(String reasonForDeclining) {
+		this.reasonForDeclining = reasonForDeclining;
+	}
+
+	public List<TeamMember> getDeclinedAssignees() {
+		return declinedAssignees;
+	}
+
+	public void addDeclinedAssignee(TeamMember declinedAssignee) {
+		declinedAssignees.add(declinedAssignee);
+	}
+
+	public Set<Integer> getRequestsById() {
+		return requestsById;
+	}
+
+	public void setRequestsById(Set<Integer> requestsById) {
+		this.requestsById = requestsById;
+	}
+
+	public void requestMoreInfo(int id) {
+		requestsById.add(id);
 	}
 }
