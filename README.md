@@ -83,12 +83,3 @@ Then start the server with the command
 > `java -jar build/libs/gs-rest-nz.co.vincens.service-0.1.0.jar`
 
 The server will run on port 8080.
-
-
-## Login accounts
-# Manager
-Username: 10001
-Password: 111111
-# Team member
-Username: 20001
-Password: 222222
