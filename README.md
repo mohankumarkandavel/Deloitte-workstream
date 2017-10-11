@@ -31,9 +31,7 @@ To execute unit tests, run
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/` on your browser. The app will automatically reload if you change any of the source files.
 
-Log in with these credentials
-> username: James\
-> password: 123
+
 
 ## Code scaffolding
 
